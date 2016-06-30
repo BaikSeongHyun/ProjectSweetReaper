@@ -65,6 +65,7 @@
      <Compile Include="Assets\Script\Character\CharacterInformation.cs" />
      <Compile Include="Assets\Script\Character\FayeController.cs" />
      <Compile Include="Assets\Script\DataBase.cs" />
+     <Compile Include="Assets\Script\GameController.cs" />
      <Compile Include="Assets\Script\Item\Item.cs" />
      <Compile Include="Assets\Script\Skill\Skill.cs" />
      <Compile Include="Assets\Script\UIScript\DungeonInCheck.cs" />
