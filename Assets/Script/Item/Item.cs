@@ -38,15 +38,37 @@ public class Item
 
 	}
 
-	public Item( string _name, int _price )
+	//constructor - all parameter
+	public Item (string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section )
 	{
+		name = _name;
+		price = _price;
+		coreRank = _coreRank;
+		weaponAtk = _weaponAtk;
+		weaponDef = _weaponDef;
+		weaponStr = _weaponStr;
+		weaponDex = _weaponDex;
+		weaponInt = _weaponInt;
+		weaponLuck = _weaponLuck;
+		weaponCri = _weaponCri;
+		section = _section;
 	}
 		
 			
 	//constructor - self parameter
 	public Item( Item data )
 	{
-
+		name = data.name;
+		price = data.price;
+		coreRank = data.coreRank;
+		weaponAtk = data.weaponAtk;
+		weaponDef = data.weaponDef;
+		weaponStr = data.weaponStr;
+		weaponDex = data.weaponDex;
+		weaponInt = data.weaponInt;
+		weaponLuck = data.weaponLuck;
+		weaponCri = data.weaponCri;
+		section = data.section;
 	}
 
 	//property
@@ -59,5 +81,15 @@ public class Item
 	{
 		get { return icon; }
 	}
+
+	//another method
+
+	//set icon
+	public void SetSpriteIcon()
+	{
+		string path = "image/" + name;
+		icon = Resources.Load<Sprite>();
+	}
+
 
 }
