@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: 41eea1dffc64a4d4fbddc5cdbe92611b
+timeCreated: 1466075602
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: barley01
+    100002: barley02
+    100004: barley03
+    100006: barley_fin
+    100008: carrot01
+    100010: carrot02
+    100012: carrot03
+    100014: corn01
+    100016: corn02
+    100018: corn03
+    100020: corn_fin
+    100022: Cylinder03
+    100024: //RootNode
+    100026: fet
+    100028: ground
+    100030: Object09
+    100032: Object10
+    100034: Object14
+    100036: sprout
+    100038: table
+    100040: tree01
+    100042: tree02
+    400000: barley01
+    400002: barley02
+    400004: barley03
+    400006: barley_fin
+    400008: carrot01
+    400010: carrot02
+    400012: carrot03
+    400014: corn01
+    400016: corn02
+    400018: corn03
+    400020: corn_fin
+    400022: Cylinder03
+    400024: //RootNode
+    400026: fet
+    400028: ground
+    400030: Object09
+    400032: Object10
+    400034: Object14
+    400036: sprout
+    400038: table
+    400040: tree01
+    400042: tree02
+    2300000: barley01
+    2300002: barley02
+    2300004: barley03
+    2300006: barley_fin
+    2300008: carrot01
+    2300010: carrot02
+    2300012: carrot03
+    2300014: corn01
+    2300016: corn02
+    2300018: corn03
+    2300020: corn_fin
+    2300022: Cylinder03
+    2300024: fet
+    2300026: ground
+    2300028: Object09
+    2300030: Object10
+    2300032: Object14
+    2300034: sprout
+    2300036: table
+    2300038: tree01
+    2300040: tree02
+    3300000: barley01
+    3300002: barley02
+    3300004: barley03
+    3300006: barley_fin
+    3300008: carrot01
+    3300010: carrot02
+    3300012: carrot03
+    3300014: corn01
+    3300016: corn02
+    3300018: corn03
+    3300020: corn_fin
+    3300022: Cylinder03
+    3300024: fet
+    3300026: ground
+    3300028: Object09
+    3300030: Object10
+    3300032: Object14
+    3300034: sprout
+    3300036: table
+    3300038: tree01
+    3300040: tree02
+    4300000: corn03
+    4300002: fet
+    4300004: table
+    4300006: corn02
+    4300008: Cylinder03
+    4300010: ground
+    4300012: tree01
+    4300014: barley03
+    4300016: barley02
+    4300018: barley01
+    4300020: Object09
+    4300022: Object10
+    4300024: carrot01
+    4300026: carrot03
+    4300028: tree02
+    4300030: carrot02
+    4300032: corn_fin
+    4300034: barley_fin
+    4300036: corn01
+    4300038: Object14
+    4300040: sprout
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
