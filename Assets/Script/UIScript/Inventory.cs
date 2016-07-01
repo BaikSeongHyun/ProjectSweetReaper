@@ -13,26 +13,30 @@ public class Inventory : MonoBehaviour
 	public Item handleInstall;
 	public Item[] charItem;
 	public Image[] itemSlot;
+	public Text money;
 
 	//Initialize this script
 	void Start( )
 	{
-		
+		info = GameObject.FindWithTag("Player").GetComponent<CharacterInformation>();
+		LinkElement();
+		InitializeElement();
 	}
 
 	//another method
-	public void InitializeInventory()
-	{
-		charItem = new Item[info.CharacterItem.Length];
-		itemSlot = new Image[info.CharacterItem.Length];
+	public void InitializeElement()
+	{		
+		charItem = new Item[35];
+		itemSlot = new Image[35];
 	}
-	public void LinkComponent()
+
+	public void LinkElement()
 	{
-		info = GameObject.Find("Player").GetComponent<CharacterInformation>();
+		money = transform.Find( "MoneyText" ).GetComponent<Text>();
 	}
 	
 	public void UpdateInventory()
 	{
-		
+		money.text = info.Money.ToString();
 	}
 }

@@ -31,8 +31,8 @@ public class CharacterInformation : MonoBehaviour
 	{
 		get { return presentDamage; }
 	}
-	//hp
-	float presentHealthPoint;
+	//hp - use public for test
+	public float presentHealthPoint;
 	float rootHealthPoint;
 	float originHealthPoint;
 
@@ -47,7 +47,7 @@ public class CharacterInformation : MonoBehaviour
 	}
 
 	//rp - for use skill
-	float presentResourcePoint;
+	public float presentResourcePoint;
 	float rootResourcePoint;
 	float originResourcePoint;
 
@@ -161,17 +161,19 @@ public class CharacterInformation : MonoBehaviour
 		DefaultStatus();
 	}
 
+	//set default status
 	public void	DefaultStatus( )
 	{
 		characterName = "Faye";
 		characterLevel = 1;
 
 		presentHealthPoint = 50.0f;
+		originHealthPoint = 50.0f;
 		presentResourcePoint = 30.0f;
+		originResourcePoint = 30.0f;
 		criticalProability = 0.0f;
 
 		exp = 0.0f;
-		//inventory ingoil  변경요망..
 
 		presentStrength = 150; 
 		presentIntelligence = 150;
@@ -180,6 +182,17 @@ public class CharacterInformation : MonoBehaviour
 		
 		presentDamage	= 30.0f;	
 		money = 0;
+
+		topInstall = null;
+		bottomInstall = null;
+		bladeInstall = null;
+		handleInstall = null;
+	}
+
+	//save data load and apply
+	public void LoadCharacterInformation()
+	{
+
 	}
 
 }

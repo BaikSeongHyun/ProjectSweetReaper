@@ -15,6 +15,7 @@ public class QuickStatus : MonoBehaviour
 	void Start( )
 	{
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
+		LinkElement();
 	}
 
 	public void LinkElement()
