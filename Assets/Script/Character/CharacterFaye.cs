@@ -14,6 +14,7 @@ public class CharacterFaye : MonoBehaviour
 	Vector3 Pos;
 	AnimatorStateInfo attackState;
 	public Vector3 destination;
+	public GameObject Effect;
 	//State Event
 	public enum STATE
 	{
@@ -30,11 +31,15 @@ public class CharacterFaye : MonoBehaviour
 
 	void Update( )
 	{
-		Move();
+		//fixed Y
+		transform.position = new Vector3 (transform.position.x, 0, transform.position.z);
+		Move ();
 	}
 
 	public void skillCommand( string _command )
 	{
+		Effect.SetActive (true);
+		animator.Play ("Idle");
 		destination = this.transform.position;
 		switch(_command)
 		{
@@ -50,6 +55,9 @@ public class CharacterFaye : MonoBehaviour
 			case "Q":
 				SetState( "Skill_Q" );
 				break;
+			case "Evation":
+				SetState( "Evation" );
+				break;
 		}
 	}
 
@@ -64,34 +72,38 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Attack( )
 	{
+		Effect.SetActive (false);
 		destination = this.transform.position;
 		SetState( "NormalAttack" );
+
 	}
 
 	void Move( )
 	{
 		attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
-		if (attackState.IsName ("NormalAttack") == true && Vector3.Distance(transform.position,destination)>=1.0f) {
+		if (attackState.IsName ("Evation")) {
+			Effect.SetActive (false);
+			transform.Translate (transform.forward * Time.deltaTime * moveSpeed, Space.World);
+			destination=this.transform.position;
+		}
+		if (attackState.IsName ("NormalAttack") && Vector3.Distance(transform.position,destination)>=0.1f) {
 			animator.Play ("Idle");
 		}
-		if (attackState.IsName( "Idle" )==true || attackState.IsName( "Run" )==true)
-		{
-			if (Vector3.Distance( destination, transform.position ) <= 0.1f)
-			{
-				SetState( "Idle" );
-			}
-			else
-			{
+		if (Vector3.Distance (destination, transform.position) <= 0.1f) {
+			SetState ("Idle");
+		} else {
+			SetState ("Run");
+			if (attackState.IsName ("Run")) {
+				Effect.SetActive (false);
 				Vector3 direction = destination - this.transform.position;
-				this.transform.LookAt( destination );
-				direction.Normalize();
-				SetState( "Run" );
-				transform.Translate( direction * Time.deltaTime * moveSpeed, Space.World );
+				this.transform.LookAt (destination);
+				direction.Normalize ();
+				transform.Translate (direction * Time.deltaTime * moveSpeed, Space.World);
 			}
 		}
 	}
 
-	void SetStateDefault( )
+	void SetStateDefault()
 	{
 		animator.SetBool( "Idle", false );
 		animator.SetBool( "Run", false );
@@ -136,6 +148,15 @@ public class CharacterFaye : MonoBehaviour
 			case "Skill_Q":
 				animator.SetTrigger( "Skill_Q" );
 				break;
+			case "Evation":
+				animator.SetTrigger( "Evation" );
+				break;
+		}
+	}
+
+	void OnCollistionEnter(Collision Coll){
+		if (Coll.gameObject) {
+			Debug.Log ("dd");
 		}
 	}
 }
