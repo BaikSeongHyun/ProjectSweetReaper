@@ -4,6 +4,7 @@ using System.Collections;
 public class UserInterfaceManager : MonoBehaviour
 {
 	//child UI
+	public CharacterInformation info;
 	public GameObject inventory;
 	public GameObject skillUI;
 	public GameObject statusUI;
@@ -14,7 +15,6 @@ public class UserInterfaceManager : MonoBehaviour
 	void Start( )
 	{
 		LinkElement();
-
 		ClearUI();
 	}
 
@@ -37,6 +37,11 @@ public class UserInterfaceManager : MonoBehaviour
 	public bool OnInventory
 	{
 		get { return inventory.activeInHierarchy; }
+	}
+
+	public CharacterInformation Info
+	{
+		get { return info; }
 	}
 
 	//another method
@@ -81,6 +86,9 @@ public class UserInterfaceManager : MonoBehaviour
 	public void ControlEnterDungeon( bool state )
 	{
 		enterDungeon.SetActive( state );
+
+		if(state)
+			Debug.Log( "Active Enter Dungeon" );
 	}
 
 	// close ui
@@ -111,7 +119,6 @@ public class UserInterfaceManager : MonoBehaviour
 		ControlStatusUI( false );
 		ControlEnterDungeon( false );
 	}
-
 
 	//direct update
 	//quick status update

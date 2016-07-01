@@ -3,34 +3,30 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class DungeonInCheck : MonoBehaviour , IPointerEnterHandler,IPointerExitHandler{
-
-	// Use this for initialization
-
+public class DungeonInCheck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+{
 	public Image dungeonCheck;
 
-	void start()
+	// initialize this script
+	void start( )
 	{
-		dungeonCheck =transform.Find("ForestCheck").GetComponent<Image> ();
-		Debug.Log (dungeonCheck);
-
-		ControlDungeonCheckImage (false);
+		dungeonCheck = transform.Find( "ForestCheck" ).GetComponent<Image>();
+		ControlDungeonCheckImage( false );
 	}
-	public void ControlDungeonCheckImage(bool state)
+
+	public void ControlDungeonCheckImage( bool state )
 	{
 		dungeonCheck.enabled = state;
 	}
 
-	public void OnPointerEnter(PointerEventData eventData)
+	public void OnPointerEnter( PointerEventData eventData )
 	{
-		ControlDungeonCheckImage (true);
-		
-		Debug.Log ("DungeonPopUp");
+		ControlDungeonCheckImage( true );
 	}
-	public void OnPointerExit(PointerEventData eventData)
-	{
-		ControlDungeonCheckImage (false);
 
+	public void OnPointerExit( PointerEventData eventData )
+	{
+		ControlDungeonCheckImage( false );
 	}
 
 }

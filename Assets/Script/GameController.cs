@@ -48,6 +48,7 @@ public class GameController : MonoBehaviour
 	//set destination for player
 	void MakeMovePoint( )
 	{
+		
 		if (!EventSystem.current.IsPointerOverGameObject())
 		{
 			mainUI.ClearUI();

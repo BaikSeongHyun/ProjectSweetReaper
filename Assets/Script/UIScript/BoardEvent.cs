@@ -2,50 +2,45 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class BoardEvent : MonoBehaviour {
+public class BoardEvent : MonoBehaviour
+{
+	//board PopUpImage
+	public Image boardQuest;
+
+	public UserInterfaceManager mainUI;
 
 
-	public Image boardQuest;//board PopUpImage
-	public UserInterfaceManager ui;
-
-
-	// Use this for initialization
-	void Start () 
+	// initialize this script
+	void Start( )
 	{
-		boardQuest = transform.Find ("BoardCanvas").Find ("BoardClickEvent").GetComponent<Image>();
-		ui = GameObject.FindWithTag ("MainUI").GetComponent<UserInterfaceManager> ();
+		boardQuest = transform.Find( "BoardCanvas" ).Find( "BoardClickEvent" ).GetComponent<Image>();
+		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 
-		ControlBoardImage (false);
+		ControlBoardImage( false );
 	}
 
-	public void ControlBoardImage(bool state)
+	public void ControlBoardImage( bool state )
 	{
 		boardQuest.enabled = state;
 	}
 
-	void OnMouseEnter()
+	void OnMouseEnter( )
 	{
-		ControlBoardImage (true);	
-
+		ControlBoardImage( true );	
 	}
 
 
-	void OnMouseExit()
+	void OnMouseExit( )
 	{
-		ControlBoardImage (false);
-
+		ControlBoardImage( false );
 	}
-	void OnMouseDown()
+
+	void OnMouseDown( )
 	{
-		if (!ui.OnEnterDungeon)
+		if (!mainUI.OnEnterDungeon)
 		{
-			ControlBoardImage (false);
-			ui.ControlEnterDungeon (true);
-
-			
+			ControlBoardImage( false );
+			mainUI.ControlEnterDungeon( true );			
 		} 
-
 	}
-
-
 }

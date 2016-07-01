@@ -39,6 +39,7 @@ public class StatusUI : MonoBehaviour
 
 	public void UpdateStatusInfo( )
 	{
+		Debug.Log( info.CharacterName );
 		characterName.text = info.CharacterName;
 		level.text = info.Level.ToString();
 		damage.text = info.Damage.ToString();

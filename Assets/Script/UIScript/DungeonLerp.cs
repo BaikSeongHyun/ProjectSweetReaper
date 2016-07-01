@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class DungeonLerp : MonoBehaviour {
+public class DungeonLerp : MonoBehaviour
+{
 
 	public Image InsertDungeonImage;
 	private Color startColor;
@@ -10,21 +11,21 @@ public class DungeonLerp : MonoBehaviour {
 	float delayTime;
 
 	//initialize this script
-	void Start () 
+	void Start( )
 	{
-		InsertDungeonImage = GetComponent<Image> ();
+		InsertDungeonImage = GetComponent<Image>();
 		startColor = InsertDungeonImage.color;
 		endColor = startColor;
 		endColor.a = 0;
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update( )
 	{
 		delayTime += Time.deltaTime; 		
 		if (delayTime >= 1)
 		{
-			InsertDungeonImage.color = Color.Lerp (InsertDungeonImage.color, endColor, Time.deltaTime);
+			InsertDungeonImage.color = Color.Lerp( InsertDungeonImage.color, endColor, Time.deltaTime );
 			if (InsertDungeonImage.color.a < 0.1f)
 			{
 				InsertDungeonImage.enabled = false;

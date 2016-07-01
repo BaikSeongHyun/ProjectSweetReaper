@@ -72,7 +72,7 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Attack( )
 	{
-		Effect.SetActive (false);
+		//Effect.SetActive (false);
 		destination = this.transform.position;
 		SetState( "NormalAttack" );
 
@@ -82,7 +82,7 @@ public class CharacterFaye : MonoBehaviour
 	{
 		attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
 		if (attackState.IsName ("Evation")) {
-			Effect.SetActive (false);
+			//Effect.SetActive (false);
 			transform.Translate (transform.forward * Time.deltaTime * moveSpeed, Space.World);
 			destination=this.transform.position;
 		}
@@ -94,7 +94,7 @@ public class CharacterFaye : MonoBehaviour
 		} else {
 			SetState ("Run");
 			if (attackState.IsName ("Run")) {
-				Effect.SetActive (false);
+				//Effect.SetActive (false);
 				Vector3 direction = destination - this.transform.position;
 				this.transform.LookAt (destination);
 				direction.Normalize ();

@@ -1317,7 +1317,6 @@ GameObject:
   - 114: {fileID: 11462468}
   - 114: {fileID: 11440828}
   - 114: {fileID: 11497614}
-  - 114: {fileID: 11442084}
   m_Layer: 5
   m_Name: UI
   m_TagString: MainUI
@@ -2389,20 +2388,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11442084
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 194246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26c8fac777086c140873699197e79fac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  faye: {fileID: 0}
-  mainUI: {fileID: 0}
-  info: {fileID: 0}
 --- !u!114 &11443286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3859,6 +3844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7df33c64c798f44d97961fa5a954013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  info: {fileID: 0}
   inventory: {fileID: 0}
   skillUI: {fileID: 0}
   statusUI: {fileID: 0}

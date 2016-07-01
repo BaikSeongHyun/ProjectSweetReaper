@@ -46,11 +46,47 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-Library
-Temp
-*.sln
-*.pidb
+# My Option
+# =============== #
+# Unity generated #
+# =============== #
+
+Temp/
+Obj/
+UnityGenerated/
+Library/
+
+
+
+# ===================================== #
+
+# Visual Studio / MonoDevelop generated #
+
+# ===================================== #
+
+ExportedObj/
+*.svd
 *.userprefs
-*.unitproj
-Assembly-CSharp.dll
-Assembly-CSharp.pdb
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+
+# ============ #
+# OS generated #
+# ============ #
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+
+obj/Debug/Assembly-CSharp.dll
