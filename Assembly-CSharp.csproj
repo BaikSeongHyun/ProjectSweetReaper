@@ -45,7 +45,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\BoardEvent.cs" />
      <Compile Include="Assets\Data\Faye\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
      <Compile Include="Assets\Data\Faye\Standard Assets\Image Effects (Pro Only)\ColorCorrectionEffect.cs" />
      <Compile Include="Assets\Data\Faye\Standard Assets\Image Effects (Pro Only)\ContrastStretchEffect.cs" />
@@ -60,18 +59,21 @@
      <Compile Include="Assets\Data\Faye\Standard Assets\Image Effects (Pro Only)\TwirlEffect.cs" />
      <Compile Include="Assets\Data\Faye\Standard Assets\Image Effects (Pro Only)\VortexEffect.cs" />
      <Compile Include="Assets\Data\Faye\Standard Assets\Scripts\General Scripts\ActivateTrigger.cs" />
-     <Compile Include="Assets\EnterDungeon.cs" />
      <Compile Include="Assets\Script\Character\CharacterFaye.cs" />
      <Compile Include="Assets\Script\Character\CharacterInformation.cs" />
      <Compile Include="Assets\Script\Character\FayeController.cs" />
      <Compile Include="Assets\Script\DataBase.cs" />
      <Compile Include="Assets\Script\GameController.cs" />
      <Compile Include="Assets\Script\Item\Item.cs" />
+     <Compile Include="Assets\Script\Monsters\Scripts\AI_Scrips\EnterPlayerCheck.cs" />
+     <Compile Include="Assets\Script\Monsters\Scripts\AI_Scrips\FrogBossAI.cs" />
      <Compile Include="Assets\Script\Monsters\Scripts\AI_Scrips\StoneFrog.cs" />
      <Compile Include="Assets\Script\Monsters\Scripts\AI_Scrips\WolfAI.cs" />
      <Compile Include="Assets\Script\Skill\Skill.cs" />
+     <Compile Include="Assets\Script\UIScript\BoardEvent.cs" />
      <Compile Include="Assets\Script\UIScript\DungeonInCheck.cs" />
      <Compile Include="Assets\Script\UIScript\DungeonLerp.cs" />
+     <Compile Include="Assets\Script\UIScript\EnterDungeon.cs" />
      <Compile Include="Assets\Script\UIScript\Inventory.cs" />
      <Compile Include="Assets\Script\UIScript\QuickStatus.cs" />
      <Compile Include="Assets\Script\UIScript\StatusUI.cs" />
