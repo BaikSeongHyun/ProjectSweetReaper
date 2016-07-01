@@ -7,6 +7,7 @@ public class CharacterFaye : MonoBehaviour
 	public float moveSpeed = 8.0f;
 	//Default : 4
 	public int skillCouunt = 1;
+	public bool moveCheck = false;
 	public bool runState = false;
 	public STATE presentState;
 	Animator animator;
@@ -18,9 +19,8 @@ public class CharacterFaye : MonoBehaviour
 	{
 		Default,
 		Idle,
-		Run}
-
-	;
+		Run
+	};
 
 	public void Start( )
 	{
@@ -65,14 +65,16 @@ public class CharacterFaye : MonoBehaviour
 	public void Attack( )
 	{
 		destination = this.transform.position;
-		SetState( "Idle" );
 		SetState( "NormalAttack" );
 	}
 
 	void Move( )
 	{
 		attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
-		if (attackState.IsName( "Idle" ) || attackState.IsName( "Run" ))
+		if (attackState.IsName ("NormalAttack") == true && Vector3.Distance(transform.position,destination)>=1.0f) {
+			animator.Play ("Idle");
+		}
+		if (attackState.IsName( "Idle" )==true || attackState.IsName( "Run" )==true)
 		{
 			if (Vector3.Distance( destination, transform.position ) <= 0.1f)
 			{
@@ -117,7 +119,7 @@ public class CharacterFaye : MonoBehaviour
 				animator.SetBool( "Run", true );
 				break;
 			case "NormalAttack":
-				animator.SetTrigger( "NormalAttack" );
+				animator.SetTrigger ("NormalAttack");
 				break;
 			case "Skill_A":
 				animator.SetTrigger( "Skill_A" );
