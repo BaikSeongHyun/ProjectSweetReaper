@@ -39,7 +39,7 @@ public class Item
 	}
 
 	//constructor - all parameter
-	public Item (string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section )
+	public Item( string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section )
 	{
 		name = _name;
 		price = _price;
@@ -85,10 +85,10 @@ public class Item
 	//another method
 
 	//set icon
-	public void SetSpriteIcon()
+	public void SetSpriteIcon( )
 	{
-		string path = "image/" + name;
-		icon = Resources.Load<Sprite>();
+//		string path = "image/" + name;
+//		icon = Resources.Load<Sprite>();
 	}
 
 
