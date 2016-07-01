@@ -50,6 +50,10 @@ public class FayeController : MonoBehaviour
 		{
 			faye.skillCommand( "Q" );
 		}
+		else if (Input.GetKeyDown( KeyCode.LeftControl ))
+		{
+			faye.skillCommand( "Evation" );
+		}
 		else if (Input.GetMouseButton( 0 ))
 		{
 			MakeMovePoint();
