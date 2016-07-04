@@ -1,20 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class CharacterFaye : MonoBehaviour
 {
 
-	public float moveSpeed = 8.0f;
-	//Default : 4
-	public int skillCouunt = 1;
-	public bool moveCheck = false;
-	public bool runState = false;
-	public STATE presentState;
-	Animator animator;
-	Vector3 Pos;
-	AnimatorStateInfo attackState;
-	public Vector3 destination;
+	//UI
 	public GameObject Effect;
+	public Image SkillChainProgressBar;
+
+	//Vector3
+	Vector3 destination;
+	Vector3 Pos;
+
+	//Animation
+	AnimatorStateInfo attackState;
+	Animator animator;
+
+	float moveSpeed = 4.0f;
+	//int skillSlotCount = 1;
+	public bool runState = false;
+	STATE presentState;
+	int skillingChainCount=0;
+	float skillChainWaitingTime=0.0f;
+	float skillChaintWaitingTimeMax=4.0f;
+	bool skillChainTrigger=false;
+	bool skillusingState=false;
 	//State Event
 	public enum STATE
 	{
@@ -25,39 +35,74 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Start( )
 	{
+		SkillChainProgressBar.gameObject.SetActive (false);
 		destination = this.transform.position;
 		animator = GetComponent<Animator>();
 	}
 
-	void Update( )
+	void Update()
 	{
+		if (skillChainTrigger == true) {
+			//skillChaintWaitingTimeMax=4.0f (Default)
+			if (skillChainWaitingTime >= skillChaintWaitingTimeMax) {
+				skillingChainCount = 0;
+				skillChainWaitingTime = 0.0f;
+				skillChaintWaitingTimeMax = 4.0f;
+				skillChainTrigger = false;
+				SkillChainProgressBar.gameObject.SetActive (false);
+			} else {
+				SkillChainProgressBar.gameObject.SetActive (true);
+				skillChainWaitingTime += Time.deltaTime;
+				SkillChainProgressBar.fillAmount = 1 - (skillChainWaitingTime / skillChaintWaitingTimeMax);
+			}
+		}
 		//fixed Y
 		transform.position = new Vector3 (transform.position.x, 0, transform.position.z);
 		Move ();
 	}
 
+	public void ChainTrigger(){
+		skillChainTrigger = true;
+		skillusingState = false;
+	}
+
 	public void skillCommand( string _command )
 	{
+		if (_command != "Evation") {
+			skillChainTrigger = false;
+			skillChaintWaitingTimeMax = skillChaintWaitingTimeMax - skillingChainCount;
+			if (skillingChainCount >= 4) {
+				skillingChainCount = 0;
+			}
+			skillChainWaitingTime = 0.0f;
+		}
 		Effect.SetActive (true);
 		animator.Play ("Idle");
 		destination = this.transform.position;
-		switch(_command)
-		{
-			case "A":
-				SetState( "Skill_A" );
-				break;
-			case "S":
-				SetState( "Skill_S" );
-				break;
-			case "D":
-				SetState( "Skill_D" );
-				break;
-			case "Q":
-				SetState( "Skill_Q" );
-				break;
-			case "Evation":
-				SetState( "Evation" );
-				break;
+		switch (_command) {
+		case "A":
+			skillingChainCount++;
+			SetState ("Skill_A");
+			skillusingState = true;
+			break;
+		case "S":
+			skillingChainCount++;
+			SetState ("Skill_S");
+			skillusingState = true;
+			break;
+		case "D":
+			skillingChainCount++;
+			SetState ("Skill_D");
+			skillusingState = true;
+			break;
+		case "Q":
+			skillingChainCount++;
+			SetState ("Skill_Q");
+			skillusingState = true;
+			break;
+		case "Evation":
+			SetState ("Evation");
+			break;
 		}
 	}
 
@@ -72,33 +117,37 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Attack( )
 	{
-		//Effect.SetActive (false);
+		Effect.SetActive (false);
 		destination = this.transform.position;
 		SetState( "NormalAttack" );
 
 	}
 
-	void Move( )
+	void Move()
 	{
-		attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
-		if (attackState.IsName ("Evation")) {
-			//Effect.SetActive (false);
-			transform.Translate (transform.forward * Time.deltaTime * moveSpeed, Space.World);
-			destination=this.transform.position;
-		}
-		if (attackState.IsName ("NormalAttack") && Vector3.Distance(transform.position,destination)>=0.1f) {
-			animator.Play ("Idle");
-		}
-		if (Vector3.Distance (destination, transform.position) <= 0.1f) {
+		if (skillusingState == true) {
 			SetState ("Idle");
 		} else {
-			SetState ("Run");
-			if (attackState.IsName ("Run")) {
-				//Effect.SetActive (false);
-				Vector3 direction = destination - this.transform.position;
-				this.transform.LookAt (destination);
-				direction.Normalize ();
-				transform.Translate (direction * Time.deltaTime * moveSpeed, Space.World);
+			attackState = this.animator.GetCurrentAnimatorStateInfo (0);
+			if (attackState.IsName ("Evation")) {
+				Effect.SetActive (false);
+				transform.Translate (transform.forward * Time.deltaTime * moveSpeed, Space.World);
+				destination = this.transform.position;
+			}
+			if (attackState.IsName ("NormalAttack") && Vector3.Distance (transform.position, destination) >= 0.1f) {
+				animator.Play ("Idle");
+			}
+			if (Vector3.Distance (destination, transform.position) <= 0.1f) {
+				SetState ("Idle");
+			} else {
+				SetState ("Run");
+				if (attackState.IsName ("Run")) {
+					//Effect.SetActive (false);
+					Vector3 direction = destination - this.transform.position;
+					this.transform.LookAt (destination);
+					direction.Normalize ();
+					transform.Translate (direction * Time.deltaTime * moveSpeed, Space.World);
+				}
 			}
 		}
 	}
@@ -156,7 +205,6 @@ public class CharacterFaye : MonoBehaviour
 
 	void OnCollistionEnter(Collision Coll){
 		if (Coll.gameObject) {
-			Debug.Log ("dd");
 		}
 	}
 }
