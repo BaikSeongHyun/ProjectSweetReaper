@@ -1,14 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class FrogBossAI : MonoBehaviour
 {
 
 	public Animator bossAiAnimator;
 	public GameObject player;
-	public GameObject rangeCheck;
 	EnterPlayerCheck collCheck;
 	AnimatorStateInfo attackStateBoss;
+	int bossAngryPattern=0;
+	float runRange=10.0f;
+	float attackRange=2.5f;
+	public Image bossAngryImage;
+	float imageDelayTime;
 
 	public enum BossPatternName
 	{
@@ -29,34 +34,56 @@ public class FrogBossAI : MonoBehaviour
 	{
 		bossAiAnimator = GetComponent<Animator> ();
 		player = GameObject.FindGameObjectWithTag ("Player");
-	
+		BossPattern (BossPatternName.AttackIdle);
+		bossAngryImage.gameObject.SetActive (false);
 
 	}
 
 
 	void Update()
 	{
-		//Vector3 chaser= player.transform.position - transform.position;
 		float searchRange = Vector3.Distance(player.transform.position,transform.position);
 
-		if (searchRange <= 10) 
+		//Vector3 frogLookAt = player.transform.position - transform.position;
+
+
+		if (searchRange<= runRange && bossAngryPattern == 0) 
 		{			
-			Debug.Log ("사거리 안 ");
+			transform.LookAt (player.transform.position);
+			//			transform.rotation = Quaternion.Lerp (transform.rotation,
+			//				Quaternion.LookRotation (frogLookAt,Vector3.forward), 
+			//				Time.deltaTime * 4f);
+			bossAngryImage.gameObject.SetActive (true);
 			BossPattern (BossPatternName.Angry);
-			//BossPattern (BossPatternName.Run);
+
+			bossAngryPattern = 1;		
 		}
-		else
+
+		else if (searchRange<= runRange && bossAngryPattern == 1)
+		{
+
+			BossPattern (BossPatternName.Run);
+
+
+			if (attackStateBoss.IsName ("Run") && searchRange<=runRange)
+			{
+				bossAngryImage.gameObject.SetActive (false);
+				transform.LookAt (player.transform.position);
+				transform.position = Vector3.Lerp (transform.position, player.transform.position, Time.deltaTime * 0.5f);
+			}
+
+		}
+		else if (searchRange > runRange)
 		{
 			BossPattern (BossPatternName.BossIdle);
 		}
+	
 
 		attackStateBoss = this.bossAiAnimator.GetCurrentAnimatorStateInfo( 0 );
 
-
-
-		if (attackStateBoss.IsName ("Run"))
+		if (searchRange < attackRange) 
 		{
-			transform.position = Vector3.Lerp (transform.position, player.transform.position, Time.deltaTime * 0.5f);
+			BossPattern (BossPatternName.BossNormalAttack);
 		}
 
 
@@ -67,39 +94,39 @@ public class FrogBossAI : MonoBehaviour
 
 	}
 
-
 	public void BossPattern (BossPatternName state)
 	{
 		switch (state)
 		{
 
-				case BossPatternName.BossIdle:
-				bossAiAnimator.SetInteger ("state", 1);
-					break;
+		case BossPatternName.BossIdle:
+			bossAiAnimator.SetInteger ("state", 1);
+			break;
 
-				case BossPatternName.Angry:
-					bossAiAnimator.SetInteger ("state", 2);
-					break;
-				case BossPatternName.Run:
-					bossAiAnimator.SetInteger ("state", 3);
-					break;
-				case BossPatternName.BossNormalAttack:
-				bossAiAnimator.SetInteger ("state", 4);
-					break;
-				case BossPatternName.BossCriticalAttack:
-				bossAiAnimator.SetInteger ("state", 5);
-					break;
-				case BossPatternName.AttackIdle:
-				bossAiAnimator.SetInteger ("state", 6);
-					break;
-				case BossPatternName.TakeDamage:
-				bossAiAnimator.SetInteger ("state", 7);
-					break;
-				case BossPatternName.Death:
-				bossAiAnimator.SetInteger ("state", 8);
-					break;
+		case BossPatternName.Angry:
+			bossAiAnimator.SetInteger ("state", 2);
+			break;
+		case BossPatternName.Run:
+			bossAiAnimator.SetInteger ("state", 3);
+			break;
+		case BossPatternName.BossNormalAttack:
+			bossAiAnimator.SetInteger ("state", 4);
+			break;
+		case BossPatternName.BossCriticalAttack:
+			bossAiAnimator.SetInteger ("state", 5);
+			break;
+		case BossPatternName.AttackIdle:
+			bossAiAnimator.SetInteger ("state", 6);
+			break;
+		case BossPatternName.TakeDamage:
+			bossAiAnimator.SetInteger ("state", 7);
+			break;
+		case BossPatternName.Death:
+			bossAiAnimator.SetInteger ("state", 8);
+			break;
+		
 
 		}
 	}
 
-	}
+}
