@@ -12,7 +12,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public QuickStatus quickStatus;
 
 	//initialize this script
-	void Start( )
+	void Start()
 	{
 		LinkElement();
 		ClearUI();
@@ -46,7 +46,7 @@ public class UserInterfaceManager : MonoBehaviour
 
 	//another method
 	//data link
-	public void LinkElement( )
+	public void LinkElement()
 	{
 		inventory = GameObject.Find( "Inventory" );
 		skillUI = GameObject.Find( "SkillUI" );
@@ -87,14 +87,14 @@ public class UserInterfaceManager : MonoBehaviour
 	{
 		enterDungeon.SetActive( state );
 
-		if(state)
+		if (state)
 			Debug.Log( "Active Enter Dungeon" );
 	}
 
 	// close ui
 	public void CloseScreen( string name )
 	{
-		switch(name)
+		switch (name)
 		{
 			case "EnterDungeon":
 				ControlEnterDungeon( false );
@@ -112,7 +112,7 @@ public class UserInterfaceManager : MonoBehaviour
 	}
 
 	//all element close
-	public void ClearUI( )
+	public void ClearUI()
 	{
 		ControlInventory( false );
 		ControlSkillUI( false );
@@ -122,8 +122,10 @@ public class UserInterfaceManager : MonoBehaviour
 
 	//direct update
 	//quick status update
-	public void UpdateQuickStatus( )
+	public void UpdateQuickStatus()
 	{
+		quickStatus.LinkCharacterInformation();
+		
 		quickStatus.UpdateQuickStatusInfo();
 	}
 

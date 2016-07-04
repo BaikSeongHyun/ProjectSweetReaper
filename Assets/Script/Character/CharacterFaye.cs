@@ -20,49 +20,48 @@ public class CharacterFaye : MonoBehaviour
 	{
 		Default,
 		Idle,
-		Run
-	};
+		Run}
 
-	public void Start( )
+	;
+
+	public void Start ()
 	{
 		destination = this.transform.position;
-		animator = GetComponent<Animator>();
+		animator = GetComponent<Animator> ();
 	}
 
-	void Update( )
+	void Update ()
 	{
 		//fixed Y
 		transform.position = new Vector3 (transform.position.x, 0, transform.position.z);
 		Move ();
 	}
 
-	public void skillCommand( string _command )
+	public void skillCommand (string _command)
 	{
 		Effect.SetActive (true);
 		animator.Play ("Idle");
 		destination = this.transform.position;
-		switch(_command)
-		{
-			case "A":
-				SetState( "Skill_A" );
-				break;
-			case "S":
-				SetState( "Skill_S" );
-				break;
-			case "D":
-				SetState( "Skill_D" );
-				break;
-			case "Q":
-				SetState( "Skill_Q" );
-				break;
-			case "Evation":
-				SetState( "Evation" );
-				break;
+		switch (_command) {
+		case "A":
+			SetState ("Skill_A");
+			break;
+		case "S":
+			SetState ("Skill_S");
+			break;
+		case "D":
+			SetState ("Skill_D");
+			break;
+		case "Q":
+			SetState ("Skill_Q");
+			break;
+		case "Evation":
+			SetState ("Evation");
+			break;
 		}
 	}
 
-	public Vector3 _destinaton
-	{
+	public Vector3 _destinaton {
 		get {
 			return destination;
 		}set {
@@ -70,23 +69,23 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
-	public void Attack( )
+	public void Attack ()
 	{
 		//Effect.SetActive (false);
 		destination = this.transform.position;
-		SetState( "NormalAttack" );
+		SetState ("NormalAttack");
 
 	}
 
-	void Move( )
+	void Move ()
 	{
-		attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
+		attackState = this.animator.GetCurrentAnimatorStateInfo (0);
 		if (attackState.IsName ("Evation")) {
 			//Effect.SetActive (false);
 			transform.Translate (transform.forward * Time.deltaTime * moveSpeed, Space.World);
-			destination=this.transform.position;
+			destination = this.transform.position;
 		}
-		if (attackState.IsName ("NormalAttack") && Vector3.Distance(transform.position,destination)>=0.1f) {
+		if (attackState.IsName ("NormalAttack") && Vector3.Distance (transform.position, destination) >= 0.1f) {
 			animator.Play ("Idle");
 		}
 		if (Vector3.Distance (destination, transform.position) <= 0.1f) {
@@ -103,58 +102,57 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
-	void SetStateDefault()
+	void SetStateDefault ()
 	{
-		animator.SetBool( "Idle", false );
-		animator.SetBool( "Run", false );
+		animator.SetBool ("Idle", false);
+		animator.SetBool ("Run", false);
 	}
 		
 	//property
-	public STATE State
-	{
+	public STATE State {
 		get { return presentState; }
 	}
 
 
 	// method
-	public void SetState( string state )
+	public void SetState (string state)
 	{
-		SetStateDefault();
-		switch(state)
-		{
-			case "Idle":
-				presentState = STATE.Idle;
-				animator.SetBool( "Idle", true );
-				break;
-			case "Run":
-				presentState = STATE.Run;
-				animator.SetBool( "Run", true );
-				break;
-			case "NormalAttack":
-				animator.SetTrigger ("NormalAttack");
-				break;
-			case "Skill_A":
-				animator.SetTrigger( "Skill_A" );
-				break;
+		SetStateDefault ();
+		switch (state) {
+		case "Idle":
+			presentState = STATE.Idle;
+			animator.SetBool ("Idle", true);
+			break;
+		case "Run":
+			presentState = STATE.Run;
+			animator.SetBool ("Run", true);
+			break;
+		case "NormalAttack":
+			animator.SetTrigger ("NormalAttack");
+			break;
+		case "Skill_A":
+			animator.SetTrigger ("Skill_A");
+			break;
 
-			case "Skill_S":
-				animator.SetTrigger( "Skill_S" );
-				break;
+		case "Skill_S":
+			animator.SetTrigger ("Skill_S");
+			break;
 
-			case "Skill_D":
-				animator.SetTrigger( "Skill_D" );
-				break;
+		case "Skill_D":
+			animator.SetTrigger ("Skill_D");
+			break;
 
-			case "Skill_Q":
-				animator.SetTrigger( "Skill_Q" );
-				break;
-			case "Evation":
-				animator.SetTrigger( "Evation" );
-				break;
+		case "Skill_Q":
+			animator.SetTrigger ("Skill_Q");
+			break;
+		case "Evation":
+			animator.SetTrigger ("Evation");
+			break;
 		}
 	}
 
-	void OnCollistionEnter(Collision Coll){
+	void OnCollistionEnter (Collision Coll)
+	{
 		if (Coll.gameObject) {
 			Debug.Log ("dd");
 		}

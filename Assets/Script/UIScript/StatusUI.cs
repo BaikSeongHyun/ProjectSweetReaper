@@ -23,6 +23,11 @@ public class StatusUI : MonoBehaviour
 		LinkElement();
 	}
 
+	public void LinkCharacterInformation()
+	{
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
+	}
+
 	public void LinkElement( )
 	{		
 		characterName = transform.Find( "CharacterNameText" ).GetComponent<Text>();
@@ -39,7 +44,6 @@ public class StatusUI : MonoBehaviour
 
 	public void UpdateStatusInfo( )
 	{
-		Debug.Log( info.CharacterName );
 		characterName.text = info.CharacterName;
 		level.text = info.Level.ToString();
 		damage.text = info.Damage.ToString();

@@ -11,14 +11,13 @@ public class Inventory : MonoBehaviour
 	public Item bottomInstall;
 	public Item bladeInstall;
 	public Item handleInstall;
-	public Item[] charItem;
-	public Image[] itemSlot;
+	public ItemElement[] elements;
 	public Text money;
 
 	//Initialize this script
-	void Start( )
+	void Start()
 	{
-		info = GameObject.FindWithTag("Player").GetComponent<CharacterInformation>();
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		LinkElement();
 		InitializeElement();
 	}
@@ -26,15 +25,20 @@ public class Inventory : MonoBehaviour
 	//another method
 	public void InitializeElement()
 	{		
-		charItem = new Item[35];
-		itemSlot = new Image[35];
+		elements = new ItemElement[35];
 	}
 
 	public void LinkElement()
 	{
 		money = transform.Find( "MoneyText" ).GetComponent<Text>();
+		for(int i = 0; i < elements.Length; i++)
+		{
+			string slot = "ItemSlot";
+			slot += ( i + 1 ).ToString();
+			elements [i] = transform.Find( slot ).GetComponent<ItemElement>();
+		}
 	}
-	
+
 	public void UpdateInventory()
 	{
 		money.text = info.Money.ToString();

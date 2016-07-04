@@ -4,18 +4,29 @@ using System.Collections;
 
 public class QuickStatus : MonoBehaviour
 {
-	CharacterInformation info;
-	Text characterName;
-	Text level;
-	Image healthBar;
-	Image resourceBar;
+	//complex field
+	public CharacterInformation info;
+	public Text characterName;
+	public Text level;
+	public Image healthBar;
+	public Image resourceBar;
 
+	//property
+	public CharacterInformation Info
+	{
+		get { return info; }
+	}
 
 	// initialize this script
 	void Start( )
 	{
-		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		LinkElement();
+	}
+
+	public void LinkCharacterInformation()
+	{
+		GameObject player = GameObject.FindWithTag( "Player" );
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 	}
 
 	public void LinkElement()
