@@ -21,7 +21,8 @@ public class ItemElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 	void Start()
 	{
 		itemIcon = GetComponent<Image>();
-		//iPopUp = transform.Find( "PopUp" ).GetComponent<ItemInformationPopUpControl>();
+		iPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
+
 	}
 
 	//pop up item information

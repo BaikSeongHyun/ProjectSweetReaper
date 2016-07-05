@@ -12,23 +12,23 @@ public class ItemInformationPopUpControl : MonoBehaviour
 	public Text coreRank;
 	public Text weaponCri;
 	public Text section;
-	public Text element1;
-	public Text element2;
-	public Text element3;
+	public Text element1Text;
+	public Text element2Text;
+	public Text element3Text;
 
 	//link all component
 	public void LinkComponent()
 	{
-		backGround = transform.Find( "ItemInformationPopUpBackGround" ).GetComponent<Image>();
+		backGround = transform.Find( "ItemPopUpBack" ).GetComponent<Image>();
 		itemName = transform.Find( "ItemNameText" ).GetComponent<Text>();
 		price = transform.Find( "PriceText" ).GetComponent<Text>();
 		coreRank = transform.Find( "CoreRankText" ).GetComponent<Text>();
 		weaponCri = transform.Find( "CriticalText" ).GetComponent<Text>();
 		section = transform.Find( "SectionText" ).GetComponent<Text>();
 
-		element1 = transform.Find( "Element1" ).GetComponent<Text>();
-		element2 = transform.Find( "Element2" ).GetComponent<Text>();
-		element3 = transform.Find( "Element3" ).GetComponent<Text>();		
+		element1Text = transform.Find( "Element1Text" ).GetComponent<Text>();
+		element2Text = transform.Find( "Element2Text" ).GetComponent<Text>();
+		element3Text = transform.Find( "Element3Text" ).GetComponent<Text>();		
 	}
 
 	public void ControlComponent( bool state )
@@ -38,9 +38,9 @@ public class ItemInformationPopUpControl : MonoBehaviour
 		price.enabled = state;
 		coreRank.enabled = state;
 		weaponCri.enabled = state;
-		element1.enabled = state;
-		element2.enabled = state;
-		element3.enabled = state;
+		element1Text.enabled = state;
+		element2Text.enabled = state;
+		element3Text.enabled = state;
 	}
 
 	//update item information
@@ -63,27 +63,27 @@ public class ItemInformationPopUpControl : MonoBehaviour
 			{
 				case Item.SECTION.Blade:
 					section.text = "Blade";
-					element1.text = info.WeaponAtk.ToString();
-					element2.text = info.WeaponStr.ToString();
-					element3.text = info.WeaponDex.ToString();
+					element1Text.text = info.WeaponAtk.ToString();
+					element2Text.text = info.WeaponStr.ToString();
+					element3Text.text = info.WeaponDex.ToString();
 					break;
 				case Item.SECTION.Top:
 					section.text = "Top";
-					element1.text = info.WeaponAtk.ToString();
-					element2.text = info.WeaponStr.ToString();
-					element3.text = info.WeaponDex.ToString();
+					element1Text.text = info.WeaponAtk.ToString();
+					element2Text.text = info.WeaponStr.ToString();
+					element3Text.text = info.WeaponDex.ToString();
 					break;
 				case Item.SECTION.Bottom:
 					section.text = "Bottom";
-					element1.text = info.WeaponDef.ToString();
-					element2.text = info.WeaponInt.ToString();
-					element3.text = info.WeaponLuck.ToString();
+					element1Text.text = info.WeaponDef.ToString();
+					element2Text.text = info.WeaponInt.ToString();
+					element3Text.text = info.WeaponLuck.ToString();
 					break;
 				case Item.SECTION.Handle:
 					section.text = "Handle";
-					element1.text = info.WeaponDef.ToString();
-					element2.text = info.WeaponInt.ToString();
-					element3.text = info.WeaponLuck.ToString();
+					element1Text.text = info.WeaponDef.ToString();
+					element2Text.text = info.WeaponInt.ToString();
+					element3Text.text = info.WeaponLuck.ToString();
 					break;
 			}
 		}

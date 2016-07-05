@@ -16,20 +16,13 @@ public class StatusUI : MonoBehaviour
 	Text dexterity;
 	Text luck;
 
-	// Use this for initialization
-	void Start( )
-	{
-		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
-		LinkElement();
-	}
-
-	public void LinkCharacterInformation()
-	{
-		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
-	}
-
+	// another method
 	public void LinkElement( )
 	{		
+		//link character information
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
+
+		//link child component
 		characterName = transform.Find( "CharacterNameText" ).GetComponent<Text>();
 		level = transform.Find( "LevelText" ).GetComponent<Text>();
 		damage = transform.Find( "DamageText" ).GetComponent<Text>();

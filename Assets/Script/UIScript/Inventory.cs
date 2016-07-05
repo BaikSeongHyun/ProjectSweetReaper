@@ -14,17 +14,10 @@ public class Inventory : MonoBehaviour
 	public ItemElement[] elements;
 	public Text money;
 
-	//Initialize this script
-	void Start()
-	{
-		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
-		LinkElement();
-		InitializeElement();
-	}
-
 	//another method
 	public void InitializeElement()
 	{		
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		elements = new ItemElement[35];
 	}
 
