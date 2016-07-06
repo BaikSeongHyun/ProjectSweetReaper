@@ -49,6 +49,7 @@ public class UserInterfaceManager : MonoBehaviour
 		enterDungeon = GameObject.Find( "EnterDungeon" );
 		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
 		itemPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
+		itemPopUp.LinkComponent();
 	}
 
 	//control ui element

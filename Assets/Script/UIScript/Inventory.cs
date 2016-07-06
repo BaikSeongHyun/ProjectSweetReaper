@@ -8,10 +8,10 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
 	//complex data field
 	public CharacterInformation info;
-	public Item topInstall;
-	public Item bottomInstall;
-	public Item bladeInstall;
-	public Item handleInstall;
+	public ItemElement topInstall;
+	public ItemElement bottomInstall;
+	public ItemElement bladeInstall;
+	public ItemElement handleInstall;
 	public ItemElement[] elements;
 	public Text money;
 	public ItemElement presentItemElement;
@@ -29,6 +29,12 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	public void LinkElement()
 	{
 		money = transform.Find( "MoneyText" ).GetComponent<Text>();
+		topInstall = transform.Find( "TopInstall" ).GetComponent<ItemElement>();
+		bottomInstall = transform.Find( "BottomInstall" ).GetComponent<ItemElement>();
+		bladeInstall = transform.Find( "BladeInstall" ).GetComponent<ItemElement>();
+		handleInstall = transform.Find( "HandleInstall" ).GetComponent<ItemElement>();
+
+
 		for (int i = 0; i < elements.Length; i++)
 		{
 			string slot = "ItemSlot";
@@ -43,7 +49,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		money.text = info.Money.ToString();
 		for (int i = 0; i < elements.Length; i++)
 		{
-//			elements[i].UpdateItemIcon();
+			//elements[i].UpdateItemIcon();
 		}
 	}
 
@@ -51,17 +57,20 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	public void OnPointerEnter( PointerEventData eventData )
 	{
 		presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
-		if (presentItemElement != null)
+		if (presentItemElement != null )
 		{
-			Debug.Log( "Active pop up" );
-		}
-					
+			presentItemElement.UpdateItemPopUp();
+		}					
 	}
 
 	//item element out -> pop up item information
 	public void OnPointerExit( PointerEventData eventData )
 	{
-		//presentItemElement.CloseItemPopup();
+		Debug.Log( "Active on pointer exit" );
+		if (presentItemElement == null)
+			return;
+		
+		presentItemElement.CloseItemPopup();
 		presentItemElement = null;
 	}
 

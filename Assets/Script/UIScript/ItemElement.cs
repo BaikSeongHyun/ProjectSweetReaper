@@ -21,15 +21,18 @@ public class ItemElement : MonoBehaviour
 	{
 		itemIcon = GetComponent<Image>();
 		iPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
-
+		//itemInfo = null;
 	}
 
 	//update item pop up
 	public void UpdateItemPopUp()
 	{
+		if (ItemInfo == null)
+			return;
+		
 		iPopUp.LinkComponent();
 		iPopUp.ControlComponent( true );
-		iPopUp.UpdateItemInformation( itemInfo, transform.position );
+		iPopUp.UpdateItemInformation( itemInfo, transform.position);
 	}
 
 	//close item pop up

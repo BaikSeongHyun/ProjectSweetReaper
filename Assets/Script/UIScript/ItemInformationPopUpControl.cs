@@ -21,32 +21,37 @@ public class ItemInformationPopUpControl : MonoBehaviour
 	{
 		backGround = transform.Find( "ItemPopUpBack" ).GetComponent<Image>();
 		itemName = transform.Find( "ItemNameText" ).GetComponent<Text>();
-		price = transform.Find( "PriceText" ).GetComponent<Text>();
 		coreRank = transform.Find( "CoreRankText" ).GetComponent<Text>();
 		weaponCri = transform.Find( "CriticalText" ).GetComponent<Text>();
 		section = transform.Find( "SectionText" ).GetComponent<Text>();
 
 		element1Text = transform.Find( "Element1Text" ).GetComponent<Text>();
 		element2Text = transform.Find( "Element2Text" ).GetComponent<Text>();
-		element3Text = transform.Find( "Element3Text" ).GetComponent<Text>();		
+		element3Text = transform.Find( "Element3Text" ).GetComponent<Text>();	
+
+		price = transform.Find( "PriceText" ).GetComponent<Text>();
 	}
 
+	//control all component  by state
 	public void ControlComponent( bool state )
 	{
 		backGround.enabled = state;
 		itemName.enabled = state;
-		price.enabled = state;
+		section.enabled = state;
 		coreRank.enabled = state;
 		weaponCri.enabled = state;
 		element1Text.enabled = state;
 		element2Text.enabled = state;
 		element3Text.enabled = state;
+		price.enabled = state;
 	}
 
 	//update item information
 	public void UpdateItemInformation( Item info, Vector3 popUpPosition )
 	{
-		transform.position = popUpPosition;
+		//position set
+		transform.position = popUpPosition + new Vector3(50f, -50f);
+
 		if (info == null)
 			return;
 		else if (info.Section == Item.SECTION.Consume)
