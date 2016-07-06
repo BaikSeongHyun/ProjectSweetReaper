@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using System.Collections;
 
-public class ItemElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ItemElement : MonoBehaviour
 {
 	//complex data field
 	public ItemInformationPopUpControl iPopUp;
@@ -25,20 +24,22 @@ public class ItemElement : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
 	}
 
-	//pop up item information
-	public void OnPointerEnter( PointerEventData eventData )
+	//update item pop up
+	public void UpdateItemPopUp()
 	{
+		iPopUp.LinkComponent();
+		iPopUp.ControlComponent(true);
 		iPopUp.UpdateItemInformation(itemInfo, transform.position);
 	}
 
-	//pop up off
-	public void OnPointerExit( PointerEventData eventData )
+	//close item pop up
+	public void CloseItemPopup()
 	{
-		
+		iPopUp.ControlComponent( false );
 	}
 
 	//set item icon -> no item set default
-	public void SetItemIcon()
+	public void UpdateItemIcon()
 	{
 		if (itemInfo == null)
 			return;

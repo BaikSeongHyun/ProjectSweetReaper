@@ -63,27 +63,27 @@ public class ItemInformationPopUpControl : MonoBehaviour
 			{
 				case Item.SECTION.Blade:
 					section.text = "Blade";
-					element1Text.text = info.WeaponAtk.ToString();
-					element2Text.text = info.WeaponStr.ToString();
-					element3Text.text = info.WeaponDex.ToString();
+					element1Text.text = "ATK : " + info.WeaponAtk.ToString();
+					element2Text.text = "STR : " + info.WeaponStr.ToString();
+					element3Text.text = "DEX : " + info.WeaponDex.ToString();
 					break;
 				case Item.SECTION.Top:
 					section.text = "Top";
-					element1Text.text = info.WeaponAtk.ToString();
-					element2Text.text = info.WeaponStr.ToString();
-					element3Text.text = info.WeaponDex.ToString();
+					element1Text.text = "ATK : " + info.WeaponAtk.ToString();
+					element2Text.text = "STR : " + info.WeaponStr.ToString();
+					element3Text.text = "DEX : " + info.WeaponDex.ToString();
 					break;
 				case Item.SECTION.Bottom:
 					section.text = "Bottom";
-					element1Text.text = info.WeaponDef.ToString();
-					element2Text.text = info.WeaponInt.ToString();
-					element3Text.text = info.WeaponLuck.ToString();
+					element1Text.text = "DEF : " + info.WeaponDef.ToString();
+					element2Text.text = "INT : " + info.WeaponInt.ToString();
+					element3Text.text = "LUCK : " + info.WeaponLuck.ToString();
 					break;
 				case Item.SECTION.Handle:
 					section.text = "Handle";
-					element1Text.text = info.WeaponDef.ToString();
-					element2Text.text = info.WeaponInt.ToString();
-					element3Text.text = info.WeaponLuck.ToString();
+					element1Text.text = "DEF : " + info.WeaponDef.ToString();
+					element2Text.text = "INT : " + info.WeaponInt.ToString();
+					element3Text.text = "LUCK : " + info.WeaponLuck.ToString();
 					break;
 			}
 		}
