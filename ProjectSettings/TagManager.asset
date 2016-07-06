@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Effect
+  - MainUI
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Board
   - Player
   - Weapon
-  - 
+  - Enermy
   - 
   - 
   - 

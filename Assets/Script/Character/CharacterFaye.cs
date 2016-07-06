@@ -23,9 +23,10 @@ public class CharacterFaye : MonoBehaviour
 	STATE presentState;
 	int skillingChainCount = 0;
 	float skillChainWaitingTime = 0.0f;
-	float skillChaintWaitingTimeMax = 4.0f;
+	float skillChainWaitingTimeMax = 4.0f;
 	bool skillChainTrigger = false;
 	bool skillusingState = false;
+	bool normalAttackState = false;
 	//State Event
 	public enum STATE
 	{
@@ -46,11 +47,11 @@ public class CharacterFaye : MonoBehaviour
 		if (skillChainTrigger == true)
 		{
 			//skillChaintWaitingTimeMax=4.0f (Default)
-			if (skillChainWaitingTime >= skillChaintWaitingTimeMax)
+			if (skillChainWaitingTime >= skillChainWaitingTimeMax)
 			{
 				skillingChainCount = 0;
 				skillChainWaitingTime = 0.0f;
-				skillChaintWaitingTimeMax = 4.0f;
+				skillChainWaitingTimeMax = 4.0f;
 				skillChainTrigger = false;
 				SkillChainProgressBar.gameObject.SetActive( false );
 			}
@@ -58,7 +59,7 @@ public class CharacterFaye : MonoBehaviour
 			{
 				SkillChainProgressBar.gameObject.SetActive( true );
 				skillChainWaitingTime += Time.deltaTime;
-				SkillChainProgressBar.fillAmount = 1 - ( skillChainWaitingTime / skillChaintWaitingTimeMax );
+				SkillChainProgressBar.fillAmount = 1 - ( skillChainWaitingTime / skillChainWaitingTimeMax );
 			}
 		}
 		//fixed Y
@@ -68,8 +69,11 @@ public class CharacterFaye : MonoBehaviour
 
 	public void ChainTrigger()
 	{
-		skillChainTrigger = true;
-		skillusingState = false;
+		if (skillusingState == true) {
+			skillChainTrigger = true;
+			skillusingState = false;
+		}
+		normalAttackState = false;
 	}
 
 	public void skillCommand( string _command )
@@ -77,7 +81,7 @@ public class CharacterFaye : MonoBehaviour
 		if (_command != "Evation")
 		{
 			skillChainTrigger = false;
-			skillChaintWaitingTimeMax = skillChaintWaitingTimeMax - skillingChainCount;
+			skillChainWaitingTimeMax = skillChainWaitingTimeMax - skillingChainCount;
 			if (skillingChainCount >= 4)
 			{
 				skillingChainCount = 0;
@@ -125,10 +129,23 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
+	public bool _normalAttackState{
+		get{
+			return normalAttackState;
+		}
+	}
+
+	public bool _skillusingState{
+		get{
+			return skillusingState;
+		}
+	}
+
 	public void Attack()
 	{
 		Effect.SetActive( false );
 		destination = this.transform.position;
+		normalAttackState = true;
 		SetState( "NormalAttack" );
 
 	}
@@ -148,6 +165,8 @@ public class CharacterFaye : MonoBehaviour
 				transform.Translate( transform.forward * Time.deltaTime * moveSpeed, Space.World );
 				destination = this.transform.position;
 			}
+
+			//Cancel Attack
 			if (attackState.IsName( "NormalAttack" ) && Vector3.Distance( transform.position, destination ) >= 0.1f)
 			{
 				animator.Play( "Idle" );
@@ -222,10 +241,20 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
-	void OnCollistionEnter( Collision Coll )
+	void OnCollisionEnter( Collision Coll )
 	{
-		if (Coll.gameObject)
-		{
+		if (Coll.gameObject.layer == 12) {
+			
+			if (skillusingState || normalAttackState) {
+			} else {
+			}
+		}
+	}
+
+	void OnCollisionStay(Collision Coll){
+		if (Coll.gameObject.layer == 12) {
+			destination = this.transform.position;
+			transform.position = new Vector3 ( transform.position.x, 0, transform.position.z );
 		}
 	}
 }

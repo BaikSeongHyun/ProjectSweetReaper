@@ -885,7 +885,7 @@ GameObject:
   - 95: {fileID: 9520702}
   m_Layer: 10
   m_Name: scythe
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1279,6 +1279,7 @@ GameObject:
   - 223: {fileID: 22392712}
   - 114: {fileID: 11471236}
   - 114: {fileID: 11423438}
+  - 114: {fileID: 11411958}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2471,6 +2472,8 @@ GameObject:
   - 4: {fileID: 401820}
   - 137: {fileID: 13761028}
   - 64: {fileID: 6433434}
+  - 114: {fileID: 11487288}
+  - 54: {fileID: 5423984}
   m_Layer: 11
   m_Name: scythe
   m_TagString: Untagged
@@ -5422,7 +5425,7 @@ Transform:
   m_LocalRotation: {x: -0.30249482, y: 0.68616426, z: -0.6511043, w: 0.11721263}
   m_LocalPosition: {x: -0.052, y: -0.034999996, z: 0.03399999}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 55.3476, y: 102.6633, z: -93.1132}
   m_Children:
   - {fileID: 401820}
   - {fileID: 493238}
@@ -6101,6 +6104,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183280}
   m_Mesh: {fileID: 4300010, guid: 60dc806e4cd5e7c4f89f22eb5b1922c1, type: 3}
+--- !u!54 &5423984
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178768}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!54 &5452676
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -6115,7 +6133,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!64 &6433434
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -6209,6 +6227,17 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
+--- !u!114 &11411958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ff48cf70a3ba14b9cf8348a2a16068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11416402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6220,15 +6249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8b0932b44f721419ff0f8c1e61d677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  skillSlotCount: 1
-  moveCheck: 0
-  runState: 0
-  presentState: 0
-  skillingChainCount: 0
-  destination: {x: 0, y: 0, z: 0}
   Effect: {fileID: 182276}
   SkillChainProgressBar: {fileID: 11448724}
+  runState: 0
 --- !u!114 &11419670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6319,6 +6342,19 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &11487288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9106e7c6378ba2c46bf7a35caa68e5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faye: {fileID: 0}
+  info: {fileID: 0}
 --- !u!136 &13600842
 CapsuleCollider:
   m_ObjectHideFlags: 1
