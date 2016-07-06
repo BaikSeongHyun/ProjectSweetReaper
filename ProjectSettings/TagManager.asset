@@ -6,7 +6,10 @@ TagManager:
   tags:
   - Effect
   - MainUI
+<<<<<<< HEAD
   - ItemPopUp
+=======
+>>>>>>> 463ea1fb4dcc95552e32b5571642871701889c18
   layers:
   - Default
   - TransparentFX
@@ -20,7 +23,7 @@ TagManager:
   - Board
   - Player
   - Weapon
-  - 
+  - Enermy
   - 
   - 
   - 
