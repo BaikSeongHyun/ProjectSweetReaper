@@ -4,12 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Effect
   - MainUI
-<<<<<<< HEAD
   - ItemPopUp
-=======
->>>>>>> 463ea1fb4dcc95552e32b5571642871701889c18
+  - Player
   layers:
   - Default
   - TransparentFX
@@ -19,11 +16,11 @@ TagManager:
   - UI
   - 
   - 
-  - Terrain
-  - Board
   - Player
   - Weapon
-  - Enermy
+  - Terrain
+  - 
+  - 
   - 
   - 
   - 

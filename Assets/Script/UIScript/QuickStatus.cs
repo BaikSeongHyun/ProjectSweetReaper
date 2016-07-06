@@ -18,7 +18,7 @@ public class QuickStatus : MonoBehaviour
 	}
 
 	// initialize this script
-	void Start( )
+	void Start()
 	{
 		LinkElement();
 	}

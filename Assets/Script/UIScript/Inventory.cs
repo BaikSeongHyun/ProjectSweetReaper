@@ -27,7 +27,6 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 	//link inventory element
 	public void LinkElement()
-	{
 		money = transform.Find( "MoneyText" ).GetComponent<Text>();
 		for (int i = 0; i < elements.Length; i++)
 		{

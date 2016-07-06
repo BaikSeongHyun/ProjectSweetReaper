@@ -20,17 +20,17 @@ public class Skill
 	{
 		Active,
 		Passive,
-		Buff
-	};
+		Buff}
+;
 
 	//constructor - no parameter
-	public Skill()
+	public Skill ()
 	{
 
 	}
 
 	//constructor - self parameter
-	public Skill( Skill data )
+	public Skill (Skill data)
 	{
 		name = data.name;
 		coolTime = data.coolTime;

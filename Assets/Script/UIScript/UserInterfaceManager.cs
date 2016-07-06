@@ -9,6 +9,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject statusUI;
 	public GameObject enterDungeon;
 	public QuickStatus quickStatus;
+	public ItemInformationPopUpControl itemPopUp;
 
 	//initialize this script
 	void Start()
@@ -47,6 +48,7 @@ public class UserInterfaceManager : MonoBehaviour
 		statusUI = GameObject.Find( "StatusUI" );
 		enterDungeon = GameObject.Find( "EnterDungeon" );
 		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
+		itemPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
 	}
 
 	//control ui element
@@ -117,6 +119,8 @@ public class UserInterfaceManager : MonoBehaviour
 		ControlSkillUI( false );
 		ControlStatusUI( false );
 		ControlEnterDungeon( false );
+		itemPopUp.ControlComponent( false );
+
 	}
 
 	//direct update

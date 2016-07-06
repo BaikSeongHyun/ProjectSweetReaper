@@ -33,7 +33,7 @@ public class CharacterFaye : MonoBehaviour
 		Default,
 		Idle,
 		Run}
-;
+	;
 
 	public void Start()
 	{
@@ -69,7 +69,8 @@ public class CharacterFaye : MonoBehaviour
 
 	public void ChainTrigger()
 	{
-		if (skillusingState == true) {
+		if (skillusingState == true)
+		{
 			skillChainTrigger = true;
 			skillusingState = false;
 		}
@@ -129,14 +130,16 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
-	public bool _normalAttackState{
-		get{
+	public bool _normalAttackState
+	{
+		get {
 			return normalAttackState;
 		}
 	}
 
-	public bool _skillusingState{
-		get{
+	public bool _skillusingState
+	{
+		get {
 			return skillusingState;
 		}
 	}
@@ -243,16 +246,22 @@ public class CharacterFaye : MonoBehaviour
 
 	void OnCollisionEnter( Collision Coll )
 	{
-		if (Coll.gameObject.layer == 12) {
-			
-			if (skillusingState || normalAttackState) {
-			} else {
+		if (Coll.gameObject.layer == 12)
+		{
+
+			if (skillusingState || normalAttackState)
+			{
+			}
+			else
+			{
 			}
 		}
 	}
 
-	void OnCollisionStay(Collision Coll){
-		if (Coll.gameObject.layer == 12) {
+	void OnCollisionStay( Collision Coll )
+	{
+		if (Coll.gameObject.layer == 12)
+		{
 			destination = this.transform.position;
 			transform.position = new Vector3 ( transform.position.x, 0, transform.position.z );
 		}

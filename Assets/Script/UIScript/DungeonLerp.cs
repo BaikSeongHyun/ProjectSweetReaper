@@ -11,7 +11,7 @@ public class DungeonLerp : MonoBehaviour
 	float delayTime;
 
 	//initialize this script
-	void Start( )
+	void Start()
 	{
 		InsertDungeonImage = GetComponent<Image>();
 		startColor = InsertDungeonImage.color;
@@ -20,7 +20,7 @@ public class DungeonLerp : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update( )
+	void Update()
 	{
 		delayTime += Time.deltaTime; 		
 		if (delayTime >= 1)

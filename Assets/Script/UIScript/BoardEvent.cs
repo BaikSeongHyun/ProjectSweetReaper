@@ -11,7 +11,7 @@ public class BoardEvent : MonoBehaviour
 
 
 	// initialize this script
-	void Start( )
+	void Start()
 	{
 		boardQuest = transform.Find( "BoardCanvas" ).Find( "BoardClickEvent" ).GetComponent<Image>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
@@ -24,18 +24,18 @@ public class BoardEvent : MonoBehaviour
 		boardQuest.enabled = state;
 	}
 
-	void OnMouseEnter( )
+	void OnMouseEnter()
 	{
 		ControlBoardImage( true );	
 	}
 
 
-	void OnMouseExit( )
+	void OnMouseExit()
 	{
 		ControlBoardImage( false );
 	}
 
-	void OnMouseDown( )
+	void OnMouseDown()
 	{
 		if (!mainUI.OnEnterDungeon)
 		{

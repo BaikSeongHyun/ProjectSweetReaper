@@ -43,7 +43,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status health bar
 	public float PresentHealthPoint
 	{
-		get { return(presentHealthPoint / originHealthPoint); }
+		get { return( presentHealthPoint / originHealthPoint ); }
 	}
 
 	//rp - for use skill
@@ -58,7 +58,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status resource bar
 	public float PresentResourcePoint
 	{
-		get { return (presentResourcePoint / originResourcePoint); }
+		get { return ( presentResourcePoint / originResourcePoint ); }
 	}
 	//critical proability
 	float criticalProability;
@@ -154,7 +154,7 @@ public class CharacterInformation : MonoBehaviour
 	
 	//property
 
-	void Start( )
+	void Start()
 	{
 		characterItem = new Item[35];
 		charSkill = new Skill[8];
@@ -162,7 +162,7 @@ public class CharacterInformation : MonoBehaviour
 	}
 
 	//set default status
-	public void	DefaultStatus( )
+	public void	DefaultStatus()
 	{
 		characterName = "Faye";
 		characterLevel = 1;

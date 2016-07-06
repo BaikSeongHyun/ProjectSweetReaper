@@ -9,7 +9,7 @@ public class EnterDungeon : MonoBehaviour
 	public Image dungeonCheck;
 
 	// initialize this script
-	void start( )
+	void start()
 	{
 		dungeonCheck = transform.Find( "Forest" ).Find( "ForestCheck" ).GetComponent<Image>();
 	}
@@ -17,7 +17,7 @@ public class EnterDungeon : MonoBehaviour
 
 	public void FirstAreaDungeonSelect( string name )
 	{
-		switch(name)
+		switch (name)
 		{
 			case "Forest":
 				SceneManager.LoadScene( "Forest" );

@@ -7,7 +7,7 @@ public class FayeController : MonoBehaviour
 	public CharacterFaye faye;
 	public UserInterfaceManager uI;
 
-	void Start( )
+	void Start()
 	{
 		faye = GetComponent<CharacterFaye>();
 		uI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
@@ -15,7 +15,7 @@ public class FayeController : MonoBehaviour
 
 
 
-	void MakeMovePoint( )
+	void MakeMovePoint()
 	{
 		Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
 		RaycastHit Hit;
@@ -28,7 +28,7 @@ public class FayeController : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update( )
+	void Update()
 	{
 		if (Input.GetMouseButtonDown( 1 ))
 		{

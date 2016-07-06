@@ -8,7 +8,7 @@ public class DungeonInCheck : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public Image dungeonCheck;
 
 	// initialize this script
-	void start( )
+	void start()
 	{
 		dungeonCheck = transform.Find( "ForestCheck" ).GetComponent<Image>();
 		ControlDungeonCheckImage( false );

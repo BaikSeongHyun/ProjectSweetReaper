@@ -28,8 +28,8 @@ public class ItemElement : MonoBehaviour
 	public void UpdateItemPopUp()
 	{
 		iPopUp.LinkComponent();
-		iPopUp.ControlComponent(true);
-		iPopUp.UpdateItemInformation(itemInfo, transform.position);
+		iPopUp.ControlComponent( true );
+		iPopUp.UpdateItemInformation( itemInfo, transform.position );
 	}
 
 	//close item pop up
