@@ -246,7 +246,7 @@ public class CharacterFaye : MonoBehaviour
 
 	void OnCollisionEnter( Collision Coll )
 	{
-		if (Coll.gameObject.layer == 12)
+		if (Coll.gameObject.layer == LayerMask.NameToLayer("Enermy"))
 		{
 
 			if (skillusingState || normalAttackState)

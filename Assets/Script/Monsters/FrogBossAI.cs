@@ -10,7 +10,6 @@ public class FrogBossAI : MonoBehaviour
 	public GameObject player;
 
 
-
 	//Boss Pattern Range
 	int bossAngryPattern = 0;
 	public float runRange = 10.0f;
@@ -25,7 +24,7 @@ public class FrogBossAI : MonoBehaviour
 	float imageDelayTime;
 	public float warningRange = 30.0f;
 	Image warningImage;
-
+	bool checkDieOrAlive=true;
 
 	public enum BossPatternName
 	{
@@ -56,12 +55,12 @@ public class FrogBossAI : MonoBehaviour
 	void Update()
 	{
 		
+		if (checkDieOrAlive == true) {
+			float searchRange = Vector3.Distance (player.transform.position, transform.position);
 
-		float searchRange = Vector3.Distance( player.transform.position, transform.position );
+			//Vector3 frogLookAt = player.transform.position - transform.position;
 
-		//Vector3 frogLookAt = player.transform.position - transform.position;
-
-		//Boss Warning Image
+			//Boss Warning Image
 
 //		if(searchRange<=warningRange && bossAngryPattern ==0)
 //		{
@@ -71,67 +70,72 @@ public class FrogBossAI : MonoBehaviour
 	
 
 
-		if (searchRange < attackRange)
-		{
-			if (attackCycle >= 3)
-			{
-				BossPattern( BossPatternName.BossNormalAttack );
-				attackCycle = 0;
-			}
-			else
-			{
-				BossPattern( BossPatternName.BossIdle );
-				attackCycle += Time.deltaTime;
-			}
-		}
-		else if (searchRange <= runRange && bossAngryPattern == 0)
-		{			
+			if (searchRange < attackRange) {
+				if (attackCycle >= 3) {
+					BossPattern (BossPatternName.BossNormalAttack);
+					attackCycle = 0;
+				} else {
+					BossPattern (BossPatternName.BossIdle);
+					attackCycle += Time.deltaTime;
+				}
+			} else if (searchRange <= runRange && bossAngryPattern == 0) {			
 			
-			//			transform.rotation = Quaternion.Lerp (transform.rotation,
-			//				Quaternion.LookRotation (frogLookAt,Vector3.forward), 
-			//				Time.deltaTime * 4f);
-			bossAngryImage.gameObject.SetActive( true );
-			BossPattern( BossPatternName.Angry );
+				//			transform.rotation = Quaternion.Lerp (transform.rotation,
+				//				Quaternion.LookRotation (frogLookAt,Vector3.forward), 
+				//				Time.deltaTime * 4f);
+				bossAngryImage.gameObject.SetActive (true);
+				BossPattern (BossPatternName.Angry);
 
-			bossAngryPattern = 1;		
-		}
-		else if (searchRange <= runRange && bossAngryPattern == 1)
-		{
+				bossAngryPattern = 1;		
+			} else if (searchRange <= runRange && bossAngryPattern == 1) {
 
-			BossPattern( BossPatternName.Run );
+				BossPattern (BossPatternName.Run);
 
-			if (attackStateBoss.IsName( "Run" ))
-			{
+				if (attackStateBoss.IsName ("Run")) {
 
-				bossAngryImage.gameObject.SetActive( false );
-				transform.LookAt( player.transform.position );
-				transform.position = Vector3.Lerp( transform.position, player.transform.position, Time.deltaTime * frogBossSpeed );
+					bossAngryImage.gameObject.SetActive (false);
+					transform.LookAt (player.transform.position);
+					transform.position = Vector3.Lerp (transform.position, player.transform.position, Time.deltaTime * frogBossSpeed);
+
+				}
+
 
 			}
 
-
-		}
-
-		if (searchRange > runRange && searchRange > runRange)
-		{
-			BossPattern( BossPatternName.BossIdle );
-		}
+			if (searchRange > runRange && searchRange > runRange) {
+				BossPattern (BossPatternName.BossIdle);
+			}
 	
 
-		attackStateBoss = this.bossAiAnimator.GetCurrentAnimatorStateInfo( 0 );
+			attackStateBoss = this.bossAiAnimator.GetCurrentAnimatorStateInfo (0);
 
 
 
-		//set default rotation
-		transform.rotation = new Quaternion ( 0f, transform.rotation.y, 0f, 0f );
-		transform.position = new Vector3 ( transform.position.x, 0f, transform.position.z );
-		transform.LookAt( player.transform.position );
+			//set default rotation
+			transform.rotation = new Quaternion (0f, transform.rotation.y, 0f, 0f);
+			transform.position = new Vector3 (transform.position.x, 0f, transform.position.z);
+			transform.LookAt (player.transform.position);
 
-
+		}
 	}
 
-	public void OnTriggerEnter( Collider col )
+
+	void OnCollisionEnter(Collision col)
 	{
+		if (col.gameObject.layer == LayerMask.NameToLayer("Weapon"))
+		{
+			if (this.GetComponent<FrogBossHealth> ().frogBossHp>=0) {
+				if (col.gameObject.GetComponent<Weapon> ()._normalAttack || col.gameObject.GetComponent<Weapon> ()._skillAttack) {
+					this.GetComponent<FrogBossHealth> ().frogBossHp -= col.gameObject.GetComponent<Weapon>()._Damage;
+					bossAiAnimator.SetTrigger ("MonsterHitTrigger");
+				}
+			} else {
+				bossAiAnimator.SetTrigger ("MonsterDie");
+				checkDieOrAlive = false;
+			}
+		}
+		//if he ==0; deathAni call
+
 
 	}
 
