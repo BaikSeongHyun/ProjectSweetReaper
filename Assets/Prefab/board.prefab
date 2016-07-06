@@ -66,7 +66,7 @@ GameObject:
   - 23: {fileID: 2384184}
   - 114: {fileID: 11478430}
   m_Layer: 0
-  m_Name: Board
+  m_Name: board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
