@@ -6,14 +6,13 @@ public class FayeController : MonoBehaviour
 
 	public CharacterFaye faye;
 	public UserInterfaceManager uI;
-
+	
+	// initialize this script
 	void Start()
 	{
 		faye = GetComponent<CharacterFaye>();
 		uI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 	}
-
-
 
 	void MakeMovePoint()
 	{
@@ -36,23 +35,23 @@ public class FayeController : MonoBehaviour
 		}
 		else if (Input.GetKeyDown( KeyCode.A ))
 		{
-			faye.skillCommand( "A" );
+			faye.SkillCommand( "A" );
 		}
 		else if (Input.GetKeyDown( KeyCode.S ))
 		{
-			faye.skillCommand( "S" );
+			faye.SkillCommand( "S" );
 		}
 		else if (Input.GetKeyDown( KeyCode.D ))
 		{
-			faye.skillCommand( "D" );
+			faye.SkillCommand( "D" );
 		}
 		else if (Input.GetKeyDown( KeyCode.Q ))
 		{
-			faye.skillCommand( "Q" );
+			faye.SkillCommand( "Q" );
 		}
 		else if (Input.GetKeyDown( KeyCode.LeftControl ))
 		{
-			faye.skillCommand( "Evation" );
+			faye.SkillCommand( "Evation" );
 		}
 		else if (Input.GetMouseButton( 0 ))
 		{

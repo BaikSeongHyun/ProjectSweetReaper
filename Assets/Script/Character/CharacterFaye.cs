@@ -7,7 +7,7 @@ public class CharacterFaye : MonoBehaviour
 
 	//UI
 	public GameObject Effect;
-	public Image SkillChainProgressBar;
+	public CharacterCanvasItem characterCanvas;
 
 	//Vector3
 	Vector3 destination;
@@ -21,7 +21,7 @@ public class CharacterFaye : MonoBehaviour
 	//int skillSlotCount = 1;
 	public bool runState = false;
 	STATE presentState;
-	int skillingChainCount = 0;
+	public int skillingChainCount = 0;
 	float skillChainWaitingTime = 0.0f;
 	float skillChainWaitingTimeMax = 4.0f;
 	bool skillChainTrigger = false;
@@ -37,7 +37,8 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Start()
 	{
-		SkillChainProgressBar.gameObject.SetActive( false );
+		characterCanvas = transform.Find( "CharacterCanvas" ).GetComponent<CharacterCanvasItem>();
+		characterCanvas.InitializeComponentData();
 		destination = this.transform.position;
 		animator = GetComponent<Animator>();
 	}
@@ -53,18 +54,18 @@ public class CharacterFaye : MonoBehaviour
 				skillChainWaitingTime = 0.0f;
 				skillChainWaitingTimeMax = 4.0f;
 				skillChainTrigger = false;
-				SkillChainProgressBar.gameObject.SetActive( false );
+				characterCanvas.ControlComponent( false );
 			}
 			else
-			{
-				SkillChainProgressBar.gameObject.SetActive( true );
+			{				
 				skillChainWaitingTime += Time.deltaTime;
-				SkillChainProgressBar.fillAmount = 1 - ( skillChainWaitingTime / skillChainWaitingTimeMax );
+				characterCanvas.UpdateCanvas( skillingChainCount, 1 - (skillChainWaitingTime / skillChainWaitingTimeMax) );
 			}
 		}
 		//fixed Y
-		transform.position = new Vector3 ( transform.position.x, 0, transform.position.z );
+		transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 		Move();
+		
 	}
 
 	public void ChainTrigger()
@@ -77,7 +78,7 @@ public class CharacterFaye : MonoBehaviour
 		normalAttackState = false;
 	}
 
-	public void skillCommand( string _command )
+	public void SkillCommand( string _command )
 	{
 		if (_command != "Evation")
 		{
@@ -226,15 +227,12 @@ public class CharacterFaye : MonoBehaviour
 			case "Skill_A":
 				animator.SetTrigger( "Skill_A" );
 				break;
-
 			case "Skill_S":
 				animator.SetTrigger( "Skill_S" );
 				break;
-
 			case "Skill_D":
 				animator.SetTrigger( "Skill_D" );
 				break;
-
 			case "Skill_Q":
 				animator.SetTrigger( "Skill_Q" );
 				break;
@@ -246,7 +244,7 @@ public class CharacterFaye : MonoBehaviour
 
 	void OnCollisionEnter( Collision Coll )
 	{
-		if (Coll.gameObject.layer == LayerMask.NameToLayer("Enermy"))
+		if (Coll.gameObject.layer == LayerMask.NameToLayer( "Enermy" ))
 		{
 
 			if (skillusingState || normalAttackState)
@@ -263,7 +261,7 @@ public class CharacterFaye : MonoBehaviour
 		if (Coll.gameObject.layer == 12)
 		{
 			destination = this.transform.position;
-			transform.position = new Vector3 ( transform.position.x, 0, transform.position.z );
+			transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 		}
 	}
 }
