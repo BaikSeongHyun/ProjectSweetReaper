@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
 	//complex data field
+	public UserInterfaceManager mainUI;
 	public CharacterInformation info;
 	public ItemElement topInstall;
 	public ItemElement bottomInstall;
@@ -21,6 +23,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//initialize inventory element
 	public void InitializeElement()
 	{		
+		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		elements = new ItemElement[35];
 	}
@@ -49,6 +52,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		money.text = info.Money.ToString();
 		for (int i = 0; i < elements.Length; i++)
 		{
+			elements[i].ItemInfo = info.CharacterItem[i];
 			//elements[i].UpdateItemIcon();
 		}
 	}
@@ -57,7 +61,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	public void OnPointerEnter( PointerEventData eventData )
 	{
 		presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
-		if (presentItemElement != null )
+		if (presentItemElement != null)
 		{
 			presentItemElement.UpdateItemPopUp();
 		}					
@@ -66,28 +70,109 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//item element out -> pop up item information
 	public void OnPointerExit( PointerEventData eventData )
 	{
+		if (mainUI.PresentSelectItem.enabled)
+			return;
+		
 		Debug.Log( "Active on pointer exit" );
 		if (presentItemElement == null)
 			return;
 		
-		presentItemElement.CloseItemPopup();
+		presentItemElement.CloseItemPopUp();
 		presentItemElement = null;
 	}
 
+
+
 	//mouse click item element
-	public void OnPointerDown(PointerEventData eventData)
+	public void OnPointerDown( PointerEventData eventData )
 	{
-		presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
+		//insert item data
+		try
+		{			
+			presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
+		}
+		catch (NullReferenceException e)
+		{
+			Debug.Log( e.InnerException );
+			presentItemElement = null;
+		}
+		//delete item
+		if (presentItemElement == null)
+			return;
+
+		//mode swap item
+		if (eventData.button == PointerEventData.InputButton.Right)
+			SwapInstallItem( presentItemElement.ItemInfo.Section, presentItemElement );
+		   
+		//mode drag send item icon data -> gameController
+		if (eventData.button == PointerEventData.InputButton.Left)
+		{
+			mainUI.PresentSelectItem.enabled = true;
+			//mainUI.PresentSelectItem.sprite = presentItemElement.ItemInfo.Icon;
+		}
+	
 	}
 
 	//mouse button up event
-	public void OnPointerUp(PointerEventData eventData)
+	public void OnPointerUp( PointerEventData eventData )
 	{
-		//default
+		presentItemElement.CloseItemPopUp();
+		mainUI.PresentSelectItem.enabled = false;
 
-		//delete
+		if (presentItemElement == null)
+			return;
+		
+		ItemElement downPointItemElement;
+		try
+		{
+			downPointItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
+		}
+		catch (NullReferenceException e)
+		{
+			Debug.Log( e.InnerException );
+			downPointItemElement = null;
+		}
 
-		//swap
+		if (downPointItemElement == null)
+			;
+		
+//		//default - no edit or self
+//		if (presentItemElement.Equals( downPointItemElement ))
+//			presentItemElement = null;
+//
+//		//swap
+//		SwapItem(presentItemElement, downPointItemElement);	
+	}
 
+
+	void SwapItem( ItemElement presentSelect, ItemElement replaceSelect )
+	{
+		ItemElement temp;
+		temp = presentSelect;
+		presentSelect = replaceSelect;
+		replaceSelect = temp;
+
+		presentSelect.UpdateItemIcon();
+		replaceSelect.UpdateItemIcon();
+	}
+
+	//installed item swap
+	void SwapInstallItem(Item.SECTION section, ItemElement presentSelect)
+	{
+		switch (section)
+		{
+			case Item.SECTION.Blade:
+				SwapItem( presentSelect, bladeInstall );
+				break;
+			case Item.SECTION.Top:
+				SwapItem( presentSelect, topInstall );
+				break;
+			case Item.SECTION.Handle:
+				SwapItem( presentSelect, handleInstall );
+				break;
+			case Item.SECTION.Bottom:
+				SwapItem( presentSelect, bottomInstall );
+				break;
+		}
 	}
 }

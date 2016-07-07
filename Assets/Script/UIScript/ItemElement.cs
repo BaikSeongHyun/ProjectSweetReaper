@@ -36,7 +36,7 @@ public class ItemElement : MonoBehaviour
 	}
 
 	//close item pop up
-	public void CloseItemPopup()
+	public void CloseItemPopUp()
 	{
 		iPopUp.ControlComponent( false );
 	}

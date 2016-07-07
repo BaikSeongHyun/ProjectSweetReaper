@@ -20,63 +20,60 @@ public class GameController : MonoBehaviour
 	void Update()
 	{
 		//charaecter section
-		if (Input.GetButtonDown( "NormalAttack" ))
-			faye.Attack();
-		else if(Input.GetButtonDown("Skill1"))
-			faye.SkillCommand("Q");
-		else if(Input.GetButtonDown("Skill2"))
-			faye.SkillCommand("Skill2");
-		else if(Input.GetButtonDown("Skill3"))
-			faye.SkillCommand("Skill3");
-		else if(Input.GetButtonDown("Skill4"))
-			faye.SkillCommand("Skill4");
-		else if(Input.GetButtonDown("Skill5"))
-			faye.SkillCommand("A");
-		else if(Input.GetButtonDown("Skill6"))
-			faye.SkillCommand("S");
-		else if(Input.GetButtonDown("Skill7"))
-			faye.SkillCommand("D");
-		else if(Input.GetButtonDown("Skill8"))
-			faye.SkillCommand("Skill8");			
-		else if (Input.GetButtonDown( "Move" ))
-			MakeMovePoint();
-		//skill number - key
-		//1q 2w 3e 4r
-		//5a 6s 7d 8f
-			
+		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)
+		{
+			if (Input.GetButtonDown( "NormalAttack" ))
+				faye.Attack();
+			else if (Input.GetButtonDown( "Skill1" ))
+				faye.SkillCommand( "Q" );
+			else if (Input.GetButtonDown( "Skill2" ))
+				faye.SkillCommand( "Skill2" );
+			else if (Input.GetButtonDown( "Skill3" ))
+				faye.SkillCommand( "Skill3" );
+			else if (Input.GetButtonDown( "Skill4" ))
+				faye.SkillCommand( "Skill4" );
+			else if (Input.GetButtonDown( "Skill5" ))
+				faye.SkillCommand( "A" );
+			else if (Input.GetButtonDown( "Skill6" ))
+				faye.SkillCommand( "S" );
+			else if (Input.GetButtonDown( "Skill7" ))
+				faye.SkillCommand( "D" );
+			else if (Input.GetButtonDown( "Skill8" ))
+				faye.SkillCommand( "Skill8" );
+			else if (Input.GetButton( "Move" ))
+				MakeMovePoint();
+			//skill number - key
+			//1q 2w 3e 4r
+			//5a 6s 7d 8f
+		}
 		
 		//ui section
 		//always update
-		mainUI.UpdateQuickStatus();
+		mainUI.UpdateMainUI();
 
-		if (Input.GetKeyDown( KeyCode.C ))
+		if (Input.GetButtonDown( "Status" ))
 			mainUI.ControlStatusUI( !mainUI.OnStatusUI );
-
-		if (Input.GetKeyDown( KeyCode.I ))
+		if (Input.GetButtonDown( "Inventory" ))
 			mainUI.ControlInventory( !mainUI.OnInventory );
-
-		if (Input.GetKeyDown( KeyCode.Escape ))
+		if (Input.GetButtonDown( "CloseAllUI" ))
 			mainUI.ClearUI();
 		
 		//move camera transform
-		
+		Debug.Log(mainUI.PresentSelectItem.enabled);
 	}
 
 	//another method
 
 	//set destination for player character
 	void MakeMovePoint()
-	{
-		if (!EventSystem.current.IsPointerOverGameObject())
-		{
-			mainUI.ClearUI();
-			Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-			RaycastHit hitInfo;
+	{		
+		mainUI.ClearUI();
+		Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+		RaycastHit hitInfo;
 
-			if (Physics.Raycast( ray, out hitInfo, Mathf.Infinity, 1 << LayerMask.NameToLayer( "Terrain" ) ))
-			{
-				faye._destinaton = hitInfo.point;
-			}
+		if (Physics.Raycast( ray, out hitInfo, Mathf.Infinity, 1 << LayerMask.NameToLayer( "Terrain" ) ))
+		{
+			faye._destinaton = hitInfo.point;
 		}
 	}
 }

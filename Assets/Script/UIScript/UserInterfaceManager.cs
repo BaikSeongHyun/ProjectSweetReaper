@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class UserInterfaceManager : MonoBehaviour
@@ -10,6 +11,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject enterDungeon;
 	public QuickStatus quickStatus;
 	public ItemInformationPopUpControl itemPopUp;
+	public Image presentSelectItem;
 
 	//initialize this script
 	void Start()
@@ -21,22 +23,27 @@ public class UserInterfaceManager : MonoBehaviour
 	//property
 	public bool OnEnterDungeon
 	{
-		get { return enterDungeon.activeInHierarchy; }
+		get { return enterDungeon.activeSelf; }
 	}
 
 	public bool OnStatusUI
 	{
-		get { return statusUI.activeInHierarchy; }
+		get { return statusUI.activeSelf; }
 	}
 
 	public bool OnSkillUI
 	{
-		get { return skillUI.activeInHierarchy; }
+		get { return skillUI.activeSelf; }
 	}
 
 	public bool OnInventory
 	{
-		get { return inventory.activeInHierarchy; }
+		get { return inventory.activeSelf; }
+	}
+
+	public Image PresentSelectItem
+	{
+		get { return presentSelectItem; }
 	}
 
 	//another method
@@ -50,6 +57,8 @@ public class UserInterfaceManager : MonoBehaviour
 		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
 		itemPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
 		itemPopUp.LinkComponent();
+		presentSelectItem = transform.Find( "PresentSelectItem" ).GetComponent<Image>();
+		presentSelectItem.enabled = false;
 	}
 
 	//control ui element
@@ -126,11 +135,15 @@ public class UserInterfaceManager : MonoBehaviour
 
 	//direct update
 	//quick status update
-	public void UpdateQuickStatus()
+	public void UpdateMainUI()
 	{
+		//update quick status
 		quickStatus.LinkCharacterInformation();
-		
 		quickStatus.UpdateQuickStatusInfo();
+
+		//update present select item
+		if (presentSelectItem.enabled)
+			presentSelectItem.transform.position = Input.mousePosition;		
 	}
 
 }
