@@ -130,7 +130,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 400016}
   - 111: {fileID: 11100000}
-  m_Layer: 0
+  - 64: {fileID: 6414262}
+  m_Layer: 11
   m_Name: Stone_Frog_Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,6 +437,18 @@ Transform:
   - {fileID: 400002}
   m_Father: {fileID: 400026}
   m_RootOrder: 5
+--- !u!64 &6414262
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 198ffd4e27fc3214abc9bf6952adb29a, type: 3}
 --- !u!111 &11100000
 Animation:
   m_ObjectHideFlags: 1

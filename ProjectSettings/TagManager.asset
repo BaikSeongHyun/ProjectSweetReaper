@@ -19,9 +19,9 @@ TagManager:
   - Player
   - Weapon
   - Terrain
-  - 
   - Enermy
-  - 
+  - EnermyWeapon
+  - Item
   - 
   - 
   - 

@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class FrogBossAI : MonoBehaviour
+public class FrogAI : MonoBehaviour
 {
 
 	public Animator bossAiAnimator;

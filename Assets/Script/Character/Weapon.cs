@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
 	public CharacterInformation info;
 	bool normalAttack;
 	bool skillAttack;
-	float damage=30;
+	float damage=0;
 
 	public bool _normalAttack{
 		get{
@@ -38,19 +38,39 @@ public class Weapon : MonoBehaviour
 		skillAttack = faye._skillusingState;
 	}
 
-	void OnCollisionEnter( Collision Coll )
+	void OnCollisionEnter(Collision coll)
 	{
-		if (Coll.gameObject.layer == 12)
-		{
-			if (faye._skillusingState || faye._normalAttackState)
-			{
-				Debug.Log( "Hit" );
-				//DAMAGE
-			}
-			else
-			{
-				Debug.Log( "Coll" );
+		//IsAttack
+		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy")) {
+			FrogBossAI BossAI = coll.gameObject.GetComponent<FrogBossAI> ();
+			if (BossAI != null) {
+				if (normalAttack) {
+					damage = info.Damage;
+				} else if (skillAttack) {
+					damage = info.Damage;
+				}
+				if (damage != 0) {
+					BossAI.HitDamage (damage);
+					damage = 0;
+				}
+			} else {
+				FrogAI MonsterAI = coll.gameObject.GetComponent<FrogAI> ();
+				if (MonsterAI != null) {
+					if (normalAttack) {
+						Debug.Log ("dd");
+						damage = info.Damage;
+					} else if (skillAttack) {
+						damage = info.Damage;
+					}
+					if (damage != 0) {
+						MonsterAI.HitDamage (damage);
+						damage = 0;
+					}
+				}
 			}
 		}
+		//if he ==0; deathAni call
+
+
 	}
 }
