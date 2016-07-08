@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FrogBossHealth : MonoBehaviour
+public class FrogHealth : MonoBehaviour
 {
 	public float frogBossHp = 100;
+	public float frogBossDamage = 30;
 	public float frogMaxHp;//BossHp Bar
 	// Use this for initialization`
 
