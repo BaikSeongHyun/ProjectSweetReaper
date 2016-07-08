@@ -92,7 +92,8 @@ public class Item
 		Bottom,
 		Blade,
 		Handle,
-		Consume}
+		Consume,
+		Default}
 
 	;
 
@@ -100,6 +101,12 @@ public class Item
 	public Item ()
 	{
 
+	}
+
+	//constructor - only name parameter
+	public Item (string name)
+	{
+		name = "default";
 	}
 
 	//constructor - all parameter
@@ -149,5 +156,21 @@ public class Item
 //		icon = Resources.Load<Sprite>();
 	}
 
+
+	public void SetDefault()
+	{
+		name = "Default";
+		price = 0;
+		coreRank = 0;
+		weaponAtk = 0;
+		weaponDef = 0;
+		weaponStr = 0;
+		weaponDex = 0;
+		weaponInt = 0;
+		weaponLuck = 0;
+		weaponCri = 0;
+		section = SECTION.Default;
+
+	}
 
 }

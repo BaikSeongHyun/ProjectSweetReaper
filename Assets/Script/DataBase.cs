@@ -13,7 +13,7 @@ public class DataBase : MonoBehaviour
 	void start()
 	{
 		CreateItemInformation();
-		LinkSkillInformation();
+		CreateSkillInformation();
 	}
 
 	//another method
@@ -32,7 +32,7 @@ public class DataBase : MonoBehaviour
 	}
 
 	//initialize skill data
-	void LinkSkillInformation()
+	void CreateSkillInformation()
 	{
 		skillInformation = new Skill[10];
 	}

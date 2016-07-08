@@ -16,6 +16,11 @@ public class ItemElement : MonoBehaviour
 		get { return itemInfo; }
 	}
 
+	public Image ItemIcon
+	{
+		get { return itemIcon; }
+	}
+
 	// initialize this script
 	void Start()
 	{

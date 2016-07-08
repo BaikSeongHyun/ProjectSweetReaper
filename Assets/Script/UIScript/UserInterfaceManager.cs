@@ -9,6 +9,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject skillUI;
 	public GameObject statusUI;
 	public GameObject enterDungeon;
+	public GameObject deathPopUp;
 	public QuickStatus quickStatus;
 	public ItemInformationPopUpControl itemPopUp;
 	public Image presentSelectItem;
@@ -54,6 +55,7 @@ public class UserInterfaceManager : MonoBehaviour
 		skillUI = GameObject.Find( "SkillUI" );
 		statusUI = GameObject.Find( "StatusUI" );
 		enterDungeon = GameObject.Find( "EnterDungeon" );
+		deathPopUp = GameObject.Find( "DeathPopUp" );
 		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
 		itemPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
 		itemPopUp.LinkComponent();
@@ -102,6 +104,12 @@ public class UserInterfaceManager : MonoBehaviour
 			Debug.Log( "Active Enter Dungeon" );
 	}
 
+	// death pop up
+	public void ControlDeathPopUp( bool state )
+	{
+		deathPopUp.SetActive( state );
+	}
+
 	// close ui
 	public void CloseScreen( string name )
 	{
@@ -119,7 +127,16 @@ public class UserInterfaceManager : MonoBehaviour
 			case "SkillUI":
 				ControlSkillUI( false );
 				break;
+			case "DeathPopUp":
+				ControlDeathPopUp( false );
+				break;
 		}
+	}
+
+	//close present item / skill
+	public void ClosePresentElement()
+	{
+		presentSelectItem.enabled = false;
 	}
 
 	//all element close
@@ -129,9 +146,28 @@ public class UserInterfaceManager : MonoBehaviour
 		ControlSkillUI( false );
 		ControlStatusUI( false );
 		ControlEnterDungeon( false );
+		ControlDeathPopUp( false );
 		itemPopUp.ControlComponent( false );
 
 	}
+
+	// on click event - quick button
+	public void QuickButtonEvent(string name)
+	{
+		switch (name)
+		{
+			case "StatusUI":
+				ControlStatusUI( !OnStatusUI );
+				break;
+			case "Inventory":
+				ControlInventory( !OnInventory );
+				break;
+			case "SkillUI":
+				ControlSkillUI( !OnSkillUI );
+				break;	
+		}
+	}
+
 
 	//direct update
 	//quick status update

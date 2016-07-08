@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
 	// initialize this script
 	void Start()
 	{
+		Application.targetFrameRate = 80;
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 	}
@@ -57,11 +58,14 @@ public class GameController : MonoBehaviour
 			mainUI.ControlInventory( !mainUI.OnInventory );
 		if (Input.GetButtonDown( "CloseAllUI" ))
 			mainUI.ClearUI();
-		
-		//move camera transform
-		Debug.Log(mainUI.PresentSelectItem.enabled);
-	}
 
+		//item / skill drag object check
+		if (mainUI.PresentSelectItem.enabled && !Input.GetMouseButton( 0 ) && !Input.GetMouseButton( 1 ))
+		{
+			Debug.Log( "Active close present element" );
+			mainUI.ClosePresentElement();
+		}
+	}
 	//another method
 
 	//set destination for player character

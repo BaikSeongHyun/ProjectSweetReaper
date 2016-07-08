@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	public ItemElement handleInstall;
 	public ItemElement[] elements;
 	public Text money;
+	Sprite defaultSprite;
 	public ItemElement presentItemElement;
 
 	//another method
@@ -61,10 +62,10 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	public void OnPointerEnter( PointerEventData eventData )
 	{
 		presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
+
 		if (presentItemElement != null)
-		{
 			presentItemElement.UpdateItemPopUp();
-		}					
+							
 	}
 
 	//item element out -> pop up item information
@@ -80,8 +81,6 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		presentItemElement.CloseItemPopUp();
 		presentItemElement = null;
 	}
-
-
 
 	//mouse click item element
 	public void OnPointerDown( PointerEventData eventData )
@@ -107,8 +106,11 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		//mode drag send item icon data -> gameController
 		if (eventData.button == PointerEventData.InputButton.Left)
 		{
+			presentItemElement.CloseItemPopUp();
 			mainUI.PresentSelectItem.enabled = true;
-			//mainUI.PresentSelectItem.sprite = presentItemElement.ItemInfo.Icon;
+			defaultSprite = mainUI.PresentSelectItem.sprite; 
+			mainUI.PresentSelectItem.sprite = presentItemElement.ItemIcon.sprite;
+			presentItemElement.ItemIcon.sprite = defaultSprite;
 		}
 	
 	}
@@ -116,12 +118,12 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//mouse button up event
 	public void OnPointerUp( PointerEventData eventData )
 	{
-		presentItemElement.CloseItemPopUp();
-		mainUI.PresentSelectItem.enabled = false;
-
 		if (presentItemElement == null)
 			return;
-		
+
+		if(presentItemElement != null)
+			presentItemElement.CloseItemPopUp();
+				
 		ItemElement downPointItemElement;
 		try
 		{
@@ -134,7 +136,10 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		}
 
 		if (downPointItemElement == null)
-			;
+		{
+			presentItemElement.ItemIcon.sprite = mainUI.PresentSelectItem.sprite;
+			mainUI.PresentSelectItem.sprite = defaultSprite;
+		}
 		
 //		//default - no edit or self
 //		if (presentItemElement.Equals( downPointItemElement ))
@@ -157,7 +162,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	}
 
 	//installed item swap
-	void SwapInstallItem(Item.SECTION section, ItemElement presentSelect)
+	void SwapInstallItem( Item.SECTION section, ItemElement presentSelect )
 	{
 		switch (section)
 		{
