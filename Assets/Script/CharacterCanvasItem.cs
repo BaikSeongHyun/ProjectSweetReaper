@@ -36,7 +36,7 @@ public class CharacterCanvasItem : MonoBehaviour
 	}
 	
 	//update component data
-	public void UpdateCanvas( int comboCounter, float gaugeFillAmount)
+	public void UpdateCanvas( int comboCounter, float gaugeFillAmount )
 	{				
 		ControlComponent( false );
 		

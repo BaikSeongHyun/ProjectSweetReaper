@@ -11,8 +11,10 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject enterDungeon;
 	public GameObject deathPopUp;
 	public QuickStatus quickStatus;
+	public QuickSkillChain quickSkillChain;
 	public ItemInformationPopUpControl itemPopUp;
 	public Image presentSelectItem;
+	public CharacterInformation info;
 
 	//initialize this script
 	void Start()
@@ -57,10 +59,13 @@ public class UserInterfaceManager : MonoBehaviour
 		enterDungeon = GameObject.Find( "EnterDungeon" );
 		deathPopUp = GameObject.Find( "DeathPopUp" );
 		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
+		quickSkillChain = GameObject.Find( "QuickSkillChain" ).GetComponent<QuickSkillChain>();
 		itemPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
 		itemPopUp.LinkComponent();
 		presentSelectItem = transform.Find( "PresentSelectItem" ).GetComponent<Image>();
 		presentSelectItem.enabled = false;
+		
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 	}
 
 	//control ui element
@@ -152,7 +157,7 @@ public class UserInterfaceManager : MonoBehaviour
 	}
 
 	// on click event - quick button
-	public void QuickButtonEvent(string name)
+	public void QuickButtonEvent( string name )
 	{
 		switch (name)
 		{
@@ -174,9 +179,11 @@ public class UserInterfaceManager : MonoBehaviour
 	public void UpdateMainUI()
 	{
 		//update quick status
-		quickStatus.LinkCharacterInformation();
-		quickStatus.UpdateQuickStatusInfo();
+		quickStatus.UpdateQuickStatusInfo( info );
 
+		//update quick skill chain
+		quickSkillChain.UpdateSkillChain( info );
+		
 		//update present select item
 		if (presentSelectItem.enabled)
 			presentSelectItem.transform.position = Input.mousePosition;		

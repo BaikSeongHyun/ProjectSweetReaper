@@ -43,7 +43,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status health bar
 	public float PresentHealthPoint
 	{
-		get { return( presentHealthPoint / originHealthPoint ); }
+		get { return(presentHealthPoint / originHealthPoint); }
 	}
 
 	//rp - for use skill
@@ -58,7 +58,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status resource bar
 	public float PresentResourcePoint
 	{
-		get { return ( presentResourcePoint / originResourcePoint ); }
+		get { return (presentResourcePoint / originResourcePoint); }
 	}
 	//critical proability
 	float criticalProability;
@@ -105,6 +105,23 @@ public class CharacterInformation : MonoBehaviour
 	}
 	
 	//chain information
+	int comboCounter;
+
+	public int ComboCounter
+	{
+		get {
+			Debug.Log(comboCounter);
+			return comboCounter; }
+		set { comboCounter = value; }
+	}
+
+	public float comboTime;
+
+	public float ComboTimeFill
+	{
+		get { return comboTime; }
+		set { comboTime = value; }
+	}
 
 	//char Inventory information
 	//Installed item

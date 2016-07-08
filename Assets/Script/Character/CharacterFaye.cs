@@ -7,8 +7,7 @@ public class CharacterFaye : MonoBehaviour
 
 	//UI
 	public GameObject Effect;
-	public CharacterCanvasItem characterCanvas;
-
+	
 	//Vector3
 	Vector3 destination;
 	Vector3 Pos;
@@ -16,14 +15,14 @@ public class CharacterFaye : MonoBehaviour
 	//Animation
 	AnimatorStateInfo attackState;
 	Animator animator;
-	CharacterInformation charinfo;
+	CharacterInformation charInfo;
 	float moveSpeed = 4.0f;
 	//int skillSlotCount = 1;
 	public bool runState = false;
 	STATE presentState;
 	public int skillingChainCount = 0;
 	float skillChainWaitingTime = 0.0f;
-	float skillChainWaitingTimeMax = 4.0f;
+	float skillChainWaitingTimeMax = 5.0f;
 	bool skillChainTrigger = false;
 	bool skillusingState = false;
 	bool normalAttackState = false;
@@ -71,39 +70,45 @@ public class CharacterFaye : MonoBehaviour
 	{
 
 		respawnPoint = transform.position;
-		characterCanvas = transform.Find( "CharacterCanvas" ).GetComponent<CharacterCanvasItem>();
-		characterCanvas.InitializeComponentData();
 		destination = this.transform.position;
 		animator = GetComponent<Animator>();
-		charinfo = GetComponent<CharacterInformation> ();
+		charInfo = GetComponent<CharacterInformation>();
 	}
 
 	void Update()
 	{
-		if (deadOrAlive) {
-			if (skillChainTrigger == true) {
+		if (deadOrAlive)
+		{
+			if (skillChainTrigger == true)
+			{
 				//skillChaintWaitingTimeMax=4.0f (Default)
-				if (skillChainWaitingTime >= skillChainWaitingTimeMax) {
+				if (skillChainWaitingTime >= skillChainWaitingTimeMax)
+				{
 					skillingChainCount = 0;
 					skillChainWaitingTime = 0.0f;
-					skillChainWaitingTimeMax = 4.0f;
-					skillChainTrigger = false;
-					characterCanvas.ControlComponent (false);
-				} else {				
+					skillChainWaitingTimeMax = 5.0f;
+					skillChainTrigger = false;	
+					charInfo.ComboCounter = 0;
+					charInfo.ComboTimeFill = 0f;
+				}
+				else
+				{				
 					skillChainWaitingTime += Time.deltaTime;
-					characterCanvas.UpdateCanvas (skillingChainCount, 1 - (skillChainWaitingTime / skillChainWaitingTimeMax));
+					charInfo.ComboCounter = skillingChainCount;
+					charInfo.ComboTimeFill = 1 - (skillChainWaitingTime / skillChainWaitingTimeMax);
 				}
 			}
 			//fixed Y
-			transform.position = new Vector3 (transform.position.x, 0, transform.position.z);
-			Move ();
+			transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+			Move();
 		}
 	}
 
-	public void Respawn(){
-		charinfo.presentHealthPoint = charinfo.OriginHealthPoint;
+	public void Respawn()
+	{
+		charInfo.presentHealthPoint = charInfo.OriginHealthPoint;
 		transform.position = respawnPoint;
-		animator.Play ("Idle");
+		animator.Play( "Idle" );
 		deadOrAlive = true;
 	}
 
@@ -123,7 +128,7 @@ public class CharacterFaye : MonoBehaviour
 		{
 			skillChainTrigger = false;
 			skillChainWaitingTimeMax = skillChainWaitingTimeMax - skillingChainCount;
-			if (skillingChainCount >= 4)
+			if (skillingChainCount >= 5)
 			{
 				skillingChainCount = 0;
 			}
@@ -132,43 +137,44 @@ public class CharacterFaye : MonoBehaviour
 		Effect.SetActive( true );
 		animator.Play( "Idle" );
 		destination = this.transform.position;
-		switch (_command) {
-		case "A":
-			skillingChainCount++;
-			SetState ("Skill_A");
-			skillusingState = true;
-			break;
-		case "S":
-			skillingChainCount++;
-			SetState ("Skill_S");
-			skillusingState = true;
-			break;
-		case "D":
-			skillingChainCount++;
-			SetState ("Skill_D");
-			skillusingState = true;
-			break;
-		case "Q":
-			skillingChainCount++;
-			SetState ("Skill_Q");
-			skillusingState = true;
-			break;
+		switch (_command)
+		{
+			case "A":
+				skillingChainCount++;
+				SetState( "Skill_A" );
+				skillusingState = true;
+				break;
+			case "S":
+				skillingChainCount++;
+				SetState( "Skill_S" );
+				skillusingState = true;
+				break;
+			case "D":
+				skillingChainCount++;
+				SetState( "Skill_D" );
+				skillusingState = true;
+				break;
+			case "Q":
+				skillingChainCount++;
+				SetState( "Skill_Q" );
+				skillusingState = true;
+				break;
 		
-		case "Skill2":
-			skillingChainCount++;
-			SetState ("Skill_W");
-			skillusingState = true;
-			break;
+			case "Skill2":
+				skillingChainCount++;
+				SetState( "Skill_W" );
+				skillusingState = true;
+				break;
 
-		case "Skill3":
-			skillingChainCount++;
-			SetState ("Skill_E");
-			skillusingState = true;
-			break;
+			case "Skill3":
+				skillingChainCount++;
+				SetState( "Skill_E" );
+				skillusingState = true;
+				break;
 
-		case "Evation":
-			SetState ("Evation");
-			break;
+			case "Evation":
+				SetState( "Evation" );
+				break;
 		}
 	}
 
@@ -229,19 +235,25 @@ public class CharacterFaye : MonoBehaviour
 		animator.SetBool( "Run", false );
 	}
 
-	public void HitDamage(float _damage){
-		if (deadOrAlive) {
-			if (charinfo.PresentHealthPoint > 0) {
-				this.charinfo.presentHealthPoint -= _damage;
-				animator.SetTrigger ("PlayerHitTrigger");
-			} else {
-				animator.SetTrigger ("PlayerDie");
+	public void HitDamage( float _damage )
+	{
+		if (deadOrAlive)
+		{
+			if (charInfo.PresentHealthPoint > 0)
+			{
+				this.charInfo.presentHealthPoint -= _damage;
+				animator.SetTrigger( "PlayerHitTrigger" );
+			}
+			else
+			{
+				animator.SetTrigger( "PlayerDie" );
 				deadOrAlive = false;
 			}
 		}
 	}
 
-	void OnCollisionEnter(Collision coll){
+	void OnCollisionEnter( Collision coll )
+	{
 		destination = transform.position;
 	}
 
@@ -249,39 +261,40 @@ public class CharacterFaye : MonoBehaviour
 	public void SetState( string state )
 	{
 		SetStateDefault();
-		switch (state) {
-		case "Idle":
-			presentState = STATE.Idle;
-			animator.SetBool ("Idle", true);
-			break;
-		case "Run":
-			presentState = STATE.Run;
-			animator.SetBool ("Run", true);
-			break;
-		case "NormalAttack":
-			animator.SetTrigger ("NormalAttack");
-			break;
-		case "Skill_A":
-			animator.SetTrigger ("Skill_A");
-			break;
-		case "Skill_S":
-			animator.SetTrigger ("Skill_S");
-			break;
-		case "Skill_D":
-			animator.SetTrigger ("Skill_D");
-			break;
-		case "Skill_Q":
-			animator.SetTrigger ("Skill_Q");
-			break;
-		case "Skill_W":
-			animator.SetTrigger ("Skill_W");
-			break;
-		case "Skill_E":
-			animator.SetTrigger ("Skill_E");
-			break;
-		case "Evation":
-			animator.SetTrigger ("Evation");
-			break;
+		switch (state)
+		{
+			case "Idle":
+				presentState = STATE.Idle;
+				animator.SetBool( "Idle", true );
+				break;
+			case "Run":
+				presentState = STATE.Run;
+				animator.SetBool( "Run", true );
+				break;
+			case "NormalAttack":
+				animator.SetTrigger( "NormalAttack" );
+				break;
+			case "Skill_A":
+				animator.SetTrigger( "Skill_A" );
+				break;
+			case "Skill_S":
+				animator.SetTrigger( "Skill_S" );
+				break;
+			case "Skill_D":
+				animator.SetTrigger( "Skill_D" );
+				break;
+			case "Skill_Q":
+				animator.SetTrigger( "Skill_Q" );
+				break;
+			case "Skill_W":
+				animator.SetTrigger( "Skill_W" );
+				break;
+			case "Skill_E":
+				animator.SetTrigger( "Skill_E" );
+				break;
+			case "Evation":
+				animator.SetTrigger( "Evation" );
+				break;
 		}
 	}
 }
