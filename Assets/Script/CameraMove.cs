@@ -10,7 +10,7 @@ public class CameraMove : MonoBehaviour
 	void Start()
 	{
 		faya = GameObject.FindWithTag( "Player" );	
-		cameraDistance = new Vector3 ( 0f, 7.5f, -6f );
+		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
 	}
 	
 	// Update is called once per frame

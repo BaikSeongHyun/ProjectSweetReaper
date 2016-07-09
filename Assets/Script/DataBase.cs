@@ -22,13 +22,10 @@ public class DataBase : MonoBehaviour
 	void CreateItemInformation()
 	{
 		itemInformation = new Item[10];
-		itemInformation[0] = new Item( "LeatherHandle", 100, 1, 0, 0, 0, 0, 0, 1, 1, Item.SECTION.Handle );
-		itemInformation[1] = new Item( "BloodyCarnival", 1000, 3, 10, 0, 10, 0, 0, 0, 5, Item.SECTION.Blade );
-		itemInformation[2] = new Item( "OutwornProp", 100, 2, 0, 0, 1, 0, 0, 1, 0, Item.SECTION.Bottom );
-		itemInformation[3] = new Item( "WingOfVictory", 4000, 3, 0, 0, 0, 5, 0, 5, 5, Item.SECTION.Top );
-		itemInformation[4] = new Item( "BFHandle", 222, 4, 0, 0, 0, 0, 0, 10, 10, Item.SECTION.Handle );
-		itemInformation[5] = new Item( "JumbiHead", 100, 2, 0, 0, 3, -1, 3, 0, 10, Item.SECTION.Top );
-		itemInformation[6] = new Item( "HealthPotion", 50, 0, 0, 0, 0, 0, 0, 0, 0, Item.SECTION.Consume );
+		itemInformation[0] = new Item( "FearBlade", 1000, 3, 10, 0, 0, 0, 0, 1, 1, Item.SECTION.Blade );
+		itemInformation[1] = new Item( "IronHandle", 100, 1, 0, 0, 0, 0, 0, 1, 1, Item.SECTION.Handle );
+		itemInformation[2] = new Item( "DropOfSorcerer", 300, 2, 0, 0, 0, 0, 0, 1, 1, Item.SECTION.Bottom );
+		itemInformation[3] = new Item( "TheHolySpear", 800, 0, 0, 0, 0, 3, 3, 0, 5, Item.SECTION.Top );
 	}
 
 	//initialize skill data
