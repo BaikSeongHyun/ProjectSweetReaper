@@ -50,7 +50,7 @@ public class ItemInformationPopUpControl : MonoBehaviour
 	public void UpdateItemInformation( Item info, Vector3 popUpPosition )
 	{
 		//position set
-		transform.position = popUpPosition + new Vector3(50f, -50f);
+		transform.position = popUpPosition + new Vector3 ( 50f, -50f );
 
 		if (info == null)
 			return;
@@ -61,8 +61,8 @@ public class ItemInformationPopUpControl : MonoBehaviour
 			ControlComponent( true );
 			itemName.text = info.Name;
 			price.text = info.Price.ToString();
-			coreRank.text = info.CoreRank.ToString();
-			weaponCri.text = info.WeaponCri.ToString();
+			coreRank.text = "CoreRank : " + info.CoreRank.ToString();
+			weaponCri.text = "Critical : " + info.WeaponCri.ToString();
 
 			switch (info.Section)
 			{
@@ -91,9 +91,7 @@ public class ItemInformationPopUpControl : MonoBehaviour
 					element3Text.text = "LUCK : " + info.WeaponLuck.ToString();
 					break;
 			}
-		}
-
-			
+		}			
 	}
 }
 

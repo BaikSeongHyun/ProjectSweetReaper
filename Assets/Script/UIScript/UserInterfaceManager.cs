@@ -104,9 +104,6 @@ public class UserInterfaceManager : MonoBehaviour
 	public void ControlEnterDungeon( bool state )
 	{
 		enterDungeon.SetActive( state );
-
-		if (state)
-			Debug.Log( "Active Enter Dungeon" );
 	}
 
 	// death pop up
@@ -153,7 +150,18 @@ public class UserInterfaceManager : MonoBehaviour
 		ControlEnterDungeon( false );
 		ControlDeathPopUp( false );
 		itemPopUp.ControlComponent( false );
+	}
 
+	//update by inventory
+	public void UpdateItemInformationByInventory( Inventory inventory )
+	{
+		info.TopInstall = inventory.TopInstall.ItemInfo;
+		info.BottomInstall = inventory.BottomInstall.ItemInfo;
+		info.BladeInstall = inventory.BladeInstall.ItemInfo;
+		info.HandleInstall = inventory.handleInstall.ItemInfo;
+
+		for (int i = 0; i < info.CharacterItem.Length; i++)
+			info.CharacterItem[i] = inventory.ItemSlot[i].ItemInfo;
 	}
 
 	// on click event - quick button
@@ -187,6 +195,9 @@ public class UserInterfaceManager : MonoBehaviour
 		//update present select item
 		if (presentSelectItem.enabled)
 			presentSelectItem.transform.position = Input.mousePosition;		
+
+		if (!info.InstalledItem)
+			info.InstallDefaultItem();		
 	}
 
 }

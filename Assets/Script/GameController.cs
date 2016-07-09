@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 	//complex data field
 	public CharacterFaye faye;
 	public UserInterfaceManager mainUI;
+	public DataBase dataBase;
 
 	// initialize this script
 	void Start()
@@ -15,6 +16,7 @@ public class GameController : MonoBehaviour
 		Application.targetFrameRate = 80;
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
+		dataBase = GameObject.FindWithTag( "DataBase" ).GetComponent<DataBase>();
 	}
 	
 	// Update is called once per frame
@@ -50,7 +52,6 @@ public class GameController : MonoBehaviour
 		
 		//ui section
 		//always update
-		mainUI.UpdateMainUI();
 
 		if (Input.GetButtonDown( "Status" ))
 			mainUI.ControlStatusUI( !mainUI.OnStatusUI );
@@ -65,6 +66,15 @@ public class GameController : MonoBehaviour
 			Debug.Log( "Active close present element" );
 			mainUI.ClosePresentElement();
 		}
+
+		if (!dataBase.OnCreate)
+		{
+			dataBase.CreateItemInformation();
+			dataBase.CreateSkillInformation();
+			dataBase.OnCreate = true;
+		}
+
+		mainUI.UpdateMainUI();
 	}
 	//another method
 

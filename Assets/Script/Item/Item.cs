@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 [System.Serializable]
@@ -14,6 +15,11 @@ public class Item
 
 	//icon
 	public Sprite icon;
+
+	public Sprite Icon
+	{
+		get { return icon; }
+	}
 
 	//data
 	public int price;
@@ -100,13 +106,17 @@ public class Item
 	//constructor - no parameter
 	public Item ()
 	{
-
-	}
-
-	//constructor - only name parameter
-	public Item (string name)
-	{
-		name = "default";
+		name = "Default";
+		price = 0;
+		coreRank = 0;
+		weaponAtk = 0;
+		weaponDef = 0;
+		weaponStr = 0;
+		weaponDex = 0;
+		weaponInt = 0;
+		weaponLuck = 0;
+		weaponCri = 0;
+		section = SECTION.Default;
 	}
 
 	//constructor - all parameter
@@ -140,11 +150,7 @@ public class Item
 		weaponLuck = data.weaponLuck;
 		weaponCri = data.weaponCri;
 		section = data.section;
-	}
-
-	public Sprite Icon
-	{
-		get { return icon; }
+		icon = data.icon;
 	}
 
 	//another method
@@ -152,8 +158,9 @@ public class Item
 	//set icon
 	public void SetSpriteIcon()
 	{
-//		string path = "image/" + name;
-//		icon = Resources.Load<Sprite>();
+		string path = "Item/Item" + name;
+		Sprite temp = Resources.Load<Sprite>( path );
+		icon = temp;
 	}
 
 
@@ -170,7 +177,6 @@ public class Item
 		weaponLuck = 0;
 		weaponCri = 0;
 		section = SECTION.Default;
-
 	}
 
 }

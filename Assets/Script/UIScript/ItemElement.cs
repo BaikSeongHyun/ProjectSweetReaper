@@ -32,12 +32,12 @@ public class ItemElement : MonoBehaviour
 	//update item pop up
 	public void UpdateItemPopUp()
 	{
-		if (ItemInfo == null)
+		if (ItemInfo.Name == "Default")
 			return;
 		
 		iPopUp.LinkComponent();
 		iPopUp.ControlComponent( true );
-		iPopUp.UpdateItemInformation( itemInfo, transform.position);
+		iPopUp.UpdateItemInformation( itemInfo, transform.position );
 	}
 
 	//close item pop up
@@ -49,10 +49,9 @@ public class ItemElement : MonoBehaviour
 	//set item icon -> no item set default
 	public void UpdateItemIcon()
 	{
-		if (itemInfo == null)
-			return;
-		//data base allow
-		else
-			return;
+		itemIcon.sprite = itemInfo.Icon;
+		if(itemInfo.Name == "Default")
+			itemIcon.sprite = Resources.Load<Sprite>( "Item/ItemDefault" );
+		  
 	}
 }

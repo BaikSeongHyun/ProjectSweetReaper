@@ -7,17 +7,9 @@ public class CharacterInformation : MonoBehaviour
 	//name
 	string characterName;
 
-	public string CharacterName
-	{
-		get { return characterName; }
-	}
 	//level
 	int characterLevel;
 
-	public int Level
-	{
-		get { return characterLevel; }
-	}
 	//exp
 	float exp;
 	float presentExp;
@@ -27,24 +19,11 @@ public class CharacterInformation : MonoBehaviour
 	float presentDamage;
 	float rootDamage;
 
-	public float Damage
-	{
-		get { return presentDamage; }
-	}
 	//hp - use public for test
 	public float presentHealthPoint;
 	float rootHealthPoint;
 	float originHealthPoint;
 
-	public float OriginHealthPoint
-	{
-		get { return originHealthPoint; }
-	}
-	//use quick status health bar
-	public float PresentHealthPoint
-	{
-		get { return( presentHealthPoint / originHealthPoint ); }
-	}
 
 	//rp - for use skill
 	public float presentResourcePoint;
@@ -55,28 +34,14 @@ public class CharacterInformation : MonoBehaviour
 	{
 		get { return originResourcePoint; }
 	}
-	//use quick status resource bar
-	public float PresentResourcePoint
-	{
-		get { return ( presentResourcePoint / originResourcePoint ); }
-	}
+
 	//critical proability
 	float criticalProability;
-
-	public float CriticalProability
-	{
-		get { return criticalProability; }
-	}
-	
+		
 	//str
 	int rootStrength;
 	int presentStrength;
-
-	public int Strength
-	{
-		get { return presentStrength; }
-	}
-	
+		
 	//intell
 	int rootIntelligence;
 	int presentIntelligence;
@@ -89,23 +54,77 @@ public class CharacterInformation : MonoBehaviour
 	//dex
 	int rootDexterity;
 	int presentDexterity;
+		
+	//luck
+	int rootLuck;
+	int presentLuck;
+
+	//chain information
+	int comboCounter;
+	public float comboTime;
+
+	//char Inventory information
+	//Installed item
+	public Item topInstall;
+	public Item bottomInstall;
+	public Item bladeInstall;
+	public Item handleInstall;
+		
+	// have item
+	Item[] characterItem;
+	int money;
+
+	//property
+
+	public string CharacterName
+	{
+		get { return characterName; }
+	}
+
+	public int Level
+	{
+		get { return characterLevel; }
+	}
+
+	public float Damage
+	{
+		get { return presentDamage; }
+	}
+
+	public float OriginHealthPoint
+	{
+		get { return originHealthPoint; }
+	}
+	//use quick status health bar
+	public float PresentHealthPoint
+	{
+		get { return( presentHealthPoint / originHealthPoint ); }
+	}
+
+	public float PresentResourcePoint
+	{
+		get { return ( presentResourcePoint / originResourcePoint ); }
+	}
+
+	public float CriticalProability
+	{
+		get { return criticalProability; }
+	}
+
+	public int Strength
+	{
+		get { return presentStrength; }
+	}
 
 	public int Dexterity
 	{
 		get { return presentDexterity; }
 	}
-	
-	//luck
-	int rootLuck;
-	int presentLuck;
 
 	public int Luck
 	{
 		get{ return presentLuck; }
 	}
-	
-	//chain information
-	int comboCounter;
 
 	public int ComboCounter
 	{
@@ -113,44 +132,35 @@ public class CharacterInformation : MonoBehaviour
 		set { comboCounter = value; }
 	}
 
-	public float comboTime;
-
 	public float ComboTimeFill
 	{
 		get { return comboTime; }
 		set { comboTime = value; }
 	}
 
-	//char Inventory information
-	//Installed item
-	Item topInstall;
-	Item bottomInstall;
-	Item bladeInstall;
-	Item handleInstall;
-
 	public Item TopInstall
 	{
 		get { return topInstall; }
+		set { topInstall = value; }
 	}
 
 	public Item BottomInstall
 	{
-		get { return BottomInstall; }
+		get { return bottomInstall; }
+		set { bottomInstall = value; }
 	}
 
 	public Item BladeInstall
 	{
 		get { return bladeInstall; }
+		set { bladeInstall = value; }
 	}
 
 	public Item HandleInstall
 	{
 		get { return handleInstall; }
+		set { handleInstall = value; }
 	}
-	
-	// have item
-	Item[] characterItem;
-	int money;
 
 	public Item[] CharacterItem
 	{
@@ -162,18 +172,26 @@ public class CharacterInformation : MonoBehaviour
 		get { return money; }
 	}
 
+	public bool InstalledItem
+	{
+		get { return installedItem; }
+		set { installedItem = value; }
+	}
+
 	//char skill infor mation
 	//slot set up skill
 	Skill[] charSkill;
 	
-	
-	//property
+	//data base
+	DataBase dataBase;
+	bool installedItem;
 
 	void Start()
 	{
 		characterItem = new Item[35];
 		charSkill = new Skill[8];
 		DefaultStatus();
+		dataBase = GameObject.FindWithTag( "DataBase" ).GetComponent<DataBase>();
 	}
 
 	//set default status
@@ -198,10 +216,20 @@ public class CharacterInformation : MonoBehaviour
 		presentDamage	= 30.0f;	
 		money = 0;
 
-		topInstall = null;
-		bottomInstall = null;
-		bladeInstall = null;
-		handleInstall = null;
+	}
+
+	//set default item
+	public void InstallDefaultItem()
+	{
+		topInstall = new Item ( dataBase.FindItem( "TheHolySpear" ) );
+		bottomInstall = new Item ( dataBase.FindItem( "DropOfSorcerer" ) );
+		bladeInstall = new Item ( dataBase.FindItem( "FearBlade" ) );
+		handleInstall = new Item ( dataBase.FindItem( "IronHandle" ) );
+
+		for (int i = 0; i < characterItem.Length; i++)
+			characterItem[i] = new Item ();	
+
+		installedItem = true;
 	}
 
 	//save data load and apply
