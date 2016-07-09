@@ -28,7 +28,6 @@ public class FrogBossAI : MonoBehaviour
 	bool checkDieOrAlive=true;
 	bool isAttack = false;
 
-
 	public GameObject DropItem;
 	public GameObject DropGold;
 
@@ -69,7 +68,6 @@ public class FrogBossAI : MonoBehaviour
 	}
 	void Update()
 	{
-
 		if (checkDieOrAlive) {
 			float searchRange = Vector3.Distance (player.transform.position, transform.position);
 
@@ -134,8 +132,8 @@ public class FrogBossAI : MonoBehaviour
 
 	public void HitDamage(float _Damage){
 		if (checkDieOrAlive) {
-			Instantiate (HitEffect, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), transform.rotation);
-			Instantiate (HitObject, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), transform.rotation);
+			Instantiate (HitEffect, new Vector3(transform.position.x,transform.position.y+4f,transform.position.z), transform.rotation);
+			Instantiate (HitObject, new Vector3(transform.position.x,transform.position.y+4f,transform.position.z), transform.rotation);
 			FrogInfo.frogBossHp -= _Damage;
 			if (FrogInfo.frogBossHp > 0) {
 				bossAiAnimator.SetTrigger ("MonsterHitTrigger");

@@ -28,7 +28,6 @@ public class FrogAI : MonoBehaviour
 	bool checkDieOrAlive=true;
 	bool isAttack = false;
 
-
 	public GameObject DropItem;
 	public GameObject DropGold;
 
@@ -68,8 +67,7 @@ public class FrogAI : MonoBehaviour
 		isAttack = false;
 	}
 	void Update()
-	{
-
+	{	
 		if (checkDieOrAlive) {
 			float searchRange = Vector3.Distance (player.transform.position, transform.position);
 

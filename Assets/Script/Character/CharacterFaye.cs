@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class CharacterFaye : MonoBehaviour
 {
-
+	public bool isStop=false;
 	//UI
 	public GameObject Effect;
 	public BoxCollider Hit;	
@@ -29,7 +29,6 @@ public class CharacterFaye : MonoBehaviour
 	bool skillusingState = false;
 	bool normalAttackState = false;
 	bool deadOrAlive = true;
-
 	STATE presentState;
 
 	//State Event
@@ -70,6 +69,12 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
+	public bool _IsStop {
+		get {
+			return  isStop;
+		}
+	}
+
 	public void Start()
 	{
 		respawnPoint = transform.position;
@@ -81,6 +86,20 @@ public class CharacterFaye : MonoBehaviour
 
 	void Update()
 	{
+		if (skillingChainCount == 5) {
+			isStop = true;
+		}
+
+		if (!skillusingState) {
+			isStop = false;
+		}
+
+		if (isStop == true) {
+			Time.timeScale = 0.1f;
+		} else {
+			Time.timeScale = 1.0f;
+		}
+
 		if (deadOrAlive)
 		{
 			if (normalAttackState || skillusingState) {
@@ -122,12 +141,6 @@ public class CharacterFaye : MonoBehaviour
 		else
 		{
 			attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
-			if (attackState.IsName( "Evation" ))
-			{
-				Effect.SetActive( false );
-				transform.Translate( transform.forward * Time.deltaTime * moveSpeed, Space.World );
-				destination = this.transform.position;
-			}
 
 			//Cancel Attack
 			if (attackState.IsName( "NormalAttack" ) && Vector3.Distance( transform.position, destination ) >= 0.1f)
@@ -211,57 +224,52 @@ public class CharacterFaye : MonoBehaviour
 
 	public void SkillCommand( string _command )
 	{
-		if (_command != "Evation")
-		{
-			skillChainTrigger = false;
-			skillChainWaitingTimeMax = skillChainWaitingTimeMax - 1;
-			if (skillingChainCount >= 5)
-			{
-				skillingChainCount = 0;
+		if (deadOrAlive) {
+			if (_command != "Evation") {
+				skillChainTrigger = false;
+				skillChainWaitingTimeMax = skillChainWaitingTimeMax - 1;
+				if (skillingChainCount >= 5) {
+					skillingChainCount = 0;
+				}
+				skillChainWaitingTime = 0.0f;
 			}
-			skillChainWaitingTime = 0.0f;
-		}
-		Effect.SetActive( true );
-		animator.Play( "Idle" );
-		destination = this.transform.position;
-		switch (_command)
-		{
+			Effect.SetActive (true);
+			animator.Play ("Idle");
+			destination = this.transform.position;
+			switch (_command) {
 			case "A":
 				skillingChainCount++;
-				SetState( "Skill_A" );
+				SetState ("Skill_A");
 				skillusingState = true;
 				break;
 			case "S":
 				skillingChainCount++;
-				SetState( "Skill_S" );
+				SetState ("Skill_S");
 				skillusingState = true;
 				break;
 			case "D":
 				skillingChainCount++;
-				SetState( "Skill_D" );
+				SetState ("Skill_D");
 				skillusingState = true;
 				break;
 			case "Q":
 				skillingChainCount++;
-				SetState( "Skill_Q" );
+				SetState ("Skill_Q");
 				skillusingState = true;
 				break;
 		
 			case "Skill2":
 				skillingChainCount++;
-				SetState( "Skill_W" );
+				SetState ("Skill_W");
 				skillusingState = true;
 				break;
 
 			case "Skill3":
 				skillingChainCount++;
-				SetState( "Skill_E" );
+				SetState ("Skill_E");
 				skillusingState = true;
 				break;
-
-			case "Evation":
-				SetState( "Evation" );
-				break;
+			}
 		}
 	}
 
@@ -299,9 +307,6 @@ public class CharacterFaye : MonoBehaviour
 				break;
 			case "Skill_E":
 				animator.SetTrigger( "Skill_E" );
-				break;
-			case "Evation":
-				animator.SetTrigger( "Evation" );
 				break;
 		}
 	}
