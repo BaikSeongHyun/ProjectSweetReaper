@@ -595,6 +595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ae0a740d621984ca6c2f4625c008b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitObject: {fileID: 100000, guid: 96ebbff8a07aaaa4abb67b9cfe5cba4a, type: 2}
+  HitEffect: {fileID: 100000, guid: 9e3ed98d52edf9a4f855ee1647f74f65, type: 2}
   bossAiAnimator: {fileID: 0}
   player: {fileID: 0}
   runRange: 10

@@ -7,27 +7,31 @@ public class CharacterFaye : MonoBehaviour
 
 	//UI
 	public GameObject Effect;
-	
+	public BoxCollider Hit;	
 	//Vector3
 	Vector3 destination;
 	Vector3 Pos;
+	Vector3 respawnPoint;
 
 	//Animation
 	AnimatorStateInfo attackState;
-	Animator animator;
 	CharacterInformation charInfo;
+	Animator animator;
+
 	float moveSpeed = 4.0f;
-	//int skillSlotCount = 1;
-	public bool runState = false;
-	STATE presentState;
-	public int skillingChainCount = 0;
 	float skillChainWaitingTime = 0.0f;
 	float skillChainWaitingTimeMax = 5.0f;
+	//int skillSlotCount = 1;
+	public int skillingChainCount = 0;
+	public bool runState = false;
+
 	bool skillChainTrigger = false;
 	bool skillusingState = false;
 	bool normalAttackState = false;
-	Vector3 respawnPoint;
 	bool deadOrAlive = true;
+
+	STATE presentState;
+
 	//State Event
 	public enum STATE
 	{
@@ -68,17 +72,22 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Start()
 	{
-
 		respawnPoint = transform.position;
 		destination = this.transform.position;
 		animator = GetComponent<Animator>();
 		charInfo = GetComponent<CharacterInformation>();
+		Hit.size = new Vector3 (0, 0, 0);
 	}
 
 	void Update()
 	{
 		if (deadOrAlive)
 		{
+			if (normalAttackState || skillusingState) {
+				Hit.size = new Vector3 (0.5f, 1.5f, 1f);
+			} else {
+				Hit.size = new Vector3 (0, 0, 0);
+			}
 			if (skillChainTrigger == true)
 			{
 				//skillChaintWaitingTimeMax=4.0f (Default)
@@ -104,6 +113,47 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
+	void Move()
+	{
+		if (skillusingState == true)
+		{
+			SetState( "Idle" );
+		}
+		else
+		{
+			attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
+			if (attackState.IsName( "Evation" ))
+			{
+				Effect.SetActive( false );
+				transform.Translate( transform.forward * Time.deltaTime * moveSpeed, Space.World );
+				destination = this.transform.position;
+			}
+
+			//Cancel Attack
+			if (attackState.IsName( "NormalAttack" ) && Vector3.Distance( transform.position, destination ) >= 0.1f)
+			{
+				normalAttackState = false;
+				animator.Play( "Idle" );
+			}
+			if (Vector3.Distance( destination, transform.position ) <= 0.1f)
+			{
+				SetState( "Idle" );
+			}
+			else
+			{
+				SetState( "Run" );
+				if (attackState.IsName( "Run" ))
+				{
+					//Effect.SetActive (false);
+					Vector3 direction = destination - this.transform.position;
+					this.transform.LookAt( destination );
+					direction.Normalize();
+					transform.Translate( direction * Time.deltaTime * moveSpeed, Space.World );
+				}
+			}
+		}
+	}
+
 	public void Respawn()
 	{
 		charInfo.presentHealthPoint = charInfo.OriginHealthPoint;
@@ -122,12 +172,49 @@ public class CharacterFaye : MonoBehaviour
 		normalAttackState = false;
 	}
 
+	public void Attack()
+	{
+		Effect.SetActive( false );
+		destination = this.transform.position;
+		normalAttackState = true;
+		SetState( "NormalAttack" );
+
+	}
+
+	void SetStateDefault()
+	{
+		animator.SetBool( "Idle", false );
+		animator.SetBool( "Run", false );
+	}
+
+	public void HitDamage( float _damage )
+	{
+		if (deadOrAlive)
+		{
+			if (charInfo.PresentHealthPoint > 0)
+			{
+				this.charInfo.presentHealthPoint -= _damage;
+				animator.SetTrigger( "PlayerHitTrigger" );
+			}
+			if (charInfo.PresentHealthPoint <= 0)
+			{
+				animator.SetTrigger( "PlayerDie" );
+				deadOrAlive = false;
+			}
+		}
+	}
+
+	void OnCollisionEnter( Collision coll )
+	{
+		destination = transform.position;
+	}
+
 	public void SkillCommand( string _command )
 	{
 		if (_command != "Evation")
 		{
 			skillChainTrigger = false;
-			skillChainWaitingTimeMax = skillChainWaitingTimeMax - skillingChainCount;
+			skillChainWaitingTimeMax = skillChainWaitingTimeMax - 1;
 			if (skillingChainCount >= 5)
 			{
 				skillingChainCount = 0;
@@ -178,92 +265,13 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
-
-	public void Attack()
-	{
-		Effect.SetActive( false );
-		destination = this.transform.position;
-		normalAttackState = true;
-		SetState( "NormalAttack" );
-
-	}
-
-	void Move()
-	{
-		if (skillusingState == true)
-		{
-			SetState( "Idle" );
-		}
-		else
-		{
-			attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
-			if (attackState.IsName( "Evation" ))
-			{
-				Effect.SetActive( false );
-				transform.Translate( transform.forward * Time.deltaTime * moveSpeed, Space.World );
-				destination = this.transform.position;
-			}
-
-			//Cancel Attack
-			if (attackState.IsName( "NormalAttack" ) && Vector3.Distance( transform.position, destination ) >= 0.1f)
-			{
-				normalAttackState = false;
-				animator.Play( "Idle" );
-			}
-			if (Vector3.Distance( destination, transform.position ) <= 0.1f)
-			{
-				SetState( "Idle" );
-			}
-			else
-			{
-				SetState( "Run" );
-				if (attackState.IsName( "Run" ))
-				{
-					//Effect.SetActive (false);
-					Vector3 direction = destination - this.transform.position;
-					this.transform.LookAt( destination );
-					direction.Normalize();
-					transform.Translate( direction * Time.deltaTime * moveSpeed, Space.World );
-				}
-			}
-		}
-	}
-
-	void SetStateDefault()
-	{
-		animator.SetBool( "Idle", false );
-		animator.SetBool( "Run", false );
-	}
-
-	public void HitDamage( float _damage )
-	{
-		if (deadOrAlive)
-		{
-			if (charInfo.PresentHealthPoint > 0)
-			{
-				this.charInfo.presentHealthPoint -= _damage;
-				animator.SetTrigger( "PlayerHitTrigger" );
-			}
-			else
-			{
-				animator.SetTrigger( "PlayerDie" );
-				deadOrAlive = false;
-			}
-		}
-	}
-
-	void OnCollisionEnter( Collision coll )
-	{
-		destination = transform.position;
-	}
-
 	// method
 	public void SetState( string state )
 	{
 		SetStateDefault();
 		switch (state)
 		{
-			case "Idle":
+		case "Idle":
 				presentState = STATE.Idle;
 				animator.SetBool( "Idle", true );
 				break;

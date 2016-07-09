@@ -57,7 +57,6 @@ public class Weapon : MonoBehaviour
 				FrogAI MonsterAI = coll.gameObject.GetComponent<FrogAI> ();
 				if (MonsterAI != null) {
 					if (normalAttack) {
-						Debug.Log ("dd");
 						damage = info.Damage;
 					} else if (skillAttack) {
 						damage = info.Damage;

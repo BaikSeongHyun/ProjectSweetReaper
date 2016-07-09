@@ -4,10 +4,11 @@ using UnityEngine.UI;
 
 public class FrogAI : MonoBehaviour
 {
-
+	public GameObject HitObject;
+	public GameObject HitEffect;
+	public GameObject player;
 	public Animator bossAiAnimator;
 	AnimatorStateInfo attackStateBoss;
-	public GameObject player;
 	FrogHealth FrogInfo;
 
 	//Boss Pattern Range
@@ -82,7 +83,7 @@ public class FrogAI : MonoBehaviour
 //
 //		}
 			if (searchRange < attackRange) {
-				if (attackCycle >= 3 && !attackStateBoss.IsName("TakeDamage")) {
+				if (attackCycle >= 2 && !attackStateBoss.IsName("TakeDamage")) {
 					BossPattern (BossPatternName.BossNormalAttack);
 					attackCycle = 0;
 				} else {
@@ -132,22 +133,26 @@ public class FrogAI : MonoBehaviour
 	}
 
 	public void HitDamage(float _Damage){
+		Instantiate (HitEffect, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), transform.rotation);
+		Instantiate (HitObject, new Vector3(transform.position.x,transform.position.y+2,transform.position.z), transform.rotation);
 		if (checkDieOrAlive) {
 			FrogInfo.frogBossHp -= _Damage;
 			if (FrogInfo.frogBossHp > 0) {
 				bossAiAnimator.SetTrigger ("MonsterHitTrigger");
 				return;
-			} else {
+			}
+
+			if (FrogInfo.frogBossHp <= 0) {
 
 				int randomItem = Random.Range (0, 3);
 
 				if (randomItem == 0) {
-					Instantiate (DropItem, transform.position, transform.rotation);
+					Instantiate (DropItem, transform.position, new Quaternion(0,0,0,0));
 				} else if (randomItem == 1) {
-					Instantiate (DropGold, transform.position, transform.rotation);
+					Instantiate (DropGold, transform.position, new Quaternion(0,0,0,0));
 				} else {
-					Instantiate (DropItem, transform.position, transform.rotation);
-					Instantiate (DropGold, transform.position, transform.rotation);
+					Instantiate (DropItem, transform.position, new Quaternion(0,0,0,0));
+					Instantiate (DropGold, transform.position, new Quaternion(0,0,0,0));
 				}
 
 				bossAiAnimator.SetTrigger ("MonsterDie");
