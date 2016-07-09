@@ -7434,6 +7434,56 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: f04471801462b3c489351379ef910a06, type: 3}
   m_PrefabInternal: {fileID: 791678214}
+--- !u!1001 &803801080
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 7.141
+      objectReference: {fileID: 0}
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -396.63156
+      objectReference: {fileID: 0}
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5442808, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_Constraints
+      value: 118
+      objectReference: {fileID: 0}
+    - target: {fileID: 157724, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_Name
+      value: StoneFrogGreen (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &804494648
 Prefab:
   m_ObjectHideFlags: 0
@@ -9290,6 +9340,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 963829380}
+  - 65: {fileID: 963829381}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -9319,6 +9370,18 @@ Transform:
   - {fileID: 1819034116}
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!65 &963829381
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 963829379}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &964656417
 Prefab:
   m_ObjectHideFlags: 0
@@ -13567,6 +13630,10 @@ Prefab:
       propertyPath: m_Name
       value: Fence_Small_Timber_01 (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: f04471801462b3c489351379ef910a06, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f04471801462b3c489351379ef910a06, type: 3}
   m_IsPrefabParent: 0
@@ -16511,7 +16578,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 472246, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -396.96
+      value: -391.59
       objectReference: {fileID: 0}
     - target: {fileID: 472246, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
       propertyPath: m_LocalRotation.x
@@ -18016,7 +18083,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -396.63156
+      value: -413.01
       objectReference: {fileID: 0}
     - target: {fileID: 478714, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
       propertyPath: m_LocalRotation.x
@@ -21633,6 +21700,10 @@ Prefab:
     - target: {fileID: 100000, guid: f04471801462b3c489351379ef910a06, type: 3}
       propertyPath: m_Name
       value: Fence_Small_Timber_01 (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6400000, guid: f04471801462b3c489351379ef910a06, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f04471801462b3c489351379ef910a06, type: 3}

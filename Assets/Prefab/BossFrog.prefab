@@ -360,8 +360,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100898}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 0.52, y: 9.561254e-17, z: -396.96}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.52, y: 9.561254e-17, z: -391.59}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_Children:
   - {fileID: 486210}
@@ -491,11 +491,11 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100898}
   serializedVersion: 2
-  m_Mass: 0.0000001
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
@@ -595,12 +595,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ae0a740d621984ca6c2f4625c008b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitObject: {fileID: 100000, guid: 96ebbff8a07aaaa4abb67b9cfe5cba4a, type: 2}
-  HitEffect: {fileID: 100000, guid: 9e3ed98d52edf9a4f855ee1647f74f65, type: 2}
+  HitObject: {fileID: 154802, guid: 7b1d6670c52c13f478cf4da3be49a7bb, type: 2}
+  HitEffect: {fileID: 108318, guid: f316e3f5256d2524592523a7fda8e535, type: 2}
   bossAiAnimator: {fileID: 0}
   player: {fileID: 0}
   runRange: 10
-  attackRange: 2
+  attackRange: 5
   attackCycle: 0
   frogBossSpeed: 0.5
   bossAngryImage: {fileID: 11464552}
@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 270476482ca499b498c25ba59c761652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frogBossHp: 100
+  frogBossHp: 500
   frogBossDamage: 30
   frogMaxHp: 0
 --- !u!137 &13749110

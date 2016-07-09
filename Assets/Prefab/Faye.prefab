@@ -6149,7 +6149,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 60dc806e4cd5e7c4f89f22eb5b1922c1, type: 3}
   m_Controller: {fileID: 9100000, guid: b742f5a4f82a1c648842acc205b1acbc, type: 2}
   m_CullingMode: 1
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -6241,6 +6241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8b0932b44f721419ff0f8c1e61d677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStop: 0
   Effect: {fileID: 176414}
   Hit: {fileID: 6565478}
   skillingChainCount: 0
