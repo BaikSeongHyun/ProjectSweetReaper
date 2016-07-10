@@ -21,11 +21,11 @@ TagManager:
   - Player
   - Weapon
   - Terrain
-  - Enermy
-  - EnermyWeapon
+  - Enemy
+  - EnemyWeapon
   - Item
   - UntouchableFieldObject
-  - 
+  - Board
   - 
   - 
   - 

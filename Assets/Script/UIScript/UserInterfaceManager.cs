@@ -10,10 +10,15 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject statusUI;
 	public GameObject enterDungeon;
 	public GameObject deathPopUp;
+	public GameObject exitDungeonPopUp;
 	public QuickStatus quickStatus;
 	public QuickSkillChain quickSkillChain;
+	public QuickSkill quickSkill;
+	public SystemUI systemUI;
 	public ItemInformationPopUpControl itemPopUp;
+	public SkillInformationPopUpControl skillPopUp;
 	public Image presentSelectItem;
+	public SkillElement presentSelectSkill;
 	public CharacterInformation info;
 
 	//initialize this script
@@ -49,6 +54,12 @@ public class UserInterfaceManager : MonoBehaviour
 		get { return presentSelectItem; }
 	}
 
+	public SkillElement PresentSelectSkill
+	{
+		get { return presentSelectSkill; }
+		set { presentSelectSkill = value; }
+	}
+
 	//another method
 	//data link
 	public void LinkElement()
@@ -58,13 +69,19 @@ public class UserInterfaceManager : MonoBehaviour
 		statusUI = GameObject.Find( "StatusUI" );
 		enterDungeon = GameObject.Find( "EnterDungeon" );
 		deathPopUp = GameObject.Find( "DeathPopUp" );
+		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
 		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
 		quickSkillChain = GameObject.Find( "QuickSkillChain" ).GetComponent<QuickSkillChain>();
-		itemPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
+		quickSkill = GameObject.Find( "QuickSkill" ).GetComponent<QuickSkill>();
+		systemUI = GameObject.Find( "SystemUI" ).GetComponent<SystemUI>();
+		itemPopUp = GameObject.Find( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
 		itemPopUp.LinkComponent();
+		skillPopUp = GameObject.Find( "SkillPopUp" ).GetComponent<SkillInformationPopUpControl>();
+		skillPopUp.LinkComponent();
 		presentSelectItem = transform.Find( "PresentSelectItem" ).GetComponent<Image>();
 		presentSelectItem.enabled = false;
-		
+		presentSelectSkill = transform.Find( "PresentSelectSkill" ).GetComponent<SkillElement>();
+		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 	}
 
@@ -76,16 +93,29 @@ public class UserInterfaceManager : MonoBehaviour
 
 		if (state)
 		{
-			inventory.GetComponent<Inventory>().InitializeElement();
-			inventory.GetComponent<Inventory>().LinkElement();
-			inventory.GetComponent<Inventory>().UpdateInventory();
+			Inventory temp = inventory.GetComponent<Inventory>();
+			temp.InitializeElement();
+			temp.LinkElement();
+			temp.UpdateInventory( info );
 		}
+		else
+			itemPopUp.ControlComponent( state );
 	}
 
 	//skill ui
 	public void ControlSkillUI( bool state )
 	{
 		skillUI.SetActive( state );
+		
+		if (state)
+		{
+			SkillUI temp = skillUI.GetComponent<SkillUI>();
+			temp.InitializeElement();
+			temp.LinkElement();
+			temp.UpdateSkillUI( info );
+		}
+		else
+			skillPopUp.ControlComponent( state );			
 	}
 
 	//status ui
@@ -97,7 +127,7 @@ public class UserInterfaceManager : MonoBehaviour
 		{
 			statusUI.GetComponent<StatusUI>().LinkElement();
 			statusUI.GetComponent<StatusUI>().UpdateStatusInfo();
-		}
+		}		
 	}
 
 	// enter dungeon
@@ -110,6 +140,12 @@ public class UserInterfaceManager : MonoBehaviour
 	public void ControlDeathPopUp( bool state )
 	{
 		deathPopUp.SetActive( state );
+	}
+	
+	// exit dungeon pop up
+	public void ControlExitDungeonPopUp( bool state )
+	{
+		exitDungeonPopUp.SetActive( state );
 	}
 
 	// close ui
@@ -132,6 +168,9 @@ public class UserInterfaceManager : MonoBehaviour
 			case "DeathPopUp":
 				ControlDeathPopUp( false );
 				break;
+			case "ExitDungeonPopUp":
+				ControlExitDungeonPopUp( false );
+				break;
 		}
 	}
 
@@ -149,6 +188,7 @@ public class UserInterfaceManager : MonoBehaviour
 		ControlStatusUI( false );
 		ControlEnterDungeon( false );
 		ControlDeathPopUp( false );
+		ControlExitDungeonPopUp( false );
 		itemPopUp.ControlComponent( false );
 	}
 
@@ -163,7 +203,21 @@ public class UserInterfaceManager : MonoBehaviour
 		for (int i = 0; i < info.CharacterItem.Length; i++)
 			info.CharacterItem[i] = inventory.ItemSlot[i].ItemInfo;
 	}
-
+	
+	//update by quick skill
+	public void UpdateInstallSkillInfomationByQuickSkill( QuickSkill quickSkill )
+	{
+		for (int i = 0; i < info.InstallSkill.Length; i++)
+			info.InstallSkill[i] = quickSkill.InstallSkill[i].SkillInfo;	
+	}
+	
+	//skill install in quick skill
+	public void InstallQuickSkill()
+	{
+		if (PresentSelectSkill.SkillInfo.Name != "Default")
+			quickSkill.InstallQuickSkill( PresentSelectSkill.SkillInfo );
+	}
+	
 	// on click event - quick button
 	public void QuickButtonEvent( string name )
 	{
@@ -180,7 +234,13 @@ public class UserInterfaceManager : MonoBehaviour
 				break;	
 		}
 	}
-
+	
+	//update system UI
+	public void AsynchronousSystemUI(string data)
+	{
+		systemUI.AddData(data);
+		systemUI.UpdateSystem();
+	}
 
 	//direct update
 	//quick status update
@@ -194,8 +254,8 @@ public class UserInterfaceManager : MonoBehaviour
 		
 		//update present select item
 		if (presentSelectItem.enabled)
-			presentSelectItem.transform.position = Input.mousePosition;		
-
+			presentSelectItem.transform.position = Input.mousePosition;	
+		
 		if (!info.InstalledItem)
 			info.InstallDefaultItem();		
 	}

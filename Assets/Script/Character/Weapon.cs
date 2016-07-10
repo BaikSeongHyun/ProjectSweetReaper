@@ -8,20 +8,23 @@ public class Weapon : MonoBehaviour
 	public CharacterInformation info;
 	bool normalAttack;
 	bool skillAttack;
-	float damage=0;
+	float damage = 0;
 
-	public bool _normalAttack{
+	public bool _normalAttack
+	{
 		get{
 			return normalAttack;
 		}
 	}
 
-	public float _Damage {
+	public float _Damage
+	{
 		get { return damage; }
 	}
 
-	public bool _skillAttack{
-		get{ return skillAttack;}
+	public bool _skillAttack
+	{
+		get{ return skillAttack; }
 	}
 	// Use this for initialization
 	void Start()
@@ -34,42 +37,46 @@ public class Weapon : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		normalAttack = faye._normalAttackState;
-		skillAttack = faye._skillusingState;
+		normalAttack = faye.NormalAttackState;
+		skillAttack = faye.SkillUsingState;
 	}
 
-	void OnCollisionEnter(Collision coll)
+	void OnCollisionEnter( Collision coll )
 	{
 		//IsAttack
-		if (coll.gameObject.layer == LayerMask.NameToLayer ("Enermy")) {
-			FrogBossAI BossAI = coll.gameObject.GetComponent<FrogBossAI> ();
-			if (BossAI != null) {
-				if (normalAttack) {
+		if (coll.gameObject.layer == LayerMask.NameToLayer( "Enemy" ))
+		{
+			FrogBossAI BossAI = coll.gameObject.GetComponent<FrogBossAI>();
+			if (BossAI != null)
+			{
+				if (normalAttack)
 					damage = info.Damage;
-				} else if (skillAttack) {
+				else if (skillAttack)
 					damage = info.Damage;
-				}
-				if (damage != 0) {
-					BossAI.HitDamage (damage);
+				
+				if (damage != 0)
+				{
+					BossAI.HitDamage( damage );
 					damage = 0;
 				}
-			} else {
-				FrogAI MonsterAI = coll.gameObject.GetComponent<FrogAI> ();
-				if (MonsterAI != null) {
-					if (normalAttack) {
+			}
+			else
+			{
+				FrogAI MonsterAI = coll.gameObject.GetComponent<FrogAI>();
+				if (MonsterAI != null)
+				{
+					if (normalAttack)
 						damage = info.Damage;
-					} else if (skillAttack) {
+					else if (skillAttack)
 						damage = info.Damage;
-					}
-					if (damage != 0) {
-						MonsterAI.HitDamage (damage);
+					
+					if (damage != 0)
+					{
+						MonsterAI.HitDamage( damage );
 						damage = 0;
 					}
 				}
 			}
 		}
-		//if he ==0; deathAni call
-
-
 	}
 }

@@ -3,14 +3,23 @@ using System.Collections;
 
 public class FrogHealth : MonoBehaviour
 {
-	public float frogBossHp = 100;
-	public float frogBossDamage = 30;
-	public float frogMaxHp;//BossHp Bar
-	// Use this for initialization`
+	public float frogHp = 100;
+	public float frogDamage = 30;
+	public float frogMaxHp = 100;
 
-	public float _frogBossHp{
-		get{ return frogBossHp; }
+	public float FrogHp
+	{
+		get{ return frogHp; }
+		set{ frogHp = value; }
 	}
-	// Update is called once per frame
 
+	public float FillFrogHp
+	{
+		get { return (frogHp / frogMaxHp); }
+	}
+
+	public float FrogDamage
+	{
+		get { return frogDamage; }
+	}
 }

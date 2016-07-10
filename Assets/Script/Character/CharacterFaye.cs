@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class CharacterFaye : MonoBehaviour
 {
-	public bool isStop=false;
+	public bool isStop = false;
 	//UI
 	public GameObject Effect;
-	public BoxCollider Hit;	
+	public BoxCollider Hit;
 	//Vector3
 	Vector3 destination;
 	Vector3 Pos;
@@ -21,14 +21,13 @@ public class CharacterFaye : MonoBehaviour
 	float moveSpeed = 4.0f;
 	float skillChainWaitingTime = 0.0f;
 	float skillChainWaitingTimeMax = 5.0f;
-	//int skillSlotCount = 1;
 	public int skillingChainCount = 0;
 	public bool runState = false;
 
 	bool skillChainTrigger = false;
-	bool skillusingState = false;
+	bool skillUsingState = false;
 	bool normalAttackState = false;
-	bool deadOrAlive = true;
+	bool isAlive = true;
 	STATE presentState;
 
 	//State Event
@@ -45,34 +44,30 @@ public class CharacterFaye : MonoBehaviour
 		get { return presentState; }
 	}
 
-	public Vector3 _destinaton
+	public Vector3 Destinaton
 	{
-		get {
-			return destination;
-		}set
-		{
-			destination = value;
-		}
+		get { return destination; }
+		set	{ destination = value; }
 	}
 
-	public bool _normalAttackState
+	public bool NormalAttackState
 	{
-		get {
-			return normalAttackState;
-		}
+		get { return normalAttackState; }
 	}
 
-	public bool _skillusingState
+	public bool SkillUsingState
 	{
-		get {
-			return skillusingState;
-		}
+		get { return skillUsingState; }
 	}
 
-	public bool _IsStop {
-		get {
-			return  isStop;
-		}
+	public bool IsStop
+	{
+		get { return  isStop; }
+	}
+
+	public bool IsAlive
+	{
+		get { return isAlive; }
 	}
 
 	public void Start()
@@ -81,32 +76,32 @@ public class CharacterFaye : MonoBehaviour
 		destination = this.transform.position;
 		animator = GetComponent<Animator>();
 		charInfo = GetComponent<CharacterInformation>();
-		Hit.size = new Vector3 (0, 0, 0);
+		Hit.size = new Vector3(0, 0, 0);
 	}
 
 	void Update()
 	{
-		if (skillingChainCount == 5) {
+		if (skillingChainCount == 5)
 			isStop = true;
-		}
+		
 
-		if (!skillusingState) {
+		if (!skillUsingState)
 			isStop = false;
-		}
+		
 
-		if (isStop == true) {
+		if (isStop == true)
 			Time.timeScale = 0.1f;
-		} else {
+		else
 			Time.timeScale = 1.0f;
-		}
+		
 
-		if (deadOrAlive)
+		if (isAlive)
 		{
-			if (normalAttackState || skillusingState) {
-				Hit.size = new Vector3 (0.5f, 1.5f, 1f);
-			} else {
-				Hit.size = new Vector3 (0, 0, 0);
-			}
+			if (normalAttackState || skillUsingState)
+				Hit.size = new Vector3(0.5f, 1.5f, 1f);
+			else
+				Hit.size = new Vector3(0, 0, 0);
+			
 			if (skillChainTrigger == true)
 			{
 				//skillChaintWaitingTimeMax=4.0f (Default)
@@ -129,12 +124,16 @@ public class CharacterFaye : MonoBehaviour
 			//fixed Y
 			transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 			Move();
+			
+			if (charInfo.PresentResourcePoint <= charInfo.OriginResourcePoint)
+				charInfo.PresentResourcePoint += 10f * Time.deltaTime;
+			
 		}
 	}
 
 	void Move()
 	{
-		if (skillusingState == true)
+		if (skillUsingState == true)
 		{
 			SetState( "Idle" );
 		}
@@ -149,9 +148,7 @@ public class CharacterFaye : MonoBehaviour
 				animator.Play( "Idle" );
 			}
 			if (Vector3.Distance( destination, transform.position ) <= 0.1f)
-			{
 				SetState( "Idle" );
-			}
 			else
 			{
 				SetState( "Run" );
@@ -171,16 +168,17 @@ public class CharacterFaye : MonoBehaviour
 	{
 		charInfo.presentHealthPoint = charInfo.OriginHealthPoint;
 		transform.position = respawnPoint;
+		destination = transform.position;
 		animator.Play( "Idle" );
-		deadOrAlive = true;
+		isAlive = true;
 	}
 
 	public void ChainTrigger()
 	{
-		if (skillusingState == true)
+		if (skillUsingState)
 		{
 			skillChainTrigger = true;
-			skillusingState = false;
+			skillUsingState = false;
 		}
 		normalAttackState = false;
 	}
@@ -202,17 +200,17 @@ public class CharacterFaye : MonoBehaviour
 
 	public void HitDamage( float _damage )
 	{
-		if (deadOrAlive)
+		if (isAlive)
 		{
 			if (charInfo.PresentHealthPoint > 0)
 			{
-				this.charInfo.presentHealthPoint -= _damage;
+				this.charInfo.PresentHealthPoint -= _damage;
 				animator.SetTrigger( "PlayerHitTrigger" );
 			}
 			if (charInfo.PresentHealthPoint <= 0)
 			{
 				animator.SetTrigger( "PlayerDie" );
-				deadOrAlive = false;
+				isAlive = false;
 			}
 		}
 	}
@@ -224,51 +222,53 @@ public class CharacterFaye : MonoBehaviour
 
 	public void SkillCommand( string _command )
 	{
-		if (deadOrAlive) {
-			if (_command != "Evation") {
+		if (isAlive && charInfo.PresentResourcePoint >= 20f)
+		{
+			charInfo.PresentResourcePoint -= 20f;
+			if (_command != "Evation")
+			{
 				skillChainTrigger = false;
 				skillChainWaitingTimeMax = skillChainWaitingTimeMax - 1;
-				if (skillingChainCount >= 5) {
+				if (skillingChainCount >= 5)
 					skillingChainCount = 0;
-				}
+				
 				skillChainWaitingTime = 0.0f;
 			}
-			Effect.SetActive (true);
-			animator.Play ("Idle");
+			Effect.SetActive( true );
+			animator.Play( "Idle" );
 			destination = this.transform.position;
-			switch (_command) {
-			case "A":
-				skillingChainCount++;
-				SetState ("Skill_A");
-				skillusingState = true;
-				break;
-			case "S":
-				skillingChainCount++;
-				SetState ("Skill_S");
-				skillusingState = true;
-				break;
-			case "D":
-				skillingChainCount++;
-				SetState ("Skill_D");
-				skillusingState = true;
-				break;
-			case "Q":
-				skillingChainCount++;
-				SetState ("Skill_Q");
-				skillusingState = true;
-				break;
-		
-			case "Skill2":
-				skillingChainCount++;
-				SetState ("Skill_W");
-				skillusingState = true;
-				break;
-
-			case "Skill3":
-				skillingChainCount++;
-				SetState ("Skill_E");
-				skillusingState = true;
-				break;
+			switch (_command)
+			{
+				case "A":
+					skillingChainCount++;
+					SetState( "Skill_A" );
+					skillUsingState = true;
+					break;
+				case "S":
+					skillingChainCount++;
+					SetState( "Skill_S" );
+					skillUsingState = true;
+					break;
+				case "D":
+					skillingChainCount++;
+					SetState( "Skill_D" );
+					skillUsingState = true;
+					break;
+				case "Q":
+					skillingChainCount++;
+					SetState( "Skill_Q" );
+					skillUsingState = true;
+					break;		
+				case "Skill2":
+					skillingChainCount++;
+					SetState( "Skill_W" );
+					skillUsingState = true;
+					break;
+				case "Skill3":
+					skillingChainCount++;
+					SetState( "Skill_E" );
+					skillUsingState = true;
+					break;
 			}
 		}
 	}
@@ -279,7 +279,7 @@ public class CharacterFaye : MonoBehaviour
 		SetStateDefault();
 		switch (state)
 		{
-		case "Idle":
+			case "Idle":
 				presentState = STATE.Idle;
 				animator.SetBool( "Idle", true );
 				break;
@@ -309,5 +309,24 @@ public class CharacterFaye : MonoBehaviour
 				animator.SetTrigger( "Skill_E" );
 				break;
 		}
+	}
+	
+	//
+	public bool AcquireItem( DropItem item, UserInterfaceManager mainUI )
+	{
+		if (item.gameObject.name == "DropGold")
+		{			
+			charInfo.Money += item.Gold;
+			mainUI.AsynchronousSystemUI( item.Gold.ToString() + " 골드를 획득하셨습니다." );
+			return true;
+		}
+		else if (item.gameObject.name == "DropItem")
+		{
+			mainUI.AsynchronousSystemUI( item.ItemInfo.Name + "를(을) 획득하셨습니다." );
+			return charInfo.AddItem( item.ItemInfo );			
+		}
+		else
+			return false;
+		
 	}
 }

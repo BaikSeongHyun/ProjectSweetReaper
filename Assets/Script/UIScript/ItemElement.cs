@@ -5,7 +5,7 @@ using System.Collections;
 public class ItemElement : MonoBehaviour
 {
 	//complex data field
-	public ItemInformationPopUpControl iPopUp;
+	public ItemInformationPopUpControl itemPopUp;
 	public Image itemIcon;
 	public Item itemInfo;
 
@@ -23,35 +23,33 @@ public class ItemElement : MonoBehaviour
 
 	// initialize this script
 	void Start()
-	{
-		itemIcon = GetComponent<Image>();
-		iPopUp = GameObject.FindWithTag( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
-		//itemInfo = null;
+	{		
+		itemPopUp = GameObject.Find( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
 	}
 
 	//update item pop up
 	public void UpdateItemPopUp()
 	{
-		if (ItemInfo.Name == "Default")
+		if (itemInfo.Name == "Default")
 			return;
 		
-		iPopUp.LinkComponent();
-		iPopUp.ControlComponent( true );
-		iPopUp.UpdateItemInformation( itemInfo, transform.position );
+		itemPopUp.LinkComponent();
+		itemPopUp.ControlComponent( true );
+		itemPopUp.UpdateItemInformation( itemInfo, transform.position );
 	}
 
 	//close item pop up
 	public void CloseItemPopUp()
 	{
-		iPopUp.ControlComponent( false );
+		itemPopUp.ControlComponent( false );
 	}
 
 	//set item icon -> no item set default
 	public void UpdateItemIcon()
 	{
+		itemIcon = GetComponent<Image>();
 		itemIcon.sprite = itemInfo.Icon;
 		if(itemInfo.Name == "Default")
-			itemIcon.sprite = Resources.Load<Sprite>( "Item/ItemDefault" );
-		  
+			itemIcon.sprite = Resources.Load<Sprite>( "Item/ItemDefault" );		  
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameController : MonoBehaviour
@@ -22,6 +23,14 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		//data base initialze
+		if (!dataBase.OnCreate)
+		{
+			dataBase.CreateItemInformation();
+			dataBase.CreateSkillInformation();
+			dataBase.OnCreate = true;
+		}
+		
 		//charaecter section
 		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)
 		{
@@ -51,8 +60,8 @@ public class GameController : MonoBehaviour
 		}
 		
 		//ui section
-		//always update
-
+		if (Input.GetButtonDown( "SkillUI" ))
+			mainUI.ControlSkillUI( !mainUI.OnSkillUI );
 		if (Input.GetButtonDown( "Status" ))
 			mainUI.ControlStatusUI( !mainUI.OnStatusUI );
 		if (Input.GetButtonDown( "Inventory" ))
@@ -65,16 +74,23 @@ public class GameController : MonoBehaviour
 		{
 			Debug.Log( "Active close present element" );
 			mainUI.ClosePresentElement();
-		}
-
-		if (!dataBase.OnCreate)
-		{
-			dataBase.CreateItemInformation();
-			dataBase.CreateSkillInformation();
-			dataBase.OnCreate = true;
-		}
+		}		
 
 		mainUI.UpdateMainUI();
+		
+		//raycast mode
+		Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
+		RaycastHit hitInfo;
+			
+		if (Physics.Raycast( ray, out hitInfo, Mathf.Infinity, 1 << LayerMask.NameToLayer( "Item" ) ))
+		{
+			if (faye.AcquireItem( hitInfo.collider.gameObject.GetComponent<DropItem>(), mainUI ))
+				Destroy( hitInfo.collider.gameObject );
+		}
+		
+		//death popup
+		if (!faye.IsAlive)
+			mainUI.ControlDeathPopUp( true );		
 	}
 	//another method
 
@@ -87,7 +103,13 @@ public class GameController : MonoBehaviour
 
 		if (Physics.Raycast( ray, out hitInfo, Mathf.Infinity, 1 << LayerMask.NameToLayer( "Terrain" ) ))
 		{
-			faye._destinaton = hitInfo.point;
+			faye.Destinaton = hitInfo.point;
 		}
+	}
+	
+	//return camp field
+	public void ReturnCampField()
+	{
+		SceneManager.LoadScene( "CampField" );
 	}
 }

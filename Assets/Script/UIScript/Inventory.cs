@@ -9,7 +9,6 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
 	//complex data field
 	public UserInterfaceManager mainUI;
-	public CharacterInformation info;
 	public ItemElement topInstall;
 	public ItemElement bottomInstall;
 	public ItemElement bladeInstall;
@@ -17,6 +16,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	public ItemElement[] elements;
 	public Text money;
 	public ItemElement presentItemElement;
+	public ItemElement downPointItemElement;
 
 	//property
 	public ItemElement TopInstall
@@ -50,7 +50,6 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	public void InitializeElement()
 	{		
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
-		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		elements = new ItemElement[35];
 	}
 
@@ -67,13 +66,13 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		for (int i = 0; i < elements.Length; i++)
 		{
 			string slot = "ItemSlot";
-			slot += ( i + 1 ).ToString();
+			slot += (i + 1).ToString();
 			elements[i] = transform.Find( slot ).GetComponent<ItemElement>();
 		}
 	}
 
 	//update inventory data
-	public void UpdateInventory()
+	public void UpdateInventory( CharacterInformation info )
 	{
 		money.text = info.Money.ToString();
 
@@ -120,6 +119,8 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//mouse click item element
 	public void OnPointerDown( PointerEventData eventData )
 	{
+		presentItemElement.CloseItemPopUp();
+		
 		//insert item data
 		try
 		{			
@@ -133,38 +134,35 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		//delete item
 		if (presentItemElement == null)
 			return;
-
-		//mode swap item
+		
+		//uninstall item
 		if (eventData.button == PointerEventData.InputButton.Right && presentItemElement.CompareTag( "InstalledItem" ))
 			UninstallItem( presentItemElement );
-
-		SwapInstallItem( presentItemElement.ItemInfo.Section, presentItemElement );
+		
+		//install item
+		if (eventData.button == PointerEventData.InputButton.Right)
+			SwapInstallItem( presentItemElement.ItemInfo.Section, presentItemElement );
 		   
 		//mode drag send item icon data -> gameController
-		if (eventData.button == PointerEventData.InputButton.Left)
-		{
-			presentItemElement.CloseItemPopUp();
+		if (eventData.button == PointerEventData.InputButton.Left && presentItemElement.ItemInfo.Name != "Default")
+		{			
 			mainUI.PresentSelectItem.enabled = true;
 			mainUI.PresentSelectItem.sprite = presentItemElement.ItemIcon.sprite;
 		}
 
-		mainUI.UpdateItemInformationByInventory( this );
-	
+		mainUI.UpdateItemInformationByInventory( this );	
 	}
 
 	//mouse button up event
 	public void OnPointerUp( PointerEventData eventData )
-	{
+	{		
 		if (presentItemElement == null)
 			return;
 
-		if (presentItemElement != null)
-			presentItemElement.CloseItemPopUp();
-				
-		ItemElement downPointItemElement;
 		try
 		{
 			downPointItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
+			Debug.Log( eventData.pointerEnter );
 		}
 		catch (NullReferenceException e)
 		{
@@ -174,12 +172,15 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 		if (downPointItemElement == null)
 		{
-			
+			Debug.Log( "Null! force!" );
+			return;
 		}
-		
-		//default - no edit or self
-		if (presentItemElement.Equals( downPointItemElement ))
-			presentItemElement = null;		
+		else if (downPointItemElement.CompareTag( "InstalledItem" ))
+			InstallItem( presentItemElement, downPointItemElement );
+		else if (downPointItemElement != null)
+			SwapItem( presentItemElement, downPointItemElement );		
+
+		mainUI.UpdateItemInformationByInventory( this );
 	}
 
 	//uninstall item
@@ -195,18 +196,6 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		}
 
 		//send message for system UI
-	}
-
-	//swap item -> a to b
-	void SwapItem( ItemElement presentSelect, ItemElement replaceSelect )
-	{
-		Item temp;
-		temp = presentSelect.ItemInfo;
-		presentSelect.ItemInfo = replaceSelect.ItemInfo;
-		replaceSelect.ItemInfo = temp;
-
-		presentSelect.UpdateItemIcon();
-		replaceSelect.UpdateItemIcon();
 	}
 
 	//installed item swap
@@ -226,6 +215,27 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 			case Item.SECTION.Bottom:
 				SwapItem( presentSelect, bottomInstall );
 				break;
+			case Item.SECTION.Consume:
+				break;
 		}
+	}
+	
+	//install item
+	void InstallItem( ItemElement presentItem, ItemElement replaceSelect )
+	{
+		if (replaceSelect.ItemInfo.Section == presentItem.ItemInfo.Section)
+			SwapItem( presentItem, replaceSelect );		
+	}
+	
+	//swap item -> a to b
+	void SwapItem( ItemElement presentSelect, ItemElement replaceSelect )
+	{
+		Item temp;
+		temp = presentSelect.ItemInfo;
+		presentSelect.ItemInfo = replaceSelect.ItemInfo;
+		replaceSelect.ItemInfo = temp;
+
+		presentSelect.UpdateItemIcon();
+		replaceSelect.UpdateItemIcon();
 	}
 }

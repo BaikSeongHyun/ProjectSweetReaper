@@ -11,7 +11,6 @@ public class CharacterInformation : MonoBehaviour
 	int characterLevel;
 
 	//exp
-	float exp;
 	float presentExp;
 	float requireExp;
 
@@ -29,11 +28,6 @@ public class CharacterInformation : MonoBehaviour
 	public float presentResourcePoint;
 	float rootResourcePoint;
 	float originResourcePoint;
-
-	public float OriginResourcePoint
-	{
-		get { return originResourcePoint; }
-	}
 
 	//critical proability
 	float criticalProability;
@@ -71,8 +65,13 @@ public class CharacterInformation : MonoBehaviour
 	public Item handleInstall;
 		
 	// have item
-	Item[] characterItem;
+	public Item[] characterItem;
 	int money;
+		
+	//char skill infor mation
+	//slot set up skill
+	public Skill[] characterSkill;
+	public Skill[] installSkill;
 
 	//property
 
@@ -95,15 +94,32 @@ public class CharacterInformation : MonoBehaviour
 	{
 		get { return originHealthPoint; }
 	}
-	//use quick status health bar
+
 	public float PresentHealthPoint
 	{
-		get { return( presentHealthPoint / originHealthPoint ); }
+		get { return presentHealthPoint; }
+		set { presentHealthPoint = value; }
+	}
+	//use quick status health bar
+	public float FillHealthPoint
+	{
+		get { return(presentHealthPoint / originHealthPoint); }
+	}
+
+	public float OriginResourcePoint
+	{
+		get { return originResourcePoint; }
 	}
 
 	public float PresentResourcePoint
 	{
-		get { return ( presentResourcePoint / originResourcePoint ); }
+		get { return presentResourcePoint; }
+		set { presentResourcePoint = value; }
+	}
+	//use quick status resource bar
+	public float FillResourcePoint
+	{
+		get { return (presentResourcePoint / originResourcePoint); }
 	}
 
 	public float CriticalProability
@@ -170,6 +186,7 @@ public class CharacterInformation : MonoBehaviour
 	public int Money
 	{
 		get { return money; }
+		set { money = value; }
 	}
 
 	public bool InstalledItem
@@ -178,9 +195,17 @@ public class CharacterInformation : MonoBehaviour
 		set { installedItem = value; }
 	}
 
-	//char skill infor mation
-	//slot set up skill
-	Skill[] charSkill;
+	public Skill[] CharacterSkill
+	{
+		get { return characterSkill; }
+	}
+
+	public Skill[] InstallSkill
+	{
+		get { return installSkill; }
+		set { installSkill = value; }
+	}
+
 	
 	//data base
 	DataBase dataBase;
@@ -189,7 +214,7 @@ public class CharacterInformation : MonoBehaviour
 	void Start()
 	{
 		characterItem = new Item[35];
-		charSkill = new Skill[8];
+		characterSkill = new Skill[9];
 		DefaultStatus();
 		dataBase = GameObject.FindWithTag( "DataBase" ).GetComponent<DataBase>();
 	}
@@ -198,38 +223,62 @@ public class CharacterInformation : MonoBehaviour
 	public void	DefaultStatus()
 	{
 		characterName = "Faye";
-		characterLevel = 1;
+		characterLevel = 5;
 
-		presentHealthPoint = 50.0f;
-		originHealthPoint = 50.0f;
-		presentResourcePoint = 30.0f;
-		originResourcePoint = 30.0f;
-		criticalProability = 0.0f;
+		presentHealthPoint = 2614.0f;
+		originHealthPoint = 2614.0f;
+		presentResourcePoint = 120.0f;
+		originResourcePoint = 120.0f;
+		criticalProability = 10.0f;
 
-		exp = 0.0f;
-
-		presentStrength = 150; 
-		presentIntelligence = 150;
-		presentDexterity = 5;
-		presentLuck = 5;
+		presentExp = 345.0f;
+		requireExp = 4035.0f;
 		
-		presentDamage	= 30.0f;	
-		money = 0;
+		presentStrength = 35; 
+		presentIntelligence = 25;
+		presentDexterity = 25;
+		presentLuck = 15;
+		
+		presentDamage = 85.0f;	
+		money = 1203;
 
 	}
 
 	//set default item
 	public void InstallDefaultItem()
 	{
-		topInstall = new Item ( dataBase.FindItem( "TheHolySpear" ) );
-		bottomInstall = new Item ( dataBase.FindItem( "DropOfSorcerer" ) );
-		bladeInstall = new Item ( dataBase.FindItem( "FearBlade" ) );
-		handleInstall = new Item ( dataBase.FindItem( "IronHandle" ) );
+		topInstall = new Item(dataBase.FindItem( "TheHolySpear" ));
+		bottomInstall = new Item(dataBase.FindItem( "DropOfSorcerer" ));
+		bladeInstall = new Item(dataBase.FindItem( "FearBlade" ));
+		handleInstall = new Item(dataBase.FindItem( "IronHandle" ));
 
 		for (int i = 0; i < characterItem.Length; i++)
-			characterItem[i] = new Item ();	
+			characterItem[i] = new Item(dataBase.FindItem( "Default" ));	
 
 		installedItem = true;
+	}
+
+	public void SetDefaultSkill()
+	{
+		for (int i = 0; i < characterSkill.Length; i++)
+			characterSkill[i] = new Skill(dataBase.FindSkill( "Default" ));
+		
+		for (int i = 0; i < installSkill.Length; i++)
+			installSkill[i] = new Skill(dataBase.FindSkill( "Default" ));
+	}
+
+	public bool AddItem( Item item )
+	{
+		for (int i = 0; i < characterItem.Length; i++)
+		{
+			if (characterItem[i].Name == "Default")
+			{
+				characterItem[i] = new Item(item);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	//save data load and apply

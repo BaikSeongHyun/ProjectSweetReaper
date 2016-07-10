@@ -25,11 +25,11 @@ public class QuickStatus : MonoBehaviour
 		resourceBar = transform.Find( "ResourcePointBar" ).GetComponent<Image>();
 	}
 
-	public void UpdateQuickStatusInfo(CharacterInformation info)
+	public void UpdateQuickStatusInfo( CharacterInformation info )
 	{
 		characterName.text = info.CharacterName;
 		level.text = info.Level.ToString();
-		healthBar.fillAmount = info.PresentHealthPoint;
-		resourceBar.fillAmount = info.PresentResourcePoint;
+		healthBar.fillAmount = info.FillHealthPoint;
+		resourceBar.fillAmount = info.FillResourcePoint;
 	}
 }
