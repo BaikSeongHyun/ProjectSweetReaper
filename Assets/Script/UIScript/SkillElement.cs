@@ -45,7 +45,7 @@ public class SkillElement : MonoBehaviour
 	{
 		skillIcon = GetComponent<Image>();
 		skillIcon.sprite = skillInfo.Icon;
-		if (SkillInfo.Name == "Default" || skillInfo.LearnLevel <= info.Level)
+		if (SkillInfo.Namde == "Default" || skillInfo.LearnLevel <= info.Level)
 			skillIcon.sprite = Resources.Load<Sprite>( "Skill/SkillDefault" );
 	}
 }
