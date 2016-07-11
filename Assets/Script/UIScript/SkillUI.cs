@@ -10,6 +10,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 	//complex data field
 	public UserInterfaceManager mainUI;
 	public SkillElement[] elements;
+	public SkillElement presentSkillElement;
 
 	public SkillElement[] CharacterSkill
 	{
@@ -27,7 +28,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 		for (int i = 0; i < elements.Length; i++)
 		{
 			string skillItem = "SkillItem";
-			skillItem += (i + 1).ToString();
+			skillItem += ( i + 1 ).ToString();
 			elements[i] = transform.Find( skillItem ).GetComponent<SkillElement>();	
 		}				
 	}
@@ -44,26 +45,20 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 	//skill element in -> pop up item information
 	public void OnPointerEnter( PointerEventData eventData )
 	{
-		mainUI.PresentSelectSkill.enabled = true;
-		mainUI.PresentSelectSkill = eventData.pointerEnter.GetComponent<SkillElement>();
-
-		if (mainUI.PresentSelectSkill != null)
-			mainUI.PresentSelectSkill.UpdateSkillPopUp();
+		presentSkillElement = eventData.pointerEnter.GetComponent<SkillElement>();
+		if (presentSkillElement != null)
+			presentSkillElement.UpdateSkillPopUp();
 	}
 
 	//skill element out -> pop up skill information
 	public void OnPointerExit( PointerEventData eventData )
 	{
-		if (mainUI.PresentSelectSkill.enabled)
+		if (presentSkillElement == null)
 			return;
 
-		if (mainUI.PresentSelectSkill == null)
-			return;
-
-		mainUI.PresentSelectSkill.CloseSkillPopUp();
-		mainUI.PresentSelectSkill.enabled = false;
+		presentSkillElement.CloseSkillPopUp();
+		presentSkillElement = null;
 	}
-
 
 	//mouse click skill element
 	public void OnPointerDown( PointerEventData eventData )
@@ -80,7 +75,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 			mainUI.PresentSelectSkill = null;
 		}
 		//delete item
-		if (mainUI.PresentSelectSkill == null)
+		if (mainUI.PresentSelectSkill.SkillInfo.Name == "Default")
 			return;
 
 		//uninstall item

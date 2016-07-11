@@ -8,37 +8,38 @@ public class CharacterInformation : MonoBehaviour
 	string characterName;
 
 	//level
-	int characterLevel;
+	public int characterLevel;
 
 	//exp
 	float presentExp;
 	float requireExp;
 
 	//damage
-	float presentDamage;
+	public float presentDamage;
 	float rootDamage;
 
 	//hp - use public for test
 	public float presentHealthPoint;
 	float rootHealthPoint;
-	float originHealthPoint;
+	public float originHealthPoint;
 
 
 	//rp - for use skill
 	public float presentResourcePoint;
 	float rootResourcePoint;
-	float originResourcePoint;
+	public float originResourcePoint;
 
 	//critical proability
-	float criticalProability;
+	float rootCriticalProability;
+	public float presentCriticalProability;
 		
 	//str
 	int rootStrength;
-	int presentStrength;
+	public int presentStrength;
 		
 	//intell
 	int rootIntelligence;
-	int presentIntelligence;
+	public int presentIntelligence;
 
 	public int Intelligence
 	{
@@ -47,11 +48,11 @@ public class CharacterInformation : MonoBehaviour
 	
 	//dex
 	int rootDexterity;
-	int presentDexterity;
+	public int presentDexterity;
 		
 	//luck
 	int rootLuck;
-	int presentLuck;
+	public int presentLuck;
 
 	//chain information
 	int comboCounter;
@@ -103,7 +104,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status health bar
 	public float FillHealthPoint
 	{
-		get { return(presentHealthPoint / originHealthPoint); }
+		get { return( presentHealthPoint / originHealthPoint ); }
 	}
 
 	public float OriginResourcePoint
@@ -119,12 +120,12 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status resource bar
 	public float FillResourcePoint
 	{
-		get { return (presentResourcePoint / originResourcePoint); }
+		get { return ( presentResourcePoint / originResourcePoint ); }
 	}
 
 	public float CriticalProability
 	{
-		get { return criticalProability; }
+		get { return presentCriticalProability; }
 	}
 
 	public int Strength
@@ -223,23 +224,23 @@ public class CharacterInformation : MonoBehaviour
 	public void	DefaultStatus()
 	{
 		characterName = "Faye";
-		characterLevel = 5;
+		characterLevel = 4;
 
 		presentHealthPoint = 2614.0f;
 		originHealthPoint = 2614.0f;
 		presentResourcePoint = 120.0f;
 		originResourcePoint = 120.0f;
-		criticalProability = 10.0f;
+		rootCriticalProability = 10.0f;
 
 		presentExp = 345.0f;
 		requireExp = 4035.0f;
 		
-		presentStrength = 35; 
-		presentIntelligence = 25;
-		presentDexterity = 25;
-		presentLuck = 15;
+		rootStrength = 35; 
+		rootIntelligence = 25;
+		rootDexterity = 25;
+		rootLuck = 15;
 		
-		presentDamage = 85.0f;	
+		rootDamage = 85.0f;	
 		money = 1203;
 
 	}
@@ -247,24 +248,26 @@ public class CharacterInformation : MonoBehaviour
 	//set default item
 	public void InstallDefaultItem()
 	{
-		topInstall = new Item(dataBase.FindItem( "TheHolySpear" ));
-		bottomInstall = new Item(dataBase.FindItem( "DropOfSorcerer" ));
-		bladeInstall = new Item(dataBase.FindItem( "FearBlade" ));
-		handleInstall = new Item(dataBase.FindItem( "IronHandle" ));
+		topInstall = new Item ( dataBase.FindItem( "TheHolySpear" ) );
+		bottomInstall = new Item ( dataBase.FindItem( "DropOfSorcerer" ) );
+		bladeInstall = new Item ( dataBase.FindItem( "FearBlade" ) );
+		handleInstall = new Item ( dataBase.FindItem( "IronHandle" ) );
 
 		for (int i = 0; i < characterItem.Length; i++)
-			characterItem[i] = new Item(dataBase.FindItem( "Default" ));	
+			characterItem[i] = new Item ( dataBase.FindItem( "Default" ) );	
 
 		installedItem = true;
+		UpdateInventoryStatus();
 	}
 
 	public void SetDefaultSkill()
 	{
 		for (int i = 0; i < characterSkill.Length; i++)
-			characterSkill[i] = new Skill(dataBase.FindSkill( "Default" ));
+				characterSkill[i] = new Skill ( dataBase.SkillInformation[i] );
 		
+
 		for (int i = 0; i < installSkill.Length; i++)
-			installSkill[i] = new Skill(dataBase.FindSkill( "Default" ));
+			installSkill[i] = new Skill ( dataBase.FindSkill( "Default" ) );
 	}
 
 	public bool AddItem( Item item )
@@ -273,12 +276,31 @@ public class CharacterInformation : MonoBehaviour
 		{
 			if (characterItem[i].Name == "Default")
 			{
-				characterItem[i] = new Item(item);
+				characterItem[i] = new Item ( item );
 				return true;
 			}
 		}
 		
 		return false;
+	}
+
+	public void UpdateStatus( Item item )
+	{
+		presentDamage = rootDamage + item.WeaponAtk;
+		originHealthPoint = rootHealthPoint + item.WeaponDef;
+		presentStrength = rootStrength + item.WeaponStr;
+		presentDexterity = rootDexterity + item.WeaponDex;
+		presentIntelligence = rootIntelligence + item.WeaponInt;
+		presentLuck = rootLuck + item.WeaponLuck;
+		presentCriticalProability = rootCriticalProability + item.WeaponCri;
+	}
+
+	public void UpdateInventoryStatus()
+	{
+		UpdateStatus( topInstall );
+		UpdateStatus( bottomInstall );
+		UpdateStatus( bladeInstall );
+		UpdateStatus( handleInstall );
 	}
 
 	//save data load and apply

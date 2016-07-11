@@ -28,7 +28,7 @@ public class SkillInformationPopUpControl : MonoBehaviour
 		else
 		{
 			ControlComponent( true );
-			skillInformation.sprite = Resources.Load<Sprite>( "SkillInfomation" + info.Name );
+			skillInformation.sprite = Resources.Load<Sprite>( "Skill/SkillInfomation" + info.Name );
 		}
 	}
 

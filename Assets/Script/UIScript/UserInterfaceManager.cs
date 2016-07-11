@@ -202,6 +202,9 @@ public class UserInterfaceManager : MonoBehaviour
 
 		for (int i = 0; i < info.CharacterItem.Length; i++)
 			info.CharacterItem[i] = inventory.ItemSlot[i].ItemInfo;
+
+		info.UpdateInventoryStatus();
+		statusUI.GetComponent<StatusUI>().UpdateStatusInfo();
 	}
 	
 	//update by quick skill
@@ -215,7 +218,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public void InstallQuickSkill()
 	{
 		if (PresentSelectSkill.SkillInfo.Name != "Default")
-			quickSkill.InstallQuickSkill( PresentSelectSkill.SkillInfo );
+			quickSkill.InstallQuickSkill( PresentSelectSkill.SkillInfo, info );
 	}
 	
 	// on click event - quick button
@@ -236,9 +239,9 @@ public class UserInterfaceManager : MonoBehaviour
 	}
 	
 	//update system UI
-	public void AsynchronousSystemUI(string data)
+	public void AsynchronousSystemUI( string data )
 	{
-		systemUI.AddData(data);
+		systemUI.AddData( data );
 		systemUI.UpdateSystem();
 	}
 
@@ -257,7 +260,10 @@ public class UserInterfaceManager : MonoBehaviour
 			presentSelectItem.transform.position = Input.mousePosition;	
 		
 		if (!info.InstalledItem)
-			info.InstallDefaultItem();		
+		{
+			info.InstallDefaultItem();	
+			info.SetDefaultSkill();
+		}
 	}
 
 }

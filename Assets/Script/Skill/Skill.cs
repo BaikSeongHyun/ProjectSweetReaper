@@ -77,6 +77,7 @@ public class Skill
 		damage = data.damage;
 		resource = data.resource;
 		state = data.state;
+		icon = data.icon;
 	}
 	
 	//set icon

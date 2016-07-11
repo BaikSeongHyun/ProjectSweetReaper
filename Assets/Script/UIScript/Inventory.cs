@@ -107,8 +107,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	{
 		if (mainUI.PresentSelectItem.enabled)
 			return;
-		
-		Debug.Log( "Active on pointer exit" );
+	
 		if (presentItemElement == null)
 			return;
 		

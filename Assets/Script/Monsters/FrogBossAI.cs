@@ -26,7 +26,7 @@ public class FrogBossAI : MonoBehaviour
 	bool isAlive = true;
 	bool isAttack = false;
 
-	Image health;
+	public Image health;
 	public GameObject dropItem;
 	public GameObject dropGold;
 
