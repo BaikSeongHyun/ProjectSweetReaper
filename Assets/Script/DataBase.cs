@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class DataBase : MonoBehaviour
+public class DataBase
 {
 	public bool onCreate;
 
@@ -13,40 +13,50 @@ public class DataBase : MonoBehaviour
 		set { onCreate = value; }
 	}
 	//complex data field
-	public Item[] itemInformation;
-	public Skill[] skillInformation;
+	public List<Item> itemInformation;
+	public List<Skill> skillInformation;
+	private static DataBase dataBaseInstance = null;
 
-	public Item[] ItemInformation
+	public List<Item> ItemInformation
 	{
 		get { return itemInformation; }
 	}
 
-	public Skill[] SkillInformation
+	public List<Skill> SkillInformation
 	{
 		get { return skillInformation; }
 	}
 
-
-	void Start()
+	//constructor set - use singletone
+	//constructor - mode static;
+	static DataBase ()
 	{
-		onCreate = false;
+		dataBaseInstance = new DataBase ();
 	}
-	//another method
+	//constructor - no parameter
+	private DataBase ()
+	{
+		CreateItemInformation();
+		CreateSkillInformation();
+	}
+
+	public static DataBase Instance
+	{
+		get { return dataBaseInstance; }
+	}
+
 
 	//initialize item data
 	public void CreateItemInformation()
 	{
 		//(string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section)
-		itemInformation = new Item[10];
-		itemInformation[0] = new Item ( "FearBlade", 1000, 3, 10, 0, 10, 10, 0, 0, 1, Item.SECTION.Blade );
-		itemInformation[1] = new Item ( "IronHandle", 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.SECTION.Handle );
-		itemInformation[2] = new Item ( "DropOfSorcerer", 300, 5, 60, 0, 0, 0, 7, 4, 1, Item.SECTION.Bottom );
-		itemInformation[3] = new Item ( "TheHolySpear", 800, 10, 50, 0, 19, 10, 0, 0, 10, Item.SECTION.Top );
-		
-		for (int i = 4; i < itemInformation.Length; i++)
-			itemInformation[i] = new Item ();
-		
-		for (int i = 0; i < itemInformation.Length; i++)
+		itemInformation = new List<Item> ();
+		itemInformation.Add( new Item ( 1, "FearBlade", 1000, 3, 10, 0, 10, 10, 0, 0, 1, Item.SECTION.Blade ) );
+		itemInformation.Add( new Item ( 2, "IronHandle", 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.SECTION.Handle ) );
+		itemInformation.Add( new Item ( 3, "DropOfSorcerer", 300, 5, 60, 0, 0, 0, 7, 4, 1, Item.SECTION.Bottom ) );
+		itemInformation.Add( new Item ( 4, "TheHolySpear", 800, 10, 50, 0, 19, 10, 0, 0, 10, Item.SECTION.Top ) );
+				
+		for (int i = 0; i < itemInformation.Count; i++)
 			itemInformation[i].SetSpriteIcon();
 	}
 
@@ -55,37 +65,27 @@ public class DataBase : MonoBehaviour
 	{
 		//(string _name, int _learnLevel, float _coolTime, float _damage, float _resource, STATE _state)
 		
-		skillInformation = new Skill[9];
-		skillInformation[0] = new Skill ( "Bash", 1, 0f, 350, 20, Skill.STATE.Active );
-		skillInformation[1] = new Skill ( "TwinRush", 1, 10.0f, 342, 10, Skill.STATE.Active );
-		skillInformation[2] = new Skill ( "CrescentCut", 1, 6f, 560, 15, Skill.STATE.Active );
-		skillInformation[3] = new Skill ( "LandCrush", 5, 18f, 1025, 90, Skill.STATE.Active );
-		skillInformation[4] = new Skill ( "WheelScythe", 5, 20f, 767, 20, Skill.STATE.Active );
-		skillInformation[5] = new Skill ( "UpperScythe", 5, 10f, 412, 20, Skill.STATE.Active );
-		for (int i = 6; i < skillInformation.Length; i++)
-			skillInformation[i] = new Skill ();
-		
-		for (int i = 0; i < skillInformation.Length; i++)
+		skillInformation = new List<Skill> ();
+		skillInformation.Add( new Skill ( 1, "Bash", 1, 0f, 350, 20, Skill.STATE.Active ) );
+		skillInformation.Add( new Skill ( 2, "TwinRush", 1, 10.0f, 342, 10, Skill.STATE.Active ) );
+		skillInformation.Add( new Skill ( 3, "CrescentCut", 1, 6f, 560, 15, Skill.STATE.Active ) );
+		skillInformation.Add( new Skill ( 4, "LandCrush", 5, 18f, 1025, 90, Skill.STATE.Active ) );
+		skillInformation.Add( new Skill ( 5, "WheelScythe", 5, 20f, 767, 20, Skill.STATE.Active ) );
+		skillInformation.Add( new Skill ( 6, "UpperScythe", 5, 10f, 412, 20, Skill.STATE.Active ) );
+			
+		for (int i = 0; i < skillInformation.Count; i++)
 			skillInformation[i].SetSpriteIcon();
 	}
 
 	//find item
-	public Item FindItem( string name )
+	public Item FindItem( int index )
 	{
-		for (int i = 0; i < itemInformation.Length; i++)
-			if (name == itemInformation[i].Name)
-				return itemInformation[i];
-
-		return null;
+		return itemInformation[index - 1];
 	}
 
 	//find skill
-	public Skill FindSkill( string name )
+	public Skill FindSkill( int index )
 	{
-		for (int i = 0; i < skillInformation.Length; i++)
-			if (name == skillInformation[i].Name)
-				return skillInformation[i];
-
-		return null;
+		return skillInformation[index - 1];
 	}
 }

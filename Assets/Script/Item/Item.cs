@@ -5,6 +5,13 @@ using System.Collections;
 [System.Serializable]
 public class Item
 {
+	//id
+	public int id;
+
+	public int Id
+	{
+		get { return id; }
+	}
 	//name
 	public string name;
 
@@ -106,6 +113,7 @@ public class Item
 	//constructor - no parameter
 	public Item ()
 	{
+		id = 0;
 		name = "Default";
 		price = 0;
 		coreRank = 0;
@@ -120,8 +128,9 @@ public class Item
 	}
 
 	//constructor - all parameter
-	public Item (string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section)
+	public Item (int _id, string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section)
 	{
+		id = _id;
 		name = _name;
 		price = _price;
 		coreRank = _coreRank;
@@ -139,6 +148,7 @@ public class Item
 	//constructor - self parameter
 	public Item (Item data)
 	{
+		id = data.id;
 		name = data.name;
 		price = data.price;
 		coreRank = data.coreRank;
@@ -166,6 +176,7 @@ public class Item
 
 	public void SetDefault()
 	{
+		id = 0;
 		name = "Default";
 		price = 0;
 		coreRank = 0;

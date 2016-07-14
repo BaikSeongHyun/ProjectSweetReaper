@@ -4,6 +4,8 @@ using System.Collections;
 [System.Serializable]
 public class Skill
 {
+	//id
+	public int id;
 	//name
 	public string name;
 
@@ -26,6 +28,11 @@ public class Skill
 		Buff}
 	;
 	//property
+	public int Id
+	{
+		get { return id; }
+	}
+
 	public string Name
 	{
 		get { return name; }
@@ -49,6 +56,7 @@ public class Skill
 	//constructor - no parameter
 	public Skill ()
 	{
+		id = 0;
 		name = "Default";
 		learnLevel = 0;
 		coolTime = 0f;
@@ -58,8 +66,9 @@ public class Skill
 	}
 	
 	//constructor - all parameter
-	public Skill (string _name, int _learnLevel, float _coolTime, float _damage, float _resource, STATE _state)
+	public Skill (int _id,string _name, int _learnLevel, float _coolTime, float _damage, float _resource, STATE _state)
 	{
+		id = _id;
 		name = _name;
 		learnLevel = _learnLevel;
 		coolTime = _coolTime;
@@ -71,6 +80,7 @@ public class Skill
 	//constructor - self parameter
 	public Skill (Skill data)
 	{
+		id = data.id;
 		name = data.name;
 		learnLevel = data.learnLevel;
 		coolTime = data.coolTime;

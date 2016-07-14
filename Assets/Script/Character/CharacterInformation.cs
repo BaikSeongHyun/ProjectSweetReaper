@@ -217,7 +217,6 @@ public class CharacterInformation : MonoBehaviour
 		characterItem = new Item[35];
 		characterSkill = new Skill[9];
 		DefaultStatus();
-		dataBase = GameObject.FindWithTag( "DataBase" ).GetComponent<DataBase>();
 	}
 
 	//set default status
@@ -248,26 +247,12 @@ public class CharacterInformation : MonoBehaviour
 	//set default item
 	public void InstallDefaultItem()
 	{
-		topInstall = new Item ( dataBase.FindItem( "TheHolySpear" ) );
-		bottomInstall = new Item ( dataBase.FindItem( "DropOfSorcerer" ) );
-		bladeInstall = new Item ( dataBase.FindItem( "FearBlade" ) );
-		handleInstall = new Item ( dataBase.FindItem( "IronHandle" ) );
-
-		for (int i = 0; i < characterItem.Length; i++)
-			characterItem[i] = new Item ( dataBase.FindItem( "Default" ) );	
-
-		installedItem = true;
-		UpdateInventoryStatus();
+		
 	}
 
 	public void SetDefaultSkill()
 	{
-		for (int i = 0; i < characterSkill.Length; i++)
-				characterSkill[i] = new Skill ( dataBase.SkillInformation[i] );
 		
-
-		for (int i = 0; i < installSkill.Length; i++)
-			installSkill[i] = new Skill ( dataBase.FindSkill( "Default" ) );
 	}
 
 	public bool AddItem( Item item )

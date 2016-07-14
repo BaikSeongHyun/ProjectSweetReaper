@@ -4,6 +4,8 @@ using System.Collections;
 
 public class UserInterfaceManager : MonoBehaviour
 {
+	public Mode presentMode;
+
 	//child UI
 	public GameObject inventory;
 	public GameObject skillUI;
@@ -26,9 +28,23 @@ public class UserInterfaceManager : MonoBehaviour
 	{
 		LinkElement();
 		ClearUI();
+		presentMode = Mode.Neutral;
 	}
 
+	public enum Mode{
+		Neutral,
+		Result,
+		NPC,
+		SubContent,
+		Default}
+;
+
 	//property
+	public Mode PresentMode
+	{
+		get { return presentMode; }	
+	}
+
 	public bool OnEnterDungeon
 	{
 		get { return enterDungeon.activeSelf; }
@@ -102,7 +118,7 @@ public class UserInterfaceManager : MonoBehaviour
 			itemPopUp.ControlComponent( state );
 	}
 
-	//skill ui
+	// skill ui
 	public void ControlSkillUI( bool state )
 	{
 		skillUI.SetActive( state );
@@ -118,7 +134,7 @@ public class UserInterfaceManager : MonoBehaviour
 			skillPopUp.ControlComponent( state );			
 	}
 
-	//status ui
+	// status ui
 	public void ControlStatusUI( bool state )
 	{
 		statusUI.SetActive( state );
@@ -192,6 +208,15 @@ public class UserInterfaceManager : MonoBehaviour
 		itemPopUp.ControlComponent( false );
 	}
 
+	//compare present Mode
+	public bool CompareMode( Mode mode )
+	{
+		if (presentMode == mode)
+			return true;
+		else
+			return false;
+	}
+
 	//update by inventory
 	public void UpdateItemInformationByInventory( Inventory inventory )
 	{
@@ -249,21 +274,34 @@ public class UserInterfaceManager : MonoBehaviour
 	//quick status update
 	public void UpdateMainUI()
 	{
-		//update quick status
-		quickStatus.UpdateQuickStatusInfo( info );
-
-		//update quick skill chain
-		quickSkillChain.UpdateSkillChain( info );
-		
-		//update present select item
-		if (presentSelectItem.enabled)
-			presentSelectItem.transform.position = Input.mousePosition;	
-		
-		if (!info.InstalledItem)
+		if (CompareMode( Mode.Neutral ))
 		{
-			info.InstallDefaultItem();	
-			info.SetDefaultSkill();
+			//update quick status
+			quickStatus.UpdateQuickStatusInfo( info );
+
+			//update quick skill chain
+			quickSkillChain.UpdateSkillChain( info );
+		
+			//update present select item
+			if (presentSelectItem.enabled)
+				presentSelectItem.transform.position = Input.mousePosition;	
+		
+			if (!info.InstalledItem)
+			{
+				info.InstallDefaultItem();	
+				info.SetDefaultSkill();
+			}
 		}
+		else if (CompareMode( Mode.NPC ))
+		{
+
+		}
+		else if (CompareMode( Mode.Result ))
+		{
+
+		}
+
 	}
+
 
 }
