@@ -564,7 +564,8 @@ Prefab:
       propertyPath: frogMaxHp
       value: 10000
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11485924, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &674242273
@@ -659,18 +660,6 @@ Prefab:
     - target: {fileID: 144216, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
       propertyPath: m_Name
       value: StoneFrogGreen(2section)
-      objectReference: {fileID: 0}
-    - target: {fileID: 475042, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 475042, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 475042, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
@@ -1159,6 +1148,10 @@ Prefab:
     - target: {fileID: 467628, guid: cc43b05c98e73e84281d3239caab58c4, type: 2}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11459052, guid: cc43b05c98e73e84281d3239caab58c4, type: 2}
+      propertyPath: presentDamage
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc43b05c98e73e84281d3239caab58c4, type: 2}
@@ -1936,6 +1929,20 @@ Transform:
 GameObject:
   m_PrefabParentObject: {fileID: 100898, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
   m_PrefabInternal: {fileID: 664260221}
+--- !u!114 &1963392120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1963392119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d147af1e0db5a3c47be1a99f3e1806fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monsterHp: 100
+  monsterDamage: 30
+  monsterMaxHp: 100
 --- !u!1001 &2096414861
 Prefab:
   m_ObjectHideFlags: 0

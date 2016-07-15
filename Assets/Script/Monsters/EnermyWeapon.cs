@@ -8,11 +8,11 @@ public class EnermyWeapon : MonoBehaviour
 	FrogAI Frog;
 	bool Attack;
 	float damage = 0;
-	FrogHealth Info;
+	MonsterHealth Info;
 	// Use this for initialization
 	void Start()
 	{
-		Info = Mob.GetComponent<FrogHealth>();
+		Info = Mob.GetComponent<MonsterHealth>();
 		if (Mob.gameObject.name == "BossFrog")
 			BossFrog = transform.GetComponentInParent<FrogBossAI>();
 		else
@@ -38,7 +38,7 @@ public class EnermyWeapon : MonoBehaviour
 			if (fayeObject != null)
 			{				
 				if (Attack)
-					damage = Info.FrogDamage;
+					damage = Info.MonsterDamage;
 				
 				if (damage != 0)
 					fayeObject.HitDamage( damage );
