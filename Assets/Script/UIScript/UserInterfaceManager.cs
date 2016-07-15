@@ -14,6 +14,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject deathPopUp;
 	public GameObject exitDungeonPopUp;
 	public QuickStatus quickStatus;
+	public ExpGauge expGauge;
 	public QuickSkillChain quickSkillChain;
 	public QuickSkill quickSkill;
 	public SystemUI systemUI;
@@ -82,11 +83,11 @@ public class UserInterfaceManager : MonoBehaviour
 	{
 		inventory = GameObject.Find( "Inventory" );
 		skillUI = GameObject.Find( "SkillUI" );
-		statusUI = GameObject.Find( "StatusUI" );
 		enterDungeon = GameObject.Find( "EnterDungeon" );
 		deathPopUp = GameObject.Find( "DeathPopUp" );
 		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
 		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
+		expGauge = GameObject.Find( "ExpGauge" ).GetComponent<ExpGauge>();
 		quickSkillChain = GameObject.Find( "QuickSkillChain" ).GetComponent<QuickSkillChain>();
 		quickSkill = GameObject.Find( "QuickSkill" ).GetComponent<QuickSkill>();
 		systemUI = GameObject.Find( "SystemUI" ).GetComponent<SystemUI>();
@@ -134,18 +135,6 @@ public class UserInterfaceManager : MonoBehaviour
 			skillPopUp.ControlComponent( state );			
 	}
 
-	// status ui
-	public void ControlStatusUI( bool state )
-	{
-		statusUI.SetActive( state );
-
-		if (state)
-		{
-			statusUI.GetComponent<StatusUI>().LinkElement();
-			statusUI.GetComponent<StatusUI>().UpdateStatusInfo();
-		}		
-	}
-
 	// enter dungeon
 	public void ControlEnterDungeon( bool state )
 	{
@@ -171,9 +160,6 @@ public class UserInterfaceManager : MonoBehaviour
 		{
 			case "EnterDungeon":
 				ControlEnterDungeon( false );
-				break;
-			case "StatusUI":
-				ControlStatusUI( false );
 				break;
 			case "Inventory":
 				ControlInventory( false );
@@ -201,7 +187,6 @@ public class UserInterfaceManager : MonoBehaviour
 	{
 		ControlInventory( false );
 		ControlSkillUI( false );
-		ControlStatusUI( false );
 		ControlEnterDungeon( false );
 		ControlDeathPopUp( false );
 		ControlExitDungeonPopUp( false );
@@ -251,9 +236,6 @@ public class UserInterfaceManager : MonoBehaviour
 	{
 		switch (name)
 		{
-			case "StatusUI":
-				ControlStatusUI( !OnStatusUI );
-				break;
 			case "Inventory":
 				ControlInventory( !OnInventory );
 				break;
@@ -278,6 +260,9 @@ public class UserInterfaceManager : MonoBehaviour
 		{
 			//update quick status
 			quickStatus.UpdateQuickStatusInfo( info );
+
+			//update exp gauge 
+			expGauge.UpdateExpGauge(info);
 
 			//update quick skill chain
 			quickSkillChain.UpdateSkillChain( info );

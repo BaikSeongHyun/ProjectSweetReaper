@@ -8,6 +8,20 @@ using System.Collections.Generic;
 public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
 	//complex data field
+
+	//status
+	Text characterName;
+	Text level;
+	Text damage;
+	Text healthPoint;
+	Text resourcePoint;
+	Text criticalProability;
+	Text strength;
+	Text intelligence;
+	Text dexterity;
+	Text luck;
+
+	//inventory
 	public UserInterfaceManager mainUI;
 	public ItemElement topInstall;
 	public ItemElement bottomInstall;
@@ -56,7 +70,21 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//link inventory element
 	public void LinkElement()
 	{
+		//status
+		characterName = transform.Find( "CharacterNameText" ).GetComponent<Text>();
+		level = transform.Find( "LevelText" ).GetComponent<Text>();
+		damage = transform.Find( "DamageText" ).GetComponent<Text>();
+		healthPoint = transform.Find( "HealthPointText" ).GetComponent<Text>();
+		resourcePoint = transform.Find( "ResourcePointText" ).GetComponent<Text>();
+		criticalProability = transform.Find( "CriticalProabilityText" ).GetComponent<Text>();
+		strength = transform.Find( "StrengthText" ).GetComponent<Text>();
+		intelligence = transform.Find( "IntelligenceText" ).GetComponent<Text>();
+		dexterity = transform.Find( "DexterityText" ).GetComponent<Text>();
+		luck = transform.Find( "LuckText" ).GetComponent<Text>();
+
+		//inventory
 		money = transform.Find( "MoneyText" ).GetComponent<Text>();
+
 		topInstall = transform.Find( "TopInstall" ).GetComponent<ItemElement>();
 		bottomInstall = transform.Find( "BottomInstall" ).GetComponent<ItemElement>();
 		bladeInstall = transform.Find( "BladeInstall" ).GetComponent<ItemElement>();
@@ -69,11 +97,25 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 			slot += (i + 1).ToString();
 			elements[i] = transform.Find( slot ).GetComponent<ItemElement>();
 		}
+
 	}
 
 	//update inventory data
 	public void UpdateInventory( CharacterInformation info )
 	{
+		//status
+		characterName.text = info.CharacterName;
+		level.text = info.Level.ToString();
+		damage.text = info.Damage.ToString();
+		healthPoint.text = info.OriginHealthPoint.ToString();
+		resourcePoint.text = info.OriginResourcePoint.ToString();
+		criticalProability.text = info.CriticalProability.ToString();
+		strength.text = info.Strength.ToString();
+		intelligence.text = info.Intelligence.ToString();
+		dexterity.text = info.Dexterity.ToString();
+		luck.text = info.Luck.ToString();	
+
+		//inventory
 		money.text = info.Money.ToString();
 
 		bladeInstall.ItemInfo = info.BladeInstall;

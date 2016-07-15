@@ -62,8 +62,6 @@ public class GameController : MonoBehaviour
 		//ui section
 		if (Input.GetButtonDown( "SkillUI" ) && mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
 			mainUI.ControlSkillUI( !mainUI.OnSkillUI );
-		if (Input.GetButtonDown( "Status" ) && mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
-			mainUI.ControlStatusUI( !mainUI.OnStatusUI );
 		if (Input.GetButtonDown( "Inventory" ) && mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
 			mainUI.ControlInventory( !mainUI.OnInventory );
 		if (Input.GetButtonDown( "CloseAllUI" ) && mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))

@@ -11,7 +11,7 @@ public class CharacterInformation : MonoBehaviour
 	public int characterLevel;
 
 	//exp
-	float presentExp;
+	public float presentExp;
 	float requireExp;
 
 	//damage
@@ -84,6 +84,11 @@ public class CharacterInformation : MonoBehaviour
 	public int Level
 	{
 		get { return characterLevel; }
+	}
+
+	public float ExpFill
+	{
+		get { return presentExp / requireExp; }
 	}
 
 	public float Damage
