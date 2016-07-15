@@ -17,6 +17,7 @@ public class NPC : MonoBehaviour {
 	void OnTriggerEnter(Collider coll){
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player")) {
 			talk.SetActive (true);
+
 		}
 	}
 
@@ -24,5 +25,9 @@ public class NPC : MonoBehaviour {
 		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player")) {
 			this.transform.LookAt (coll.gameObject.transform.position,Vector3.up);
 		}
+	}
+
+	void OnTriggerExit(){
+		
 	}
 }
