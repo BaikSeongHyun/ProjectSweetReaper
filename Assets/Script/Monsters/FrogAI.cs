@@ -2,34 +2,24 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class FrogAI : MonoBehaviour
+public class FrogAI : Monster
 {
-	public GameObject HitObject;
-	public GameObject HitEffect;
-	public GameObject player;
+	
 	public Animator frogAiAnimator;
 	AnimatorStateInfo attackStateBoss;
-	public FrogHealth frogInfo;
 
 	//Boss Pattern Range
 	int bossAngryPattern = 0;
-	public float runRange = 10.0f;
-	public float attackRange = 2.5f;
-	public float attackCycle;
-	public float frogBossSpeed = 0.5f;
+
 
 	//Boss Angry Image or Warning
 	public Image angryImage;
 	Image warningImage;
 	float imageDelayTime;
-	public float warningRange = 30.0f;	
-	bool isAlive = true;
-	bool isAttack = false;
+	public float warningRange = 30.0f;
+
 	
 	//hp image
-	public Image health;
-	public GameObject dropItem;
-	public GameObject dropGold;
 
 	public enum FrogPatternName
 	{
@@ -47,7 +37,7 @@ public class FrogAI : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		frogInfo = GetComponent<FrogHealth>();
+		frogInfo = GetComponent<MonsterHealth>();
 		frogAiAnimator = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag( "Player" );
 		FrogPattern( FrogPatternName.AttackIdle );
@@ -57,15 +47,7 @@ public class FrogAI : MonoBehaviour
 		
 	}
 
-	public bool IsAttack
-	{
-		get{ return isAttack; }
-	}
 
-	public void AttackTrigger()
-	{
-		isAttack = false;
-	}
 
 	void Update()
 	{	
@@ -118,6 +100,7 @@ public class FrogAI : MonoBehaviour
 			
 			//update hp
 			health.fillAmount = frogInfo.FillFrogHp;
+			RotateHealthBar ();
 		}
 	}
 
@@ -126,20 +109,21 @@ public class FrogAI : MonoBehaviour
 		attackCycle = 0;
 	}
 
-	public void HitDamage( float _Damage )
+	public override void HitDamage( float _Damage )
 	{
-		Instantiate( HitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
-		Instantiate( HitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
+		Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
+		Instantiate( hitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
+		frogInfo.MonsterHp -= _Damage;
 		if (isAlive)
 		{
-			frogInfo.frogHp -= _Damage;
-			if (frogInfo.FrogHp > 0)
+			frogInfo.monsterHp -= _Damage;
+			if (frogInfo.MonsterHp > 0)
 			{
 				frogAiAnimator.SetTrigger( "MonsterHitTrigger" );
 				return;
 			}
 
-			if (frogInfo.FrogHp <= 0)
+			if (frogInfo.MonsterHp <= 0)
 			{
 				health.fillAmount = 0;
 				int randomItem = Random.Range( 0, 3 );

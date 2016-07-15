@@ -46,37 +46,61 @@ public class Weapon : MonoBehaviour
 		//IsAttack
 		if (coll.gameObject.layer == LayerMask.NameToLayer( "Enemy" ))
 		{
-			FrogBossAI BossAI = coll.gameObject.GetComponent<FrogBossAI>();
-			if (BossAI != null)
+
+			Monster monsterDamege = coll.gameObject.GetComponent<Monster> ();
+
+			if (monsterDamege != null) 
 			{
 				if (normalAttack)
+				{
 					damage = info.Damage;
+
+				} 
 				else if (skillAttack)
+				{
 					damage = info.Damage;
-				
+				}
 				if (damage != 0)
 				{
-					BossAI.HitDamage( damage );
+					monsterDamege.HitDamage (damage);
 					damage = 0;
 				}
 			}
-			else
-			{
-				FrogAI MonsterAI = coll.gameObject.GetComponent<FrogAI>();
-				if (MonsterAI != null)
-				{
-					if (normalAttack)
-						damage = info.Damage;
-					else if (skillAttack)
-						damage = info.Damage;
-					
-					if (damage != 0)
-					{
-						MonsterAI.HitDamage( damage );
-						damage = 0;
-					}
-				}
-			}
+
+
+
+
+//			FrogBossAI BossAI = coll.gameObject.GetComponent<FrogBossAI>();
+//			if (BossAI != null)
+//			{
+//				if (normalAttack)
+//					damage = info.Damage;
+//				else if (skillAttack)
+//					damage = info.Damage;
+//				
+//				if (damage != 0)
+//				{
+//					BossAI.HitDamage( damage );
+//					damage = 0;
+//				}
+//			}
+//			else
+//			{
+//				FrogAI MonsterAI = coll.gameObject.GetComponent<FrogAI>();
+//				if (MonsterAI != null)
+//				{
+//					if (normalAttack)
+//						damage = info.Damage;
+//					else if (skillAttack)
+//						damage = info.Damage;
+//					
+//					if (damage != 0)
+//					{
+//						MonsterAI.HitDamage( damage );
+//						damage = 0;
+//					}
+//				}
+//			}
 		}
 	}
 }

@@ -2,33 +2,18 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class FrogBossAI : MonoBehaviour
+public class FrogBossAI : Monster
 {
-	public GameObject hitObject;
-	public GameObject hitEffect;
 	public Animator bossAiAnimator;
-	public GameObject player;
+
 	AnimatorStateInfo attackStateBoss;
-	FrogHealth frogInfo;
+
 
 	//Boss Pattern Range
 	int bossAngryPattern = 0;
-	public float runRange = 10.0f;
-	public float attackRange = 2.5f;
-	public float attackCycle;
-	public float frogBossSpeed = 0.5f;
 
 	//Boss Angry Image or Warning
 	public Image bossAngryImage;
-	float imageDelayTime;
-	public float warningRange = 30.0f;
-	Image warningImage;
-	bool isAlive = true;
-	bool isAttack = false;
-
-	public Image health;
-	public GameObject dropItem;
-	public GameObject dropGold;
 
 	public enum BossPatternName
 	{
@@ -47,22 +32,12 @@ public class FrogBossAI : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		frogInfo = this.GetComponent<FrogHealth>();
+		frogInfo = this.GetComponent<MonsterHealth>();
 		bossAiAnimator = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag( "Player" );
 		BossPattern( BossPatternName.AttackIdle );
 		bossAngryImage.gameObject.SetActive( false );
 		health = transform.Find( "BossFrogHpBar" ).GetComponent<Image>();
-	}
-
-	public bool IsAttack
-	{
-		get{ return isAttack; }
-	}
-
-	public void AttackTrigger()
-	{
-		isAttack = false;
 	}
 
 	void Update()
@@ -116,6 +91,7 @@ public class FrogBossAI : MonoBehaviour
 			
 			//update hp
 			health.fillAmount = frogInfo.FillFrogHp;
+			RotateHealthBar ();
 		}
 	}
 
@@ -124,20 +100,20 @@ public class FrogBossAI : MonoBehaviour
 		attackCycle = 0;
 	}
 
-	public void HitDamage( float _Damage )
+	public override void HitDamage( float _Damage )
 	{
 		if (isAlive)
 		{
 			Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 4f, transform.position.z), transform.rotation );
 			Instantiate( hitObject, new Vector3(transform.position.x, transform.position.y + 4f, transform.position.z), transform.rotation );
-			frogInfo.FrogHp -= _Damage;
-			if (frogInfo.FrogHp > 0)
+			frogInfo.MonsterHp -= _Damage;
+			if (frogInfo.MonsterHp > 0)
 			{
 				bossAiAnimator.SetTrigger( "MonsterHitTrigger" );
 				return;
 			}
 
-			if (frogInfo.FrogHp <= 0)
+			if (frogInfo.MonsterHp <= 0)
 			{				
 				health.fillAmount = 0;
 				int randomItem = Random.Range( 0, 3 );
