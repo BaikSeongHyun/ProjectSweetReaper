@@ -17,12 +17,14 @@ public class Talk : NPC {
 		if (i == count) {
 			UI.SetActive (true);
 			talk.SetActive (false);
+			GameObject.Find("GameController").GetComponent<GameController>().modeNPC = false;
 		} else {
 			if (Timer >= 5.0f) {
 				Timer = 0.0f;
 				txt [i].gameObject.SetActive (false);
 				i++;
 			} else {
+				GameObject.Find("GameController").GetComponent<GameController>().modeNPC = true;
 				UI.SetActive (false);
 				Timer += Time.deltaTime;
 				txt [i].gameObject.SetActive (true);
