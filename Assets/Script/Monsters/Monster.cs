@@ -33,6 +33,7 @@ public class Monster : MonoBehaviour
 	public void AttackTrigger()
 	{
 		isAttack = false;
+
 	}
 
 	public virtual void HitDamage( float _Damage )
