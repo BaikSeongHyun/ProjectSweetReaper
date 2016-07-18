@@ -8,98 +8,105 @@ public class Item
 	//id
 	public int id;
 
+	//name
+	public string name;
+
+	//icon
+	public Sprite icon;
+
+	//data
+	public int price;
+	public int coreRank;
+	public int weaponAtk;
+	public int weaponDef;
+	public int weaponStr;
+	public int weaponDex;
+	public int weaponInt;
+	public int weaponLuck;
+	public int weaponCri;
+	public Section section;
+	public Rarity rareRank;
+
+	//property
 	public int Id
 	{
 		get { return id; }
 	}
-	//name
-	public string name;
 
 	public string Name
 	{
 		get { return name; }
 	}
 
-	//icon
-	public Sprite icon;
-
 	public Sprite Icon
 	{
 		get { return icon; }
 	}
-
-	//data
-	public int price;
 
 	public int Price
 	{
 		get { return price; }
 	}
 
-	public int coreRank;
-
 	public int CoreRank
 	{
 		get { return coreRank; }
 	}
-
-	public int weaponAtk;
 
 	public int WeaponAtk
 	{
 		get { return weaponAtk; }
 	}
 
-	public int weaponDef;
-
 	public int WeaponDef
 	{
 		get { return weaponDef; }
 	}
-
-	public int weaponStr;
 
 	public int WeaponStr
 	{
 		get { return weaponStr; }
 	}
 
-	public int weaponDex;
-
 	public int WeaponDex
 	{
 		get { return weaponDex; }
 	}
-
-	public int weaponInt;
 
 	public int WeaponInt
 	{
 		get { return weaponInt; }
 	}
 
-	public int weaponLuck;
-
 	public int WeaponLuck
 	{
 		get { return weaponLuck; }
 	}
-
-	public int weaponCri;
 
 	public int WeaponCri
 	{
 		get { return weaponCri; }
 	}
 
-	public SECTION section;
-
-	public SECTION Section
+	public Section InstallSection
 	{
 		get { return section; }
 	}
 
-	public enum SECTION
+	public Rarity RareRank
+	{
+		get { return rareRank; }
+	}
+
+	public enum Rarity{
+		Default,
+		Normal,
+		Rare,
+		Unique,
+		Legendary}
+;
+
+	public enum Section
 	{
 		Top,
 		Bottom,
@@ -124,11 +131,12 @@ public class Item
 		weaponInt = 0;
 		weaponLuck = 0;
 		weaponCri = 0;
-		section = SECTION.Default;
+		section = Section.Default;
+		rareRank = Rarity.Default;
 	}
 
 	//constructor - all parameter
-	public Item (int _id, string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section)
+	public Item (int _id, string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Section _section, Rarity _rareRank)
 	{
 		id = _id;
 		name = _name;
@@ -142,6 +150,7 @@ public class Item
 		weaponLuck = _weaponLuck;
 		weaponCri = _weaponCri;
 		section = _section;
+		rareRank = _rareRank;
 	}
 		
 			
@@ -160,6 +169,7 @@ public class Item
 		weaponLuck = data.weaponLuck;
 		weaponCri = data.weaponCri;
 		section = data.section;
+		rareRank = data.rareRank;
 		icon = data.icon;
 	}
 
@@ -173,6 +183,39 @@ public class Item
 		icon = temp;
 	}
 
+	public Color SetTextColor()
+	{
+		switch (rareRank)
+		{
+			case Rarity.Legendary:
+				return new Color ( 1f, 0.5f, 0.0f, 1f );
+			case Rarity.Unique:
+				return Color.magenta;
+			case Rarity.Rare:
+				return Color.yellow;
+			case Rarity.Normal:
+				return Color.black;
+		}
+
+		return Color.clear;
+	}
+
+	public string SetRarityText()
+	{
+		switch (rareRank)
+		{
+			case Rarity.Legendary:
+				return "[Legendary]";
+			case Rarity.Unique:
+				return "[Unique]";
+			case Rarity.Rare:
+				return "[Rare]";
+			case Rarity.Normal:
+				return"[Normal]";
+		}
+
+		return null;
+	}
 
 	public void SetDefault()
 	{
@@ -187,7 +230,7 @@ public class Item
 		weaponInt = 0;
 		weaponLuck = 0;
 		weaponCri = 0;
-		section = SECTION.Default;
+		section = Section.Default;
 	}
 
 }

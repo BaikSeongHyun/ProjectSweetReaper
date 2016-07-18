@@ -48,8 +48,7 @@ public class ItemElement : MonoBehaviour
 	public void UpdateItemIcon()
 	{
 		itemIcon = GetComponent<Image>();
-		itemIcon.sprite = itemInfo.Icon;
-		if(itemInfo.Name == "Default")
-			itemIcon.sprite = Resources.Load<Sprite>( "Item/ItemDefault" );		  
+		itemInfo.SetSpriteIcon();
+		itemIcon.sprite = ItemInfo.Icon;		  
 	}
 }

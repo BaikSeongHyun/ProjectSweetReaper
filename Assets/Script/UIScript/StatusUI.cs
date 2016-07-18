@@ -4,9 +4,6 @@ using System.Collections;
 
 public class StatusUI : MonoBehaviour
 {
-	CharacterInformation info;
-
-
 	// another method
 	public void LinkElement( )
 	{			

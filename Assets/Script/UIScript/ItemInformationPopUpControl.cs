@@ -8,6 +8,7 @@ public class ItemInformationPopUpControl : MonoBehaviour
 	//pop up component
 	public Image backGround;
 	public Text itemName;
+	public Text rarity;
 	public Text price;
 	public Text coreRank;
 	public Text weaponCri;
@@ -20,6 +21,7 @@ public class ItemInformationPopUpControl : MonoBehaviour
 	public void LinkComponent()
 	{
 		backGround = transform.Find( "ItemPopUpBack" ).GetComponent<Image>();
+		rarity = transform.Find( "RarityText" ).GetComponent<Text>();
 		itemName = transform.Find( "ItemNameText" ).GetComponent<Text>();
 		coreRank = transform.Find( "CoreRankText" ).GetComponent<Text>();
 		weaponCri = transform.Find( "CriticalText" ).GetComponent<Text>();
@@ -37,6 +39,7 @@ public class ItemInformationPopUpControl : MonoBehaviour
 	{
 		backGround.enabled = state;
 		itemName.enabled = state;
+		rarity.enabled = state;
 		section.enabled = state;
 		coreRank.enabled = state;
 		weaponCri.enabled = state;
@@ -54,37 +57,39 @@ public class ItemInformationPopUpControl : MonoBehaviour
 
 		if (info == null)
 			return;
-		else if (info.Section == Item.SECTION.Consume)
+		else if (info.InstallSection == Item.Section.Consume)
 			return;
 		else
 		{
 			ControlComponent( true );
 			itemName.text = info.Name;
+			itemName.color = info.SetTextColor();
+			rarity.text = info.SetRarityText();
 			price.text = info.Price.ToString();
 			coreRank.text = "CoreRank : " + info.CoreRank.ToString();
 			weaponCri.text = "Critical : " + info.WeaponCri.ToString();
 
-			switch (info.Section)
+			switch (info.InstallSection)
 			{
-				case Item.SECTION.Blade:
+				case Item.Section.Blade:
 					section.text = "Blade";
 					element1Text.text = "ATK : " + info.WeaponAtk.ToString();
 					element2Text.text = "STR : " + info.WeaponStr.ToString();
 					element3Text.text = "DEX : " + info.WeaponDex.ToString();
 					break;
-				case Item.SECTION.Top:
+				case Item.Section.Top:
 					section.text = "Top";
 					element1Text.text = "ATK : " + info.WeaponAtk.ToString();
 					element2Text.text = "STR : " + info.WeaponStr.ToString();
 					element3Text.text = "DEX : " + info.WeaponDex.ToString();
 					break;
-				case Item.SECTION.Bottom:
+				case Item.Section.Bottom:
 					section.text = "Bottom";
 					element1Text.text = "DEF : " + info.WeaponDef.ToString();
 					element2Text.text = "INT : " + info.WeaponInt.ToString();
 					element3Text.text = "LUCK : " + info.WeaponLuck.ToString();
 					break;
-				case Item.SECTION.Handle:
+				case Item.Section.Handle:
 					section.text = "Handle";
 					element1Text.text = "DEF : " + info.WeaponDef.ToString();
 					element2Text.text = "INT : " + info.WeaponInt.ToString();

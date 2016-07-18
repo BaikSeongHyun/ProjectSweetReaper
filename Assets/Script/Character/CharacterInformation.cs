@@ -247,12 +247,17 @@ public class CharacterInformation : MonoBehaviour
 		rootDamage = 85.0f;	
 		money = 1203;
 
+		InstallDefaultItem();
+
 	}
 
 	//set default item
 	public void InstallDefaultItem()
 	{
-		
+		bladeInstall = DataBase.Instance.FindItemByName( "FearBlade" );
+		bottomInstall = DataBase.Instance.FindItemByName( "DropOfSorcerer" );
+		topInstall = DataBase.Instance.FindItemByName( "TheHolySpear" );
+		handleInstall = DataBase.Instance.FindItemByName( "IronHandle" );
 	}
 
 	public void SetDefaultSkill()

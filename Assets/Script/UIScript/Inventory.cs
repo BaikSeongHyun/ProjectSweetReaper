@@ -159,9 +159,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 	//mouse click item element
 	public void OnPointerDown( PointerEventData eventData )
-	{
-		presentItemElement.CloseItemPopUp();
-		
+	{		
 		//insert item data
 		try
 		{			
@@ -175,14 +173,16 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		//delete item
 		if (presentItemElement == null)
 			return;
-		
+
+		presentItemElement.CloseItemPopUp();
+
 		//uninstall item
 		if (eventData.button == PointerEventData.InputButton.Right && presentItemElement.CompareTag( "InstalledItem" ))
 			UninstallItem( presentItemElement );
 		
 		//install item
 		if (eventData.button == PointerEventData.InputButton.Right)
-			SwapInstallItem( presentItemElement.ItemInfo.Section, presentItemElement );
+			SwapInstallItem( presentItemElement.ItemInfo.InstallSection, presentItemElement );
 		   
 		//mode drag send item icon data -> gameController
 		if (eventData.button == PointerEventData.InputButton.Left && presentItemElement.ItemInfo.Name != "Default")
@@ -240,23 +240,23 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	}
 
 	//installed item swap
-	void SwapInstallItem( Item.SECTION section, ItemElement presentSelect )
+	void SwapInstallItem( Item.Section section, ItemElement presentSelect )
 	{
 		switch (section)
 		{
-			case Item.SECTION.Blade:
+			case Item.Section.Blade:
 				SwapItem( presentSelect, bladeInstall );
 				break;
-			case Item.SECTION.Top:
+			case Item.Section.Top:
 				SwapItem( presentSelect, topInstall );
 				break;
-			case Item.SECTION.Handle:
+			case Item.Section.Handle:
 				SwapItem( presentSelect, handleInstall );
 				break;
-			case Item.SECTION.Bottom:
+			case Item.Section.Bottom:
 				SwapItem( presentSelect, bottomInstall );
 				break;
-			case Item.SECTION.Consume:
+			case Item.Section.Consume:
 				break;
 		}
 	}
@@ -264,7 +264,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//install item
 	void InstallItem( ItemElement presentItem, ItemElement replaceSelect )
 	{
-		if (replaceSelect.ItemInfo.Section == presentItem.ItemInfo.Section)
+		if (replaceSelect.ItemInfo.InstallSection == presentItem.ItemInfo.InstallSection)
 			SwapItem( presentItem, replaceSelect );		
 	}
 	

@@ -47,23 +47,23 @@ public class DataBase
 
 
 	//initialize item data
-	public void CreateItemInformation()
+	void CreateItemInformation()
 	{
-		//(string _name, int _price, int _coreRank, int _weaponAtk, int _weaponDef, int _weaponStr, int _weaponDex, int _weaponInt, int _weaponLuck, int _weaponCri, Item.SECTION _section)
+		//name, price, coreRank, weaponAtk, weaponDef, weaponStr, weaponDex, weaponInt, weaponLuck, weaponCri, section, rareRank)
 		itemInformation = new List<Item> ();
-		itemInformation.Add( new Item ( 1, "FearBlade", 1000, 3, 10, 0, 10, 10, 0, 0, 1, Item.SECTION.Blade ) );
-		itemInformation.Add( new Item ( 2, "IronHandle", 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.SECTION.Handle ) );
-		itemInformation.Add( new Item ( 3, "DropOfSorcerer", 300, 5, 60, 0, 0, 0, 7, 4, 1, Item.SECTION.Bottom ) );
-		itemInformation.Add( new Item ( 4, "TheHolySpear", 800, 10, 50, 0, 19, 10, 0, 0, 10, Item.SECTION.Top ) );
+		itemInformation.Add( new Item ( 1, "FearBlade", 1000, 3, 10, 0, 10, 10, 0, 0, 1, Item.Section.Blade, Item.Rarity.Legendary ) );
+		itemInformation.Add( new Item ( 2, "IronHandle", 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.Section.Handle, Item.Rarity.Normal ) );
+		itemInformation.Add( new Item ( 3, "DropOfSorcerer", 300, 5, 60, 0, 0, 0, 7, 4, 1, Item.Section.Bottom, Item.Rarity.Unique ) );
+		itemInformation.Add( new Item ( 4, "TheHolySpear", 800, 10, 50, 0, 19, 10, 0, 0, 10, Item.Section.Top, Item.Rarity.Rare ) );
 				
 		for (int i = 0; i < itemInformation.Count; i++)
 			itemInformation[i].SetSpriteIcon();
 	}
 
 	//initialize skill data
-	public void CreateSkillInformation()
+	void CreateSkillInformation()
 	{
-		//(string _name, int _learnLevel, float _coolTime, float _damage, float _resource, STATE _state)
+		// name, learnLevel,coolTime, damage, resource, state
 		
 		skillInformation = new List<Skill> ();
 		skillInformation.Add( new Skill ( 1, "Bash", 1, 0f, 350, 20, Skill.STATE.Active ) );
@@ -81,6 +81,16 @@ public class DataBase
 	public Item FindItem( int index )
 	{
 		return itemInformation[index - 1];
+	}
+
+	public Item FindItemByName( string name )
+	{
+		for (int i = 0; i < itemInformation.Count; i++)
+		{
+			if (name == itemInformation[i].Name)
+				return itemInformation[i];			
+		}
+		return null;
 	}
 
 	//find skill
