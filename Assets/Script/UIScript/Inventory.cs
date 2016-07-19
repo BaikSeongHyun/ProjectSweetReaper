@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerUpHandler, IPointerDownHandler
 {
-	//complex data field
+	public string presentName;
 
 	//status
 	Text characterName;
@@ -90,11 +90,10 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		bladeInstall = transform.Find( "BladeInstall" ).GetComponent<ItemElement>();
 		handleInstall = transform.Find( "HandleInstall" ).GetComponent<ItemElement>();
 
-
 		for (int i = 0; i < elements.Length; i++)
 		{
 			string slot = "ItemSlot";
-			slot += (i + 1).ToString();
+			slot += ( i + 1 ).ToString();
 			elements[i] = transform.Find( slot ).GetComponent<ItemElement>();
 		}
 
@@ -137,11 +136,11 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//item element in -> pop up item information
 	public void OnPointerEnter( PointerEventData eventData )
 	{
-		presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
+		if (!mainUI.OnClickMouse)
+			presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
 
-		if (presentItemElement != null)
-			presentItemElement.UpdateItemPopUp();
-							
+		if (( presentItemElement != null ) && !mainUI.onClickMouse)
+			presentItemElement.UpdateItemPopUp();								
 	}
 
 	//item element out -> pop up item information
@@ -160,10 +159,17 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//mouse click item element
 	public void OnPointerDown( PointerEventData eventData )
 	{		
+		if (presentItemElement != null)
+		{
+			presentItemElement.CloseItemPopUp();
+			presentItemElement = null;
+		}
+
 		//insert item data
 		try
 		{			
-			presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
+			presentName = eventData.pointerEnter.name;
+			presentItemElement = transform.Find( presentName ).gameObject.GetComponent<ItemElement>();
 		}
 		catch (NullReferenceException e)
 		{
@@ -203,23 +209,18 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		try
 		{
 			downPointItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
-			Debug.Log( eventData.pointerEnter );
 		}
-		catch (NullReferenceException e)
+		catch
 		{
-			Debug.Log( e.InnerException );
 			downPointItemElement = null;
 		}
 
 		if (downPointItemElement == null)
-		{
-			Debug.Log( "Null! force!" );
 			return;
-		}
 		else if (downPointItemElement.CompareTag( "InstalledItem" ))
 			InstallItem( presentItemElement, downPointItemElement );
 		else if (downPointItemElement != null)
-			SwapItem( presentItemElement, downPointItemElement );		
+			SwapItem( presentItemElement, downPointItemElement );	
 
 		mainUI.UpdateItemInformationByInventory( this );
 	}
@@ -264,13 +265,15 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 	//install item
 	void InstallItem( ItemElement presentItem, ItemElement replaceSelect )
 	{
-		if (replaceSelect.ItemInfo.InstallSection == presentItem.ItemInfo.InstallSection)
+		if (presentItem.ItemInfo.InstallSection.ToString() + "Install" == replaceSelect.gameObject.name)
 			SwapItem( presentItem, replaceSelect );		
 	}
 	
 	//swap item -> a to b
 	void SwapItem( ItemElement presentSelect, ItemElement replaceSelect )
 	{
+//		Debug.Log( presentSelect );
+//		Debug.Log( replaceSelect );
 		Item temp;
 		temp = presentSelect.ItemInfo;
 		presentSelect.ItemInfo = replaceSelect.ItemInfo;

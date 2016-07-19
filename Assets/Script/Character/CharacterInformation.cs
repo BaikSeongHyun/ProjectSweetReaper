@@ -258,6 +258,9 @@ public class CharacterInformation : MonoBehaviour
 		bottomInstall = DataBase.Instance.FindItemByName( "DropOfSorcerer" );
 		topInstall = DataBase.Instance.FindItemByName( "TheHolySpear" );
 		handleInstall = DataBase.Instance.FindItemByName( "IronHandle" );
+
+		for (int i = 0; i < characterItem.Length; i++)
+			characterItem[i] = new Item ();
 	}
 
 	public void SetDefaultSkill()

@@ -4,7 +4,9 @@ using System.Collections;
 
 public class UserInterfaceManager : MonoBehaviour
 {
+	//ui mode
 	public Mode presentMode;
+	public bool onClickMouse;
 
 	//child UI
 	public GameObject inventory;
@@ -36,6 +38,7 @@ public class UserInterfaceManager : MonoBehaviour
 		Neutral,
 		Result,
 		NPC,
+		Tranning,
 		SubContent,
 		Default}
 ;
@@ -44,6 +47,12 @@ public class UserInterfaceManager : MonoBehaviour
 	public Mode PresentMode
 	{
 		get { return presentMode; }	
+	}
+
+	public bool OnClickMouse
+	{
+		get { return onClickMouse; }
+		set { onClickMouse = value; }
 	}
 
 	public bool OnEnterDungeon
@@ -180,6 +189,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public void ClosePresentElement()
 	{
 		presentSelectItem.enabled = false;
+		presentSelectSkill.enabled = false;
 	}
 
 	//all element close
@@ -214,7 +224,6 @@ public class UserInterfaceManager : MonoBehaviour
 			info.CharacterItem[i] = inventory.ItemSlot[i].ItemInfo;
 
 		info.UpdateInventoryStatus();
-		statusUI.GetComponent<StatusUI>().UpdateStatusInfo();
 	}
 	
 	//update by quick skill
@@ -262,7 +271,7 @@ public class UserInterfaceManager : MonoBehaviour
 			quickStatus.UpdateQuickStatusInfo( info );
 
 			//update exp gauge 
-			expGauge.UpdateExpGauge(info);
+			expGauge.UpdateExpGauge( info );
 
 			//update quick skill chain
 			quickSkillChain.UpdateSkillChain( info );

@@ -7,7 +7,6 @@ using System.Collections;
 public class GameController : MonoBehaviour
 {
 	//simple data field
-	public bool modeNPC;
 	public Vector3 cameraDistance;
 	public GameObject temp;
 
@@ -25,7 +24,6 @@ public class GameController : MonoBehaviour
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
-		modeNPC = false;
 	}
 	
 	// Update is called once per frame
@@ -58,6 +56,12 @@ public class GameController : MonoBehaviour
 			//1q 2w 3e 4r
 			//5a 6s 7d 8f
 		}
+
+		//check mouse click
+		if (Input.GetMouseButton( 0 ) || Input.GetMouseButton( 1 ))
+			mainUI.OnClickMouse = true;
+		else
+			mainUI.OnClickMouse = false;
 		
 		//ui section
 		if (Input.GetButtonDown( "SkillUI" ) && mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
@@ -68,9 +72,8 @@ public class GameController : MonoBehaviour
 			mainUI.ClearUI();
 
 		//item / skill drag object check
-		if (mainUI.PresentSelectItem.enabled && !Input.GetMouseButton( 0 ) && !Input.GetMouseButton( 1 ))
+		if (mainUI.PresentSelectItem.enabled && !mainUI.OnClickMouse)
 		{
-			Debug.Log( "Active close present element" );
 			mainUI.ClosePresentElement();
 		}		
 		SetUIState();
@@ -90,10 +93,6 @@ public class GameController : MonoBehaviour
 		//death popup
 		if (!faye.IsAlive)
 			mainUI.ControlDeathPopUp( true );		
-
-		//test camera
-		if (Input.GetKeyDown( KeyCode.F1 ))
-			modeNPC = !modeNPC;
 	}
 
 	public void LateUpdate()
@@ -124,7 +123,7 @@ public class GameController : MonoBehaviour
 
 	public void CameraControl()
 	{
-		if (!modeNPC)
+		if (mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
 		{
 			//position
 			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, faye.transform.position + cameraDistance, Time.deltaTime * 10 );
@@ -132,13 +131,19 @@ public class GameController : MonoBehaviour
 			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion ( 0.4f, 0.0f, 0.0f, 0.9f ), Time.deltaTime * 10 );
 		}
 
-		if (modeNPC)
+		if (mainUI.CompareMode( UserInterfaceManager.Mode.NPC ))
 		{
 			//rotation -> use forward vector
 			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
 			//position
 			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + ( temp.transform.forward * 3 ) + new Vector3 ( 0f, 0.5f, 0f ), Time.deltaTime * 10 );
 		}
+
+		if (mainUI.CompareMode( UserInterfaceManager.Mode.Tranning ))
+		{
+		}
+
+
 			
 	}
 
