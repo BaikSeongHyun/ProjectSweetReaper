@@ -1,9 +1,56 @@
 fileFormatVersion: 2
-guid: 5df49fef92fb1af478bdac7246f52da9
+guid: 33862dfeea2ea6a4fa40ca59d7d94e65
+timeCreated: 1456973229
+licenseType: Store
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    4300000: polySurface240
+    100000: boxcat_poly:pCube2
+    100002: boxcat_poly:pCube6
+    100004: boxcat_poly:pCube7
+    100006: boxcat_poly:pCube8
+    100008: boxcat_poly:pCube9
+    100010: cat
+    100012: //RootNode
+    100014: joint1
+    100016: joint10
+    100018: joint11
+    100020: joint2
+    100022: joint3
+    100024: joint5
+    100026: joint7
+    100028: joint9
+    100030: Mesh
+    400000: boxcat_poly:pCube2
+    400002: boxcat_poly:pCube6
+    400004: boxcat_poly:pCube7
+    400006: boxcat_poly:pCube8
+    400008: boxcat_poly:pCube9
+    400010: cat
+    400012: //RootNode
+    400014: joint1
+    400016: joint10
+    400018: joint11
+    400020: joint2
+    400022: joint3
+    400024: joint5
+    400026: joint7
+    400028: joint9
+    400030: Mesh
+    4300000: boxcat_poly:pCube2
+    4300002: boxcat_poly:pCube6
+    4300004: boxcat_poly:pCube7
+    4300006: boxcat_poly:pCube8
+    4300008: boxcat_poly:pCube9
+    4300010: cat
+    7400000: CatBox@close
+    9500000: //RootNode
+    13700000: boxcat_poly:pCube2
+    13700002: boxcat_poly:pCube6
+    13700004: boxcat_poly:pCube7
+    13700006: boxcat_poly:pCube8
+    13700008: boxcat_poly:pCube9
+    13700010: cat
   materials:
     importMaterials: 0
     materialName: 0
@@ -28,7 +75,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 30
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -42,11 +89,11 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
-    normalSmoothAngle: 180
-    normalImportMode: 1
-    tangentImportMode: 4
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -62,7 +109,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
