@@ -213,6 +213,34 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 4870495a42d37af40abd1963efdbaec8, type: 2}
   m_PrefabInternal: {fileID: 65964283}
+--- !u!1 &75370231 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100898, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
+  m_PrefabInternal: {fileID: 937062335}
+--- !u!114 &75370232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75370231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237754f4d326b954cb3b7191836b25e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  petRunningSpeed: 0.1
+  petAttackcycle: 0
+  petFear: 0
+  petLiking: 0
+  disposition: 0
+  violenceImage: {fileID: 0}
+  peaceImage: {fileID: 0}
+  petHitObject: {fileID: 0}
+  petHitEffect: {fileID: 0}
+  petIsAttack: 0
+  NPCFrogPetRandomPattern: 1
+  NPCFrogPetRandomPatternCycle: 0
+  NPCFrogPetAiAnimator: {fileID: 0}
 --- !u!1001 &115351065
 Prefab:
   m_ObjectHideFlags: 0
@@ -1237,9 +1265,14 @@ Prefab:
       propertyPath: m_Name
       value: NPCFrogPet
       objectReference: {fileID: 0}
+    - target: {fileID: 9592070, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 49612d467ba42ec42b4aec1a20d23a15, type: 2}
     m_RemovedComponents:
     - {fileID: 11423850, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
     - {fileID: 11485924, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
+    - {fileID: 11401586, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 65a422074ba587e41a50d621a7515c59, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &958744888
@@ -3660,7 +3693,15 @@ Prefab:
       propertyPath: m_Name
       value: PlayerFrogPet
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9580126, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5470278, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+    - {fileID: 11443638, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+    - {fileID: 11469258, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+    - {fileID: 11487384, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &2061395166 stripped
