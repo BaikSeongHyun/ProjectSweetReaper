@@ -972,7 +972,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 555713497}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 5.25, y: 0, z: 3}
+  m_LocalPosition: {x: 5.8, y: 0, z: -36.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children: []
@@ -1594,7 +1594,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1028779353}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -3, y: 0, z: 3}
+  m_LocalPosition: {x: -3, y: 0, z: -36.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children: []
@@ -1926,7 +1926,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1142867185}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: -10, y: 0, z: 3}
+  m_LocalPosition: {x: -10, y: 0, z: -36.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children: []
@@ -2843,6 +2843,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 66.6249
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 0e439927d70fa4e4395a1fe422d6d4f2, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2380c3cede3f1eb49b953be7cffcec9b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e439927d70fa4e4395a1fe422d6d4f2, type: 3}
   m_IsPrefabParent: 0
@@ -2872,7 +2876,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1501583562}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 12, y: 0, z: 3}
+  m_LocalPosition: {x: 12.12, y: 0, z: -36.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_Children: []
@@ -4015,7 +4019,11 @@ Prefab:
     - target: {fileID: 9576680, guid: 1930aeb28c7dd544787e4691c550aacc, type: 2}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: b343d02df75f43c45ac700a8718dc9a9, type: 2}
+      objectReference: {fileID: 9100000, guid: e1353078288aedc489f235e9a93dccec, type: 2}
+    - target: {fileID: 9576680, guid: 1930aeb28c7dd544787e4691c550aacc, type: 2}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1930aeb28c7dd544787e4691c550aacc, type: 2}
   m_IsPrefabParent: 0
@@ -4047,14 +4055,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cnt: 4
-  lineOfObstacleLimit: 2
-  position:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  obstacle: []
-  box: {fileID: 105826, guid: d996f0e9ba61c6645a3290a4e23b0d62, type: 2}
+  lineOfObstacleLimit: 4
+  sectionDistance: 20
+  ObstacleCount: 1
+  box:
+  - {fileID: 105826, guid: d996f0e9ba61c6645a3290a4e23b0d62, type: 2}
+  - {fileID: 165542, guid: 2978b7bd21521774186b661e35b8c4f9, type: 2}
 --- !u!4 &1899031470
 Transform:
   m_ObjectHideFlags: 0
