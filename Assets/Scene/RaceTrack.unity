@@ -4056,7 +4056,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cnt: 4
   lineOfObstacleLimit: 4
-  sectionDistance: 20
+  ObstaclePlacement: 20
+  sectionDistance: 35
   ObstacleCount: 1
   box:
   - {fileID: 105826, guid: d996f0e9ba61c6645a3290a4e23b0d62, type: 2}
