@@ -5,6 +5,7 @@ public class RaceFieldManager : MonoBehaviour {
 
 	public int cnt=0;
 	public int lineOfObstacleLimit=0;
+	public int ObstaclePlacement = 0;
 	public int sectionDistance = 30;
 	public int ObstacleCount = 0;
 
@@ -48,13 +49,14 @@ public class RaceFieldManager : MonoBehaviour {
 			//Random Obstacle
 			int Counter = Random.Range (0, ObstacleCount);
 			obstacle [i] = (GameObject)Instantiate (box[Counter], box[Counter].transform.position, box[Counter].transform.rotation);
+			obstacle [i].name = "obstacle" + i;
 		}
 
 		boxCount = 0;
 
 		for (int i = 0; i < cnt; i++) {
 			for (int j = 0; j < lineOfObstacleLimit; j++) {
-				int randomPosition = Random.Range (0, 15);
+				int randomPosition = Random.Range (0, ObstaclePlacement);
 				//Obstacle position reset 
 				obstacle [boxCount].transform.position = new Vector3 (position [i].transform.position.x,obstacle[boxCount].transform.position.y ,position [i].transform.position.z+randomPosition);
 				position [i].transform.position = new Vector3 (position [i].transform.position.x, obstacle [boxCount].transform.position.y, position [i].transform.position.z + sectionDistance);
