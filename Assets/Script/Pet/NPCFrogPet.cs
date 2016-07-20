@@ -27,13 +27,13 @@ public class NPCFrogPet : Pet
 //		violenceImage.gameObject.SetActive (false);
 		NPCFrogPetPattern(NPCFrogPetPatternName.NPCFrogIdle);
 
-
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 		//NPCFrogPetRandomPatternCycle += Time.deltaTime;
+
 
 		NPCFrogPetPattern (NPCFrogPetPatternName.NPCFrogRun);
 
@@ -45,6 +45,11 @@ public class NPCFrogPet : Pet
 		}
 
 		runStateNPCPetFrog = this.NPCFrogPetAiAnimator.GetCurrentAnimatorStateInfo( 0 );
+
+		//att
+
+		//
+
 
 
 //		if (NPCFrogPetRandomPatternCycle <= 5)
@@ -72,7 +77,6 @@ public class NPCFrogPet : Pet
 
 	
 	}
-
 
 	public void NPCFrogPetPattern( NPCFrogPetPatternName NPCFrogState)
 	{
@@ -108,4 +112,12 @@ public class NPCFrogPet : Pet
 		}
 	}
 
+	public override void UserOrder(string data)
+	{
+		if (data == "Run") 
+		{
+			//NPCFrogPetPattern (NPCFrogPetPatternName.NPCFrogRun);
+
+		}
+	}
 }

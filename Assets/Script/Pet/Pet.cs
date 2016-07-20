@@ -4,12 +4,13 @@ using UnityEngine.UI;
 
 public class Pet : MonoBehaviour {
 
-
+	public bool playerPet;
 	//pet status
 	public float petRunningSpeed;
 	public float petAttackcycle;
 
 	public int petFear;
+	public int petBelligerence;
 	public int petLiking;
 
 	//pet violence of peace
@@ -44,5 +45,8 @@ public class Pet : MonoBehaviour {
 		
 	}
 
+	public virtual void UserOrder(string data)
+	{
+	}
 
 }
