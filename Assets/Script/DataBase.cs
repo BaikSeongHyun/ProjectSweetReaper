@@ -96,6 +96,6 @@ public class DataBase
 	//find skill
 	public Skill FindSkill( int index )
 	{
-		return skillInformation[index - 1];
+		return skillInformation[index];
 	}
 }

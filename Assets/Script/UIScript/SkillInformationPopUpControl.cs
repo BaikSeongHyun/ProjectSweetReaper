@@ -8,7 +8,7 @@ public class SkillInformationPopUpControl : MonoBehaviour
 	public Image skillInformation;
 	
 	//link all component
-	public void LinkComponent()
+	public void LinkElement()
 	{
 		skillInformation = transform.Find( "SkillInformation" ).GetComponent<Image>();
 	}

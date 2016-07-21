@@ -33,7 +33,7 @@ public class ItemElement : MonoBehaviour
 		if (itemInfo.Name == "Default")
 			return;
 		
-		itemPopUp.LinkComponent();
+		itemPopUp.LinkElement();
 		itemPopUp.ControlComponent( true );
 		itemPopUp.UpdateItemInformation( itemInfo, transform.position );
 	}

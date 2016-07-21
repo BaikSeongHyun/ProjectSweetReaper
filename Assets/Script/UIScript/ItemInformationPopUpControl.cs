@@ -18,7 +18,7 @@ public class ItemInformationPopUpControl : MonoBehaviour
 	public Text element3Text;
 
 	//link all component
-	public void LinkComponent()
+	public void LinkElement()
 	{
 		backGround = transform.Find( "ItemPopUpBack" ).GetComponent<Image>();
 		rarity = transform.Find( "RarityText" ).GetComponent<Text>();

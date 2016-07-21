@@ -8,7 +8,7 @@ public class SkillElement : MonoBehaviour
 	public SkillInformationPopUpControl skillPopUp;
 	public Image skillIcon;
 	public Skill skillInfo;
-	public CharacterInformation info;
+
 	//property
 	public Skill SkillInfo
 	{
@@ -18,7 +18,7 @@ public class SkillElement : MonoBehaviour
 
 	public Image SkillIcon
 	{
-		get { return SkillIcon; }
+		get { return skillIcon; }
 	}
 	// initialize this script
 	void Start()
@@ -31,7 +31,7 @@ public class SkillElement : MonoBehaviour
 		if (skillInfo.Name == " Default")
 			return;
 		
-		skillPopUp.LinkComponent();
+		skillPopUp.LinkElement();
 		skillPopUp.ControlComponent( true );
 		skillPopUp.UpdateSkillInformation( skillInfo, transform.position );
 	}
@@ -44,13 +44,15 @@ public class SkillElement : MonoBehaviour
 	public void UpdateSkillIcon(CharacterInformation info)
 	{
 		skillIcon = GetComponent<Image>();
-		skillIcon.sprite = skillInfo.Icon;
-		if (SkillInfo.Name == "Default" || skillInfo.LearnLevel >= info.Level)
+		skillInfo.SetSpriteIcon();
+		SkillIcon.sprite = skillInfo.Icon;
+		if (skillInfo.Name == "Default" || skillInfo.LearnLevel >= info.Level)
 			skillIcon.sprite = Resources.Load<Sprite>( "Skill/SkillDefault" );
+
 	}
 
 	//use default only
-	public void UpdateDefaultSkillIcon(Sprite data)
+	public void UpdateDefaultSkillIcon( Sprite data )
 	{
 		skillIcon = GetComponent<Image>();
 		skillIcon.sprite = data;

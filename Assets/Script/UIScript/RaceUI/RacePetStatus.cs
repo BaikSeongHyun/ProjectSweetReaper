@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class RacePetStatus : MonoBehaviour {
+public class RacePetStatus : MonoBehaviour
+{
+	Image fearFill;
+	Image belligerenceFill;
 
-	// Use this for initialization
-	void Start () {
-	
+	public void LinkElement()
+	{
+		fearFill = transform.Find( "FearGaugeBack" ).GetComponent<Image>();
+		belligerenceFill = transform.Find( "BelligerenceGaugeFill" ).GetComponent<Image>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public void UpdatePetStatus()
+	{
+
 	}
 }

@@ -139,7 +139,7 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		if (!mainUI.OnClickMouse)
 			presentItemElement = eventData.pointerEnter.GetComponent<ItemElement>();
 
-		if (( presentItemElement != null ) && !mainUI.onClickMouse)
+		if (( presentItemElement != null ) && !mainUI.OnClickMouse)
 			presentItemElement.UpdateItemPopUp();								
 	}
 

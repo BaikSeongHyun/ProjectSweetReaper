@@ -9,10 +9,9 @@ public class SystemUI : MonoBehaviour
 	public UserInterfaceManager mainUI;
 	public Text[] elements;
 	public List<string> elementsText;
-	
-	// initialize this script
-	void Start()
-	{		
+
+	public void LinkElement()
+	{
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		elements = new Text[5];
 		for (int i = 0; i < elements.Length; i++)

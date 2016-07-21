@@ -10,7 +10,6 @@ public class QuickStatus : MonoBehaviour
 	public Image healthBar;
 	public Image resourceBar;
 
-	//property
 	// initialize this script
 	void Start()
 	{

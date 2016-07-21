@@ -12,6 +12,7 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 	public SkillElement[] elements;
 	public SkillElement presentSkillElement;
 	public Sprite defaultSprite;
+
 	public SkillElement[] InstallSkill
 	{
 		get { return elements; }
@@ -46,7 +47,7 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 			if (elements[i].SkillInfo.Name == "Default" && skill.LearnLevel <= info.Level)
 			{
 				elements[i].SkillInfo = new Skill ( skill );
-				elements[i].UpdateSkillIcon( info );
+				elements[i].UpdateSkillIcon(info);
 				break;
 			}
 		}
@@ -57,7 +58,7 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 		for (int i = 0; i < elements.Length; i++)
 		{
 			elements[i].SkillInfo = info.InstallSkill[i];
-			elements[i].UpdateSkillIcon( info );
+			elements[i].UpdateSkillIcon(info);
 		}
 	}
 	

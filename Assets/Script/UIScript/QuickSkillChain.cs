@@ -6,10 +6,9 @@ public class QuickSkillChain : MonoBehaviour
 {
 	public Image comboGaugeFill;
 	public Image[] comboPointElement;
-	
 
-	// initialization this script
-	void Start()
+
+	public void LinkElement()
 	{
 		comboGaugeFill = transform.Find( "SkillChainFill" ).GetComponent<Image>();
 		comboPointElement = new Image[4];

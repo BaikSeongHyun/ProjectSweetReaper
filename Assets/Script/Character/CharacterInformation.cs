@@ -221,6 +221,7 @@ public class CharacterInformation : MonoBehaviour
 	{
 		characterItem = new Item[35];
 		characterSkill = new Skill[9];
+		installSkill = new Skill[8];
 		DefaultStatus();
 	}
 
@@ -265,7 +266,16 @@ public class CharacterInformation : MonoBehaviour
 
 	public void SetDefaultSkill()
 	{
-		
+		characterSkill[0] = DataBase.Instance.FindSkill( 0 );
+		characterSkill[1] = DataBase.Instance.FindSkill( 1 );
+		characterSkill[2] = DataBase.Instance.FindSkill( 2 );
+		characterSkill[3] = DataBase.Instance.FindSkill( 3 );
+		characterSkill[4] = DataBase.Instance.FindSkill( 4 );
+		characterSkill[5] = DataBase.Instance.FindSkill( 5 );
+
+		for (int i = 6; i < characterSkill.Length; i++)
+			characterSkill[i] = new Skill ();
+
 	}
 
 	public bool AddItem( Item item )

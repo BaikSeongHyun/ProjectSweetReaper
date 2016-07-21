@@ -8,30 +8,57 @@ public class UserInterfaceManager : MonoBehaviour
 	public Mode presentMode;
 	public bool onClickMouse;
 
-	//child UI
+	//child UI & data - use neutral
 	public GameObject inventory;
+	public Inventory inventoryLogic;
+
 	public GameObject skillUI;
-	public GameObject statusUI;
+	public SkillUI skillUILogic;
+
 	public GameObject enterDungeon;
-	public GameObject deathPopUp;
-	public GameObject exitDungeonPopUp;
-	public QuickStatus quickStatus;
-	public ExpGauge expGauge;
-	public QuickSkillChain quickSkillChain;
-	public QuickSkill quickSkill;
-	public SystemUI systemUI;
-	public ItemInformationPopUpControl itemPopUp;
-	public SkillInformationPopUpControl skillPopUp;
+	public EnterDungeon enterDungeonLogic;
+
+	public GameObject quickStatus;
+	public QuickStatus quickStatusLogic;
+
+	public GameObject expGauge;
+	public ExpGauge expGaugeLogic;
+
+	public GameObject quickSkillChain;
+	public QuickSkillChain quickSkillChainLogic;
+
+	public GameObject quickSkill;
+	public QuickSkill quickSkillLogic;
+
+	public GameObject systemUI;
+	public SystemUI systemUILogic;
+
+	public GameObject itemPopUp;
+	public ItemInformationPopUpControl itemPopUpLogic;
+
+	public GameObject skillPopUp;
+	public SkillInformationPopUpControl skillPopUpLogic;
+
 	public Image presentSelectItem;
 	public SkillElement presentSelectSkill;
 	public CharacterInformation info;
+	public GameObject deathPopUp;
+	public GameObject exitDungeonPopUp;
+
+	//child UI & data - use race
+	public GameObject raceMiniMap;
+	public RaceMiniMap raceMiniMapLogic;
+	public GameObject racePetStatus;
+	public RacePetStatus racePetStatusLogic;
+	public GameObject racePetOrder;
+
 
 	//initialize this script
 	void Start()
-	{
+	{		
 		LinkElement();
-		ClearUI();
 		presentMode = Mode.Neutral;
+		InitializeModeNeutral();
 	}
 
 	public enum Mode{
@@ -39,6 +66,7 @@ public class UserInterfaceManager : MonoBehaviour
 		Result,
 		NPC,
 		Tranning,
+		Race,
 		SubContent,
 		Default}
 ;
@@ -58,11 +86,6 @@ public class UserInterfaceManager : MonoBehaviour
 	public bool OnEnterDungeon
 	{
 		get { return enterDungeon.activeSelf; }
-	}
-
-	public bool OnStatusUI
-	{
-		get { return statusUI.activeSelf; }
 	}
 
 	public bool OnSkillUI
@@ -90,28 +113,93 @@ public class UserInterfaceManager : MonoBehaviour
 	//data link
 	public void LinkElement()
 	{
+		//neutral UI & data
 		inventory = GameObject.Find( "Inventory" );
+		inventoryLogic = inventory.GetComponent<Inventory>();
+
 		skillUI = GameObject.Find( "SkillUI" );
+		skillUILogic = skillUI.GetComponent<SkillUI>();
+
 		enterDungeon = GameObject.Find( "EnterDungeon" );
-		deathPopUp = GameObject.Find( "DeathPopUp" );
-		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
-		quickStatus = GameObject.Find( "QuickStatus" ).GetComponent<QuickStatus>();
-		expGauge = GameObject.Find( "ExpGauge" ).GetComponent<ExpGauge>();
-		quickSkillChain = GameObject.Find( "QuickSkillChain" ).GetComponent<QuickSkillChain>();
-		quickSkill = GameObject.Find( "QuickSkill" ).GetComponent<QuickSkill>();
-		systemUI = GameObject.Find( "SystemUI" ).GetComponent<SystemUI>();
-		itemPopUp = GameObject.Find( "ItemPopUp" ).GetComponent<ItemInformationPopUpControl>();
-		itemPopUp.LinkComponent();
-		skillPopUp = GameObject.Find( "SkillPopUp" ).GetComponent<SkillInformationPopUpControl>();
-		skillPopUp.LinkComponent();
+		enterDungeonLogic = enterDungeon.GetComponent<EnterDungeon>();
+
+		quickStatus = GameObject.Find( "QuickStatus" );
+		quickStatusLogic = quickStatus.GetComponent<QuickStatus>();
+		quickStatusLogic.LinkElement();
+
+		expGauge = GameObject.Find( "ExpGauge" );
+		expGaugeLogic = expGauge.GetComponent<ExpGauge>();
+		expGaugeLogic.LinkElement();
+
+		quickSkill = GameObject.Find( "QuickSkill" );
+		quickSkillLogic = quickSkill.GetComponent<QuickSkill>();
+		quickSkillLogic.LinkElement();
+
+		quickSkillChain = GameObject.Find( "QuickSkillChain" );
+		quickSkillChainLogic = quickSkillChain.GetComponent<QuickSkillChain>();
+		quickSkillChainLogic.LinkElement();
+
+		systemUI = GameObject.Find( "SystemUI" );
+		systemUILogic = systemUI.GetComponent<SystemUI>();
+		systemUILogic.LinkElement();
+
+		itemPopUp = GameObject.Find( "ItemPopUp" );
+		itemPopUpLogic = itemPopUp.GetComponent<ItemInformationPopUpControl>();
+		itemPopUpLogic.LinkElement();
+
+		skillPopUp = GameObject.Find( "SkillPopUp" );
+		skillPopUpLogic = skillPopUp.GetComponent<SkillInformationPopUpControl>();
+		skillPopUpLogic.LinkElement();
+
 		presentSelectItem = transform.Find( "PresentSelectItem" ).GetComponent<Image>();
 		presentSelectItem.enabled = false;
+
 		presentSelectSkill = transform.Find( "PresentSelectSkill" ).GetComponent<SkillElement>();
 		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
+
+		deathPopUp = GameObject.Find( "DeathPopUp" );
+		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
+
+		//race UI & data
+		raceMiniMap = GameObject.Find( "RaceMiniMap" );
+		raceMiniMapLogic = raceMiniMap.GetComponent<RaceMiniMap>();
+		racePetStatus = GameObject.Find( "RacePetStatus" );
+		racePetStatusLogic = racePetStatus.GetComponent<RacePetStatus>();
+		racePetOrder = GameObject.Find( "RacePetOrder" );
+
 	}
 
-	//control ui element
+	//state apply - neutral
+	public void InitializeModeNeutral()
+	{
+		//on neutral update item
+		quickSkill.SetActive( true );
+		quickSkillChain.SetActive( true );
+		quickStatus.SetActive( true );
+		systemUI.SetActive( true );
+		expGauge.SetActive( true );
+
+		//off asynchronous item
+		inventory.SetActive( false );
+		skillUI.SetActive( false );
+		enterDungeon.SetActive( false );
+		deathPopUp.SetActive( false );
+		itemPopUpLogic.ControlComponent( false );	
+		skillPopUp.SetActive( false );
+		exitDungeonPopUp.SetActive( false );
+		presentSelectItem.enabled = false;
+		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
+
+
+		//off race items
+		raceMiniMap.SetActive( false );
+		racePetStatus.SetActive( false );
+		racePetOrder.SetActive( false );
+
+	}
+
+
 	// inventory
 	public void ControlInventory( bool state )
 	{
@@ -119,13 +207,12 @@ public class UserInterfaceManager : MonoBehaviour
 
 		if (state)
 		{
-			Inventory temp = inventory.GetComponent<Inventory>();
-			temp.InitializeElement();
-			temp.LinkElement();
-			temp.UpdateInventory( info );
+			inventoryLogic.InitializeElement();
+			inventoryLogic.LinkElement();
+			inventoryLogic.UpdateInventory( info );
 		}
 		else
-			itemPopUp.ControlComponent( state );
+			itemPopUpLogic.ControlComponent( state );
 	}
 
 	// skill ui
@@ -135,13 +222,11 @@ public class UserInterfaceManager : MonoBehaviour
 		
 		if (state)
 		{
-			SkillUI temp = skillUI.GetComponent<SkillUI>();
-			temp.InitializeElement();
-			temp.LinkElement();
-			temp.UpdateSkillUI( info );
+			skillUILogic.LinkElement();
+			skillUILogic.UpdateSkillUI( info );
 		}
 		else
-			skillPopUp.ControlComponent( state );			
+			skillPopUpLogic.ControlComponent( state );			
 	}
 
 	// enter dungeon
@@ -200,7 +285,7 @@ public class UserInterfaceManager : MonoBehaviour
 		ControlEnterDungeon( false );
 		ControlDeathPopUp( false );
 		ControlExitDungeonPopUp( false );
-		itemPopUp.ControlComponent( false );
+		itemPopUpLogic.ControlComponent( false );
 	}
 
 	//compare present Mode
@@ -237,7 +322,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public void InstallQuickSkill()
 	{
 		if (PresentSelectSkill.SkillInfo.Name != "Default")
-			quickSkill.InstallQuickSkill( PresentSelectSkill.SkillInfo, info );
+			quickSkillLogic.InstallQuickSkill( PresentSelectSkill.SkillInfo, info );
 	}
 	
 	// on click event - quick button
@@ -257,8 +342,8 @@ public class UserInterfaceManager : MonoBehaviour
 	//update system UI
 	public void AsynchronousSystemUI( string data )
 	{
-		systemUI.AddData( data );
-		systemUI.UpdateSystem();
+		systemUILogic.AddData( data );
+		systemUILogic.UpdateSystem();
 	}
 
 	//direct update
@@ -268,13 +353,13 @@ public class UserInterfaceManager : MonoBehaviour
 		if (CompareMode( Mode.Neutral ))
 		{
 			//update quick status
-			quickStatus.UpdateQuickStatusInfo( info );
+			quickStatusLogic.UpdateQuickStatusInfo( info );
 
 			//update exp gauge 
-			expGauge.UpdateExpGauge( info );
+			expGaugeLogic.UpdateExpGauge( info );
 
 			//update quick skill chain
-			quickSkillChain.UpdateSkillChain( info );
+			quickSkillChainLogic.UpdateSkillChain( info );
 		
 			//update present select item
 			if (presentSelectItem.enabled)
@@ -284,18 +369,20 @@ public class UserInterfaceManager : MonoBehaviour
 			{
 				info.InstallDefaultItem();	
 				info.SetDefaultSkill();
+				info.InstalledItem = true;
 			}
 		}
 		else if (CompareMode( Mode.NPC ))
 		{
+			//update race mini map
+			raceMiniMapLogic.UpdateMinimap( 1.0f );
 
+			//update race pet status
+			racePetStatusLogic.UpdatePetStatus();
 		}
 		else if (CompareMode( Mode.Result ))
 		{
 
 		}
-
 	}
-
-
 }

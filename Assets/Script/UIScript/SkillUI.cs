@@ -17,14 +17,13 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 		get { return elements; }	
 	}
 
-	public void InitializeElement()
-	{
-		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
-		elements = new SkillElement[9];
-	}
+
 
 	public void LinkElement()
 	{		
+
+		elements = new SkillElement[9];
+		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		for (int i = 0; i < elements.Length; i++)
 		{
 			string skillItem = "SkillItem";
@@ -45,14 +44,19 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 	//skill element in -> pop up item information
 	public void OnPointerEnter( PointerEventData eventData )
 	{
-		presentSkillElement = eventData.pointerEnter.GetComponent<SkillElement>();
-		if (presentSkillElement != null)
+		if(!mainUI.OnClickMouse)
+			presentSkillElement = eventData.pointerEnter.GetComponent<SkillElement>();
+
+		if ((presentSkillElement != null) && !mainUI.OnClickMouse)
 			presentSkillElement.UpdateSkillPopUp();
 	}
 
 	//skill element out -> pop up skill information
 	public void OnPointerExit( PointerEventData eventData )
 	{
+		if (mainUI.PresentSelectSkill == null)
+			return;
+		
 		if (presentSkillElement == null)
 			return;
 
