@@ -17,25 +17,41 @@ public class CharacterFaye : MonoBehaviour
 	AnimatorStateInfo attackState;
 	CharacterInformation charInfo;
 	Animator animator;
-
-	float moveSpeed = 4.0f;
+	float moveSpeed = 5.0f;
 	float skillChainWaitingTime = 0.0f;
 	float skillChainWaitingTimeMax = 5.0f;
 	public int skillingChainCount = 0;
 	public bool runState = false;
-
+	public int skillCount=6;
 	bool skillChainTrigger = false;
 	bool skillUsingState = false;
 	bool normalAttackState = false;
 	bool isAlive = true;
 	STATE presentState;
 
+	//skill
+
+	bool bash=false;
+	bool twinRush=false;
+	bool crescentCut=false;
+	bool landCrush=false;
+	bool wheelScythe=false;
+	bool upperScythe=false;
+
+	float bashCooltime=0.0f;
+	float twinRushCooltime=0.0f;
+	float landCrushCooltime=0.0f;
+	float crescentCutCooltime=0.0f;
+	float WheelScythebashCooltime=0.0f;
+	float upperScytheCooltime=0.0f;
+
 	//State Event
 	public enum STATE
 	{
 		Default,
 		Idle,
-		Run}
+		Run
+	}
 	;
 
 	//property
@@ -77,10 +93,12 @@ public class CharacterFaye : MonoBehaviour
 		animator = GetComponent<Animator>();
 		charInfo = GetComponent<CharacterInformation>();
 		Hit.size = new Vector3(0, 0, 0);
+		this.GetComponent<Animator> ().speed = 1.5f;
 	}
 
 	void Update()
 	{
+		SkillCoolTime ();
 		if (skillingChainCount == 5)
 			isStop = true;
 		
@@ -164,6 +182,60 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
+	public void BashHitBoxIncease(){
+		normalAttackState = false;
+	}
+
+	public void SkillCoolTime(){
+		if (bash) {
+			bashCooltime += Time.deltaTime;
+			if (bashCooltime >= 5.0f) {
+				bash = false;
+				bashCooltime = 0.0f;
+			}
+		}
+
+		if (twinRush) {
+			twinRushCooltime += Time.deltaTime;
+			if (twinRushCooltime >= 5.0f) {
+				twinRush = false;
+				twinRushCooltime = 0.0f;
+			}
+		}
+
+		if (crescentCut) {
+			crescentCutCooltime += Time.deltaTime;
+			if (crescentCutCooltime >= 5.0f) {
+				crescentCut = false;
+				crescentCutCooltime = 0.0f;
+			}
+		}
+
+		if (landCrush) {
+			landCrushCooltime += Time.deltaTime;
+			if (landCrushCooltime >= 5.0f) {
+				landCrush = false;
+				landCrushCooltime = 0.0f;
+			}
+		}
+
+		if (wheelScythe) {
+			WheelScythebashCooltime += Time.deltaTime;
+			if (WheelScythebashCooltime >= 5.0f) {
+				wheelScythe = false;
+				WheelScythebashCooltime = 0.0f;
+			}
+		}
+
+		if (upperScythe) {
+			upperScytheCooltime += Time.deltaTime;
+			if (upperScytheCooltime >= 5.0f) {
+				upperScythe = false;
+				upperScytheCooltime = 0.0f;
+			}
+		}
+	}
+
 	public void Respawn()
 	{
 		charInfo.presentHealthPoint = charInfo.OriginHealthPoint;
@@ -180,7 +252,7 @@ public class CharacterFaye : MonoBehaviour
 			skillChainTrigger = true;
 			skillUsingState = false;
 		}
-		normalAttackState = false;
+		destination = transform.position;
 	}
 
 	public void Attack()
@@ -237,38 +309,67 @@ public class CharacterFaye : MonoBehaviour
 			Effect.SetActive( true );
 			animator.Play( "Idle" );
 			destination = this.transform.position;
-			switch (_command)
-			{
-				case "A":
+			switch (_command) {
+			case "A":
+				if (!bash) {
 					skillingChainCount++;
-					SetState( "Skill_A" );
+					SetState ("Bash");
 					skillUsingState = true;
-					break;
-				case "S":
+					bash = true;
+				}
+				break;
+
+			case "S":
+				if (!twinRush) {
 					skillingChainCount++;
-					SetState( "Skill_S" );
+					SetState ("TwinRush");
 					skillUsingState = true;
-					break;
-				case "D":
+					twinRush = true;
+				}
+				break;
+
+			case "D":
+				if (!landCrush) {
 					skillingChainCount++;
-					SetState( "Skill_D" );
+					SetState ("LandCrush");
 					skillUsingState = true;
-					break;
-				case "Q":
+					landCrush = true;
+				}
+				break;
+
+			case "Skill8":
+				skillingChainCount++;
+				SetState ("Kick");
+				skillUsingState = true;
+				break;
+
+			case "Q":
+				if (!wheelScythe) {
 					skillingChainCount++;
-					SetState( "Skill_Q" );
+					SetState ("WheelScythe");
 					skillUsingState = true;
-					break;		
-				case "Skill2":
+					wheelScythe = true;
+				}
+				break;
+
+			case "Skill2":
+				if (!upperScythe) {
 					skillingChainCount++;
-					SetState( "Skill_W" );
+					SetState ("UpperScythe");
 					skillUsingState = true;
-					break;
-				case "Skill3":
+					upperScythe = true;
+				}
+				break;
+
+			case "Skill3":
+				if (!crescentCut) {
 					skillingChainCount++;
-					SetState( "Skill_E" );
+					SetState ("CrescentCut");
 					skillUsingState = true;
-					break;
+					crescentCut = true;
+				}
+				break;
+
 			}
 		}
 	}
@@ -277,37 +378,39 @@ public class CharacterFaye : MonoBehaviour
 	public void SetState( string state )
 	{
 		SetStateDefault();
-		switch (state)
-		{
-			case "Idle":
-				presentState = STATE.Idle;
-				animator.SetBool( "Idle", true );
-				break;
-			case "Run":
-				presentState = STATE.Run;
-				animator.SetBool( "Run", true );
-				break;
-			case "NormalAttack":
-				animator.SetTrigger( "NormalAttack" );
-				break;
-			case "Skill_A":
-				animator.SetTrigger( "Skill_A" );
-				break;
-			case "Skill_S":
-				animator.SetTrigger( "Skill_S" );
-				break;
-			case "Skill_D":
-				animator.SetTrigger( "Skill_D" );
-				break;
-			case "Skill_Q":
-				animator.SetTrigger( "Skill_Q" );
-				break;
-			case "Skill_W":
-				animator.SetTrigger( "Skill_W" );
-				break;
-			case "Skill_E":
-				animator.SetTrigger( "Skill_E" );
-				break;
+		switch (state) {
+		case "Idle":
+			presentState = STATE.Idle;
+			animator.SetBool ("Idle", true);
+			break;
+		case "Run":
+			presentState = STATE.Run;
+			animator.SetBool ("Run", true);
+			break;
+		case "Bash":
+			animator.SetTrigger ("Bash");
+			break;
+		case "TwinRush":
+			animator.SetTrigger ("TwinRush");
+			break;
+		case "CrescentCut":
+			animator.SetTrigger ("CrescentCut");
+			break;
+		case "LandCrush":
+			animator.SetTrigger ("LandCrush");
+			break;
+		case "WheelScythe":
+			animator.SetTrigger ("WheelScythe");
+			break;
+		case "UpperScythe":
+			animator.SetTrigger ("UpperScythe");
+			break;
+		case "Skill_E":
+			animator.SetTrigger ("Skill_E");
+			break;
+		case "Kick":
+			animator.SetTrigger ("Kick");
+			break;
 		}
 	}
 	
