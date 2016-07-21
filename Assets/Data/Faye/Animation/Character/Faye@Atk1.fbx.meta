@@ -474,6 +474,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.994872
+        functionName: BashHitBoxIncease
+        data: 
+        objectReferenceParameter: {fileID: 179576, guid: cc43b05c98e73e84281d3239caab58c4,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
