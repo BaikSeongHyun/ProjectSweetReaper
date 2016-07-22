@@ -12909,6 +12909,10 @@ Prefab:
       propertyPath: talk
       value: 
       objectReference: {fileID: 1382694171}
+    - target: {fileID: 135200, guid: 0f9602618e2816c418f9e92d69cf2890, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0f9602618e2816c418f9e92d69cf2890, type: 2}
   m_IsPrefabParent: 0
