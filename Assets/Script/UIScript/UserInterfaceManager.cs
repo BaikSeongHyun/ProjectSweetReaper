@@ -30,6 +30,8 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject quickSkill;
 	public QuickSkill quickSkillLogic;
 
+	public GameObject quickSlot;
+
 	public GameObject systemUI;
 	public SystemUI systemUILogic;
 
@@ -41,9 +43,10 @@ public class UserInterfaceManager : MonoBehaviour
 
 	public Image presentSelectItem;
 	public SkillElement presentSelectSkill;
-	public CharacterInformation info;
 	public GameObject deathPopUp;
 	public GameObject exitDungeonPopUp;
+	public GameObject quickButton;
+	public CharacterInformation info;
 
 	//child UI & data - use race
 	public GameObject raceMiniMap;
@@ -139,6 +142,8 @@ public class UserInterfaceManager : MonoBehaviour
 		quickSkillChainLogic = quickSkillChain.GetComponent<QuickSkillChain>();
 		quickSkillChainLogic.LinkElement();
 
+		quickSlot = GameObject.Find( "QuickSlot" );
+
 		systemUI = GameObject.Find( "SystemUI" );
 		systemUILogic = systemUI.GetComponent<SystemUI>();
 		systemUILogic.LinkElement();
@@ -159,6 +164,7 @@ public class UserInterfaceManager : MonoBehaviour
 
 		deathPopUp = GameObject.Find( "DeathPopUp" );
 		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
+		quickButton = GameObject.Find( "QuickButton" );
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 
 		//race UI & data
@@ -170,6 +176,21 @@ public class UserInterfaceManager : MonoBehaviour
 
 	}
 
+	public void SwitchUIMode(Mode uiMode)
+	{
+		switch (uiMode)
+		{
+			case Mode.Neutral:
+				presentMode = Mode.Neutral;
+				InitializeModeNeutral();
+				break;
+			case Mode.Race:
+				presentMode = Mode.Race;
+				InitializeModeRace();
+				break;
+		}
+	}
+
 	//state apply - neutral
 	public void InitializeModeNeutral()
 	{
@@ -177,8 +198,10 @@ public class UserInterfaceManager : MonoBehaviour
 		quickSkill.SetActive( true );
 		quickSkillChain.SetActive( true );
 		quickStatus.SetActive( true );
+		quickSlot.SetActive( true );
 		systemUI.SetActive( true );
 		expGauge.SetActive( true );
+		quickButton.SetActive( true );
 
 		//off asynchronous item
 		inventory.SetActive( false );
@@ -191,11 +214,40 @@ public class UserInterfaceManager : MonoBehaviour
 		presentSelectItem.enabled = false;
 		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
 
-
 		//off race items
 		raceMiniMap.SetActive( false );
 		racePetStatus.SetActive( false );
 		racePetOrder.SetActive( false );
+
+	}
+
+	//state apply - Race
+	public void InitializeModeRace()
+	{
+		//off neutral update item
+		quickSkill.SetActive( false );
+		quickSkillChain.SetActive( false );
+		quickStatus.SetActive( false );
+		quickSlot.SetActive( false );
+		systemUI.SetActive( false );
+		expGauge.SetActive( false );
+		quickButton.SetActive( false );
+
+		//off asynchronous item
+		inventory.SetActive( false );
+		skillUI.SetActive( false );
+		enterDungeon.SetActive( false );
+		deathPopUp.SetActive( false );
+		itemPopUpLogic.ControlComponent( false );	
+		skillPopUp.SetActive( false );
+		exitDungeonPopUp.SetActive( false );
+		presentSelectItem.enabled = false;
+		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
+
+		//off race items
+		raceMiniMap.SetActive( true );
+		racePetStatus.SetActive( true );
+		racePetOrder.SetActive( true );
 
 	}
 

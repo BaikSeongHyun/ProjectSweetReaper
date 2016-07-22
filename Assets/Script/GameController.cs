@@ -89,6 +89,13 @@ public class GameController : MonoBehaviour
 			if (faye.AcquireItem( hitInfo.collider.gameObject.GetComponent<DropItem>(), mainUI ))
 				Destroy( hitInfo.collider.gameObject );
 		}
+
+		if (Input.GetKeyDown( KeyCode.F8 ))
+			mainUI.SwitchUIMode( UserInterfaceManager.Mode.Race );
+		else if (Input.GetKeyDown( KeyCode.F7 ))
+			mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
+			
+			
 		
 		//death popup
 		if (!faye.IsAlive)

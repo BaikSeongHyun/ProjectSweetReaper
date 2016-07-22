@@ -10,7 +10,6 @@ public class DropItem : MonoBehaviour
 	public int gold;
 	public TextMesh text;
 	public bool onCreate;
-	public DataBase database;
 
 	public Item ItemInfo
 	{
@@ -31,9 +30,7 @@ public class DropItem : MonoBehaviour
 		rigid.AddForce( force );
 		rigid.velocity = transform.up * power;
 		
-		//link data base
-		database = GameObject.FindWithTag( "DataBase" ).GetComponent<DataBase>(); 
-		
+
 		//set item info
 		if (gameObject.name == "DropGold")
 		{
@@ -44,7 +41,7 @@ public class DropItem : MonoBehaviour
 		else if (gameObject.name == "DropItem")
 		{
 			text = transform.Find( "DropItemImage" ).Find( "DropItemName" ).GetComponent<TextMesh>();
-			itemInfo = new Item(database.ItemInformation[Random.Range( 0, 4 )]);
+			itemInfo = new Item ( DataBase.Instance.FindItemByName( "TheHolySpear" ) );
 			text.text = itemInfo.Name;	
 		}		
 	}
