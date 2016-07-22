@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 455120}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 481158}
   - 137: {fileID: 13797872}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: boxcat_poly:pCube8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 462166}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 443168}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 449894}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 477030}
   - 137: {fileID: 13741882}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: boxcat_poly:pCube6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 412572}
   - 137: {fileID: 13781156}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: boxcat_poly:pCube9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 441428}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 476982}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 443508}
   - 137: {fileID: 13724326}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: boxcat_poly:pCube7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 488380}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 494746}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: joint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 403570}
   - 137: {fileID: 13701930}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: boxcat_poly:pCube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +209,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 488026}
   - 137: {fileID: 13748502}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: cat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - 114: {fileID: 11492892}
   - 222: {fileID: 22251038}
   - 114: {fileID: 11454044}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: StoneFrogHpBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 451150}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,9 +260,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 458080}
   - 95: {fileID: 9528012}
-  - 54: {fileID: 5429074}
   - 114: {fileID: 11436384}
   - 65: {fileID: 6517108}
+  - 54: {fileID: 5466686}
   m_Layer: 11
   m_Name: CatBox4
   m_TagString: Untagged
@@ -392,7 +392,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197292}
   m_LocalRotation: {x: 0, y: -0.112577096, z: 0, w: 0.993643}
-  m_LocalPosition: {x: -0.046168096, y: 0, z: 8.079816}
+  m_LocalPosition: {x: -0.61, y: 0, z: 10.54}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_LocalEulerAnglesHint: {x: 0, y: -12.927799, z: 0}
   m_Children:
@@ -494,7 +494,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 449894}
   m_RootOrder: 1
---- !u!54 &5429074
+--- !u!54 &5466686
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -507,7 +507,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 1
 --- !u!65 &6517108
 BoxCollider:
@@ -519,7 +519,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.4, z: 0.4}
+  m_Size: {x: 0.4, y: 2, z: 0.4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &9528012
 Animator:
@@ -570,6 +570,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71455d15a3a840742b202456ef1ddff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitObject: {fileID: 0}
+  hitEffect: {fileID: 0}
+  player: {fileID: 0}
+  frogInfo: {fileID: 0}
+  runRange: 0
+  attackRange: 0
+  attackCycle: 0
+  frogBossSpeed: 0
+  isAlive: 1
+  isAttack: 0
+  health: {fileID: 0}
+  dropItem: {fileID: 0}
+  dropGold: {fileID: 0}
   player: {fileID: 0}
   dummyAnimator: {fileID: 0}
   damagelist: 1
