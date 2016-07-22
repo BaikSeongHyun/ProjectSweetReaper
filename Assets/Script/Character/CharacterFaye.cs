@@ -19,7 +19,7 @@ public class CharacterFaye : MonoBehaviour
 	Animator animator;
 	float moveSpeed = 5.0f;
 	float skillChainWaitingTime = 0.0f;
-	float skillChainWaitingTimeMax = 5.0f;
+	float skillChainWaitingTimeMax = 6.0f;
 	public int skillingChainCount = 0;
 	public bool runState = false;
 	public int skillCount=6;
@@ -27,6 +27,7 @@ public class CharacterFaye : MonoBehaviour
 	bool skillUsingState = false;
 	bool normalAttackState = false;
 	bool isAlive = true;
+	bool finish = false;
 	STATE presentState;
 
 	//skill
@@ -34,10 +35,12 @@ public class CharacterFaye : MonoBehaviour
 	bool bash=false;
 	bool twinRush=false;
 	bool crescentCut=false;
+	bool kick=false;
 	bool landCrush=false;
 	bool wheelScythe=false;
 	bool upperScythe=false;
 
+	float kickCooltime=0.0f;
 	float bashCooltime=0.0f;
 	float twinRushCooltime=0.0f;
 	float landCrushCooltime=0.0f;
@@ -99,9 +102,8 @@ public class CharacterFaye : MonoBehaviour
 	void Update()
 	{
 		SkillCoolTime ();
-		if (skillingChainCount == 5)
+		if (finish)
 			isStop = true;
-		
 
 		if (!skillUsingState)
 			isStop = false;
@@ -126,11 +128,11 @@ public class CharacterFaye : MonoBehaviour
 				if (skillChainWaitingTime >= skillChainWaitingTimeMax)
 				{
 					skillingChainCount = 0;
-					skillChainWaitingTime = 0.0f;
-					skillChainWaitingTimeMax = 5.0f;
-					skillChainTrigger = false;	
 					charInfo.ComboCounter = 0;
-					charInfo.ComboTimeFill = 0f;
+					skillChainWaitingTimeMax = 5.0f;
+					charInfo.ComboTimeFill = 0f;	
+					skillChainWaitingTime = 0.0f;
+					skillChainTrigger = false;	
 				}
 				else
 				{				
@@ -145,7 +147,6 @@ public class CharacterFaye : MonoBehaviour
 			
 			if (charInfo.PresentResourcePoint <= charInfo.OriginResourcePoint)
 				charInfo.PresentResourcePoint += 10f * Time.deltaTime;
-			
 		}
 	}
 
@@ -234,6 +235,14 @@ public class CharacterFaye : MonoBehaviour
 				upperScytheCooltime = 0.0f;
 			}
 		}
+
+		if (kick) {
+			kickCooltime += Time.deltaTime;
+			if (kickCooltime >= 5.0f) {
+				kick = false;
+				kickCooltime = 0.0f;
+			}
+		}
 	}
 
 	public void Respawn()
@@ -294,25 +303,16 @@ public class CharacterFaye : MonoBehaviour
 
 	public void SkillCommand( string _command )
 	{
-		if (isAlive && charInfo.PresentResourcePoint >= 20f)
-		{
-			charInfo.PresentResourcePoint -= 20f;
-			if (_command != "Evation")
-			{
-				skillChainTrigger = false;
-				skillChainWaitingTimeMax = skillChainWaitingTimeMax - 1;
-				if (skillingChainCount >= 5)
-					skillingChainCount = 0;
-				
-				skillChainWaitingTime = 0.0f;
-			}
-			Effect.SetActive( true );
-			animator.Play( "Idle" );
+		if (isAlive && charInfo.PresentResourcePoint >= 20f && !skillUsingState) {
+
+			Effect.SetActive (true);
+			animator.Play ("Idle");
 			destination = this.transform.position;
+
 			switch (_command) {
 			case "A":
 				if (!bash) {
-					skillingChainCount++;
+					skillChainTrigger = false;
 					SetState ("Bash");
 					skillUsingState = true;
 					bash = true;
@@ -321,7 +321,7 @@ public class CharacterFaye : MonoBehaviour
 
 			case "S":
 				if (!twinRush) {
-					skillingChainCount++;
+					skillChainTrigger = false;
 					SetState ("TwinRush");
 					skillUsingState = true;
 					twinRush = true;
@@ -330,7 +330,7 @@ public class CharacterFaye : MonoBehaviour
 
 			case "D":
 				if (!landCrush) {
-					skillingChainCount++;
+					skillChainTrigger = false;
 					SetState ("LandCrush");
 					skillUsingState = true;
 					landCrush = true;
@@ -338,14 +338,17 @@ public class CharacterFaye : MonoBehaviour
 				break;
 
 			case "Skill8":
-				skillingChainCount++;
-				SetState ("Kick");
-				skillUsingState = true;
+				if (!kick) {
+					skillChainTrigger = false;
+					SetState ("Kick");
+					skillUsingState = true;
+					kick = true;
+				}
 				break;
 
 			case "Q":
 				if (!wheelScythe) {
-					skillingChainCount++;
+					skillChainTrigger = false;
 					SetState ("WheelScythe");
 					skillUsingState = true;
 					wheelScythe = true;
@@ -354,7 +357,7 @@ public class CharacterFaye : MonoBehaviour
 
 			case "Skill2":
 				if (!upperScythe) {
-					skillingChainCount++;
+					skillChainTrigger = false;
 					SetState ("UpperScythe");
 					skillUsingState = true;
 					upperScythe = true;
@@ -363,18 +366,39 @@ public class CharacterFaye : MonoBehaviour
 
 			case "Skill3":
 				if (!crescentCut) {
-					skillingChainCount++;
+					skillChainTrigger = false;
 					SetState ("CrescentCut");
 					skillUsingState = true;
 					crescentCut = true;
+					finish = true;
 				}
 				break;
 
 			}
+
+			if (skillUsingState) {
+				skillChainWaitingTime = 0.0f;
+				charInfo.PresentResourcePoint -= 20f;
+			}
+
+			if (skillingChainCount < 4 && skillUsingState) {
+				skillChainWaitingTimeMax = skillChainWaitingTimeMax - 1;
+				skillingChainCount++;
+			} else if (skillingChainCount >=4 && skillUsingState) {
+				if (!finish) {
+					skillingChainCount = 4;
+				} else {
+					finish = false;
+					skillingChainCount = 0;
+					charInfo.ComboCounter = 0;
+					skillChainWaitingTimeMax = 5.0f;
+				}
+			}
+
+
 		}
 	}
-
-	// method
+		
 	public void SetState( string state )
 	{
 		SetStateDefault();
@@ -383,38 +407,50 @@ public class CharacterFaye : MonoBehaviour
 			presentState = STATE.Idle;
 			animator.SetBool ("Idle", true);
 			break;
+
 		case "Run":
 			presentState = STATE.Run;
 			animator.SetBool ("Run", true);
 			break;
+
+		case "NormalAttack":
+			animator.SetTrigger ("NormalAttack");
+			break;
+
 		case "Bash":
 			animator.SetTrigger ("Bash");
 			break;
+
 		case "TwinRush":
 			animator.SetTrigger ("TwinRush");
 			break;
+
 		case "CrescentCut":
 			animator.SetTrigger ("CrescentCut");
 			break;
+
 		case "LandCrush":
 			animator.SetTrigger ("LandCrush");
 			break;
+
 		case "WheelScythe":
 			animator.SetTrigger ("WheelScythe");
 			break;
+
 		case "UpperScythe":
 			animator.SetTrigger ("UpperScythe");
 			break;
+
 		case "Skill_E":
 			animator.SetTrigger ("Skill_E");
 			break;
+
 		case "Kick":
 			animator.SetTrigger ("Kick");
 			break;
 		}
 	}
-	
-	//
+
 	public bool AcquireItem( DropItem item, UserInterfaceManager mainUI )
 	{
 		if (item.gameObject.name == "DropGold")
