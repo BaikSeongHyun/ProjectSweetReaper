@@ -25,6 +25,7 @@ public class Monster : MonoBehaviour
 
 
 
+
 	public bool IsAttack
 	{
 		get{ return isAttack; }

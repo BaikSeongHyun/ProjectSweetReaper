@@ -8,6 +8,7 @@ public class RaceStageManager : MonoBehaviour {
 	public GameObject petType;
 	public List<Pet> petList;
 	public Pet myPet;
+	public UserInterfaceManager mainUI;
 
 	// Use this for initialization
 	void Start () 
@@ -19,7 +20,7 @@ public class RaceStageManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-					
+		mainUI.UpdateMainUI ();			
 	}
 
 
