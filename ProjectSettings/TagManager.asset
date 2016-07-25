@@ -10,6 +10,8 @@ TagManager:
   - DataBase
   - InstalledItem
   - Pet
+  - PetRaceGoal
+  - StartPosition
   layers:
   - Default
   - TransparentFX
