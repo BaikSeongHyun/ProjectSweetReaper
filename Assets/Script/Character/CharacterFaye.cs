@@ -26,8 +26,12 @@ public class CharacterFaye : MonoBehaviour
 	bool skillChainTrigger = false;
 	bool skillUsingState = false;
 	bool normalAttackState = false;
+
+	//finish Skill
 	bool isAlive = true;
 	bool finish = false;
+	int finishSkillcount = 0;
+	float animatorSpeed = 0.6f;
 	STATE presentState;
 
 	//skill
@@ -102,8 +106,29 @@ public class CharacterFaye : MonoBehaviour
 	void Update()
 	{
 		SkillCoolTime ();
-		if (finish)
+		if (finish) {
 			isStop = true;
+			if (finishSkillcount >= 10) {
+				finishSkillcount = 0;
+				animatorSpeed = 0.6f;
+				finish = false;
+				isStop = false;
+			} else if (finishSkillcount == 9 && !skillUsingState) {
+				this.GetComponent<Animator> ().speed = 1.5f;
+				finishSkillcount++;
+				skillUsingState = true;
+			}else if (finishSkillcount < 9 && !skillUsingState) {
+				animatorSpeed = animatorSpeed + 0.4f;
+				this.GetComponent<Animator> ().speed = animatorSpeed;
+				finishSkillcount++;
+				skillUsingState = true;
+				Debug.Log (finishSkillcount);
+			}
+		}
+
+		if (Input.GetKeyDown (KeyCode.Z)) {
+			SetState ("DemonicScythe");
+		}
 
 		if (!skillUsingState)
 			isStop = false;
@@ -370,7 +395,7 @@ public class CharacterFaye : MonoBehaviour
 					SetState ("CrescentCut");
 					skillUsingState = true;
 					crescentCut = true;
-					finish = true;
+					//finish = true;
 				}
 				break;
 
@@ -447,6 +472,17 @@ public class CharacterFaye : MonoBehaviour
 
 		case "Kick":
 			animator.SetTrigger ("Kick");
+			break;
+
+		case "DemonicScythe":
+			if (skillingChainCount >= 4) {
+				Effect.SetActive (false);
+				animator.SetTrigger ("DemonicScythe");
+				this.GetComponent<Animator> ().speed = animatorSpeed;
+				finish = true;
+				skillUsingState = true;
+				skillingChainCount = 0;
+			}
 			break;
 		}
 	}
