@@ -747,6 +747,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786dcf67758582741a854a8ee8196c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraDistance: {x: 0, y: 0, z: 0}
+  temp: {fileID: 0}
+  faye: {fileID: 0}
+  info: {fileID: 0}
+  mainUI: {fileID: 0}
   ExplainText1: {fileID: 0}
   ExplainText2: {fileID: 0}
   ExplainText3: {fileID: 0}
@@ -754,6 +759,7 @@ MonoBehaviour:
   ExplainText5: {fileID: 0}
   ExplainText6: {fileID: 0}
   ExplainText7: {fileID: 0}
+  ExplainState: 0
 --- !u!114 &830414981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,8 +1225,8 @@ GameObject:
   - 33: {fileID: 1229184445}
   - 65: {fileID: 1229184444}
   - 23: {fileID: 1229184443}
-  - 114: {fileID: 1229184446}
-  m_Layer: 0
+  - 114: {fileID: 1229184447}
+  m_Layer: 11
   m_Name: Eventfield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1285,7 +1291,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1229184441}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1229184446
+--- !u!114 &1229184447
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -1293,9 +1299,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1229184441}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b0e3edaeee4b3344ac4ad8732ffa051, type: 3}
+  m_Script: {fileID: 11500000, guid: 96972b444e3ab4149b7d0d9856a08b44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialManager: {fileID: 830414980}
+  box: {fileID: 1229184441}
 --- !u!1 &1274377853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,16 +1671,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1685577738}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786dcf67758582741a854a8ee8196c7b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9679d1205075680448dcaefb897eda3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ExplainText1: {fileID: 0}
-  ExplainText2: {fileID: 0}
-  ExplainText3: {fileID: 0}
-  ExplainText4: {fileID: 0}
-  ExplainText5: {fileID: 0}
-  ExplainText6: {fileID: 0}
-  ExplainText7: {fileID: 0}
 --- !u!1001 &1751934985
 Prefab:
   m_ObjectHideFlags: 0
@@ -1838,4 +1839,4 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
