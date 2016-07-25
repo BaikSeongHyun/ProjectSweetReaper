@@ -14,12 +14,17 @@ public class Pet : MonoBehaviour {
 	public int petFear;
 	public int petBelligerence;
 	public int petLiking;
+	public bool petStart;
+	public bool petAlive;
+	public GameObject goalObject;
+	public GameObject startObject;
 
 	//check pet chase another pet
 	public bool onChase;
 
 	//check Fall back per
 	public bool isFallBack;
+
 
 	//pet violence of peace
 	public bool disposition;
@@ -32,11 +37,14 @@ public class Pet : MonoBehaviour {
 	public GameObject petHitEffect;
 	public bool petIsAttack;
 	public float chaseDistance;
+	public bool isStun;
 
 	//for chase
 	public Pet[] enemyPets;
 	public Pet chaseTarget;
 	public int targetCount;
+
+
 
 	public int NPCFrogPetRandomPattern = 1;
 	public float NPCFrogPetRandomPatternCycle;
