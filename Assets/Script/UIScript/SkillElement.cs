@@ -20,10 +20,11 @@ public class SkillElement : MonoBehaviour
 	{
 		get { return skillIcon; }
 	}
-	// initialize this script
-	void Start()
-	{		
+
+	public virtual void LinkElement()
+	{
 		skillPopUp = GameObject.Find( "SkillPopUp" ).GetComponent<SkillInformationPopUpControl>();		
+		skillIcon = GetComponent<Image>();
 	}
 
 	public void UpdateSkillPopUp()
@@ -41,20 +42,17 @@ public class SkillElement : MonoBehaviour
 		skillPopUp.ControlComponent( false );	
 	}
 
-	public void UpdateSkillIcon(CharacterInformation info)
-	{
-		skillIcon = GetComponent<Image>();
+	public virtual void UpdateSkillIcon(CharacterInformation info)
+	{		
 		skillInfo.SetSpriteIcon();
 		SkillIcon.sprite = skillInfo.Icon;
 		if (skillInfo.Name == "Default" || skillInfo.LearnLevel >= info.Level)
 			skillIcon.sprite = Resources.Load<Sprite>( "Skill/SkillDefault" );
-
 	}
 
 	//use default only
 	public void UpdateDefaultSkillIcon( Sprite data )
-	{
-		skillIcon = GetComponent<Image>();
+	{		
 		skillIcon.sprite = data;
 	}
 }

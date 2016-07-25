@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 
 public class UserInterfaceManager : MonoBehaviour
@@ -46,7 +47,6 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject deathPopUp;
 	public GameObject exitDungeonPopUp;
 	public GameObject quickButton;
-	public CharacterInformation info;
 
 	//child UI & data - use race
 	public GameObject raceMiniMap;
@@ -54,6 +54,11 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject racePetStatus;
 	public RacePetStatus racePetStatusLogic;
 	public GameObject racePetOrder;
+
+	//another information data
+	public CharacterInformation info;
+	public Pet[] anotherPets;
+	public Pet myPet;
 
 
 	//initialize this script
@@ -165,7 +170,6 @@ public class UserInterfaceManager : MonoBehaviour
 		deathPopUp = GameObject.Find( "DeathPopUp" );
 		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
 		quickButton = GameObject.Find( "QuickButton" );
-		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 
 		//race UI & data
 		raceMiniMap = GameObject.Find( "RaceMiniMap" );
@@ -173,10 +177,9 @@ public class UserInterfaceManager : MonoBehaviour
 		racePetStatus = GameObject.Find( "RacePetStatus" );
 		racePetStatusLogic = racePetStatus.GetComponent<RacePetStatus>();
 		racePetOrder = GameObject.Find( "RacePetOrder" );
-
 	}
 
-	public void SwitchUIMode(Mode uiMode)
+	public void SwitchUIMode( Mode uiMode )
 	{
 		switch (uiMode)
 		{
@@ -189,6 +192,16 @@ public class UserInterfaceManager : MonoBehaviour
 				InitializeModeRace();
 				break;
 		}
+	}
+
+	public void LinkNeutralData(CharacterInformation _info)
+	{
+		info = _info;
+	}
+	public void LinkRaceData(Pet[] _anotherPets, Pet _myPet)
+	{
+		anotherPets = _anotherPets;
+		myPet = _myPet;
 	}
 
 	//state apply - neutral
@@ -250,7 +263,6 @@ public class UserInterfaceManager : MonoBehaviour
 		racePetOrder.SetActive( true );
 
 	}
-
 
 	// inventory
 	public void ControlInventory( bool state )

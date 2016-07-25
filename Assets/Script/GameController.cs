@@ -22,7 +22,9 @@ public class GameController : MonoBehaviour
 	{
 		Application.targetFrameRate = 80;
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
+		mainUI.LinkNeutralData( info );
 		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
 	}
 	

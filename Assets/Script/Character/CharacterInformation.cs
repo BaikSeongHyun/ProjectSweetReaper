@@ -57,6 +57,7 @@ public class CharacterInformation : MonoBehaviour
 	//chain information
 	int comboCounter;
 	public float comboTime;
+	bool overChain;
 
 	//char Inventory information
 	//Installed item
@@ -159,6 +160,12 @@ public class CharacterInformation : MonoBehaviour
 		get { return comboTime; }
 		set { comboTime = value; }
 	}
+
+	public bool OverChain
+	{
+		get { return overChain; }
+		set { overChain = value; }
+	}			
 
 	public Item TopInstall
 	{
