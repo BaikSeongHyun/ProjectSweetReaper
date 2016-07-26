@@ -2445,6 +2445,7 @@ GameObject:
   - 54: {fileID: 5470194}
   - 114: {fileID: 11485134}
   - 114: {fileID: 11459052}
+  - 82: {fileID: 8282284}
   m_Layer: 8
   m_Name: Faye
   m_TagString: Player
@@ -4993,7 +4994,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179576}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.52000105, y: 0, z: -404.54}
+  m_LocalPosition: {x: -11.39, y: 0, z: 3.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -6121,6 +6122,80 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.42998067, y: 1.4701148, z: 0.14809145}
   m_Center: {x: 1.0610118, y: 0.6249066, z: 0.06505551}
+--- !u!82 &8282284
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179576}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.502
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 1
+  BypassListenerEffects: 1
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9527752
 Animator:
   serializedVersion: 3
@@ -6213,9 +6288,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3beb9afa828f24c9957f3a590ef1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterLevel: 0
+  presentExp: 0
+  presentDamage: 20
   presentHealthPoint: 10000
+  originHealthPoint: 0
   presentResourcePoint: 10000
+  originResourcePoint: 0
+  presentCriticalProability: 0
+  presentStrength: 0
+  presentIntelligence: 0
+  presentDexterity: 0
+  presentLuck: 0
   comboTime: 0
+  topInstall:
+    id: 0
+    name: Default
+    icon: {fileID: 0}
+    price: 0
+    coreRank: 0
+    weaponAtk: 0
+    weaponDef: 0
+    weaponStr: 0
+    weaponDex: 0
+    weaponInt: 0
+    weaponLuck: 0
+    weaponCri: 0
+    section: 5
+    rareRank: 0
+  bottomInstall:
+    id: 0
+    name: Default
+    icon: {fileID: 0}
+    price: 0
+    coreRank: 0
+    weaponAtk: 0
+    weaponDef: 0
+    weaponStr: 0
+    weaponDex: 0
+    weaponInt: 0
+    weaponLuck: 0
+    weaponCri: 0
+    section: 5
+    rareRank: 0
+  bladeInstall:
+    id: 0
+    name: Default
+    icon: {fileID: 0}
+    price: 0
+    coreRank: 0
+    weaponAtk: 0
+    weaponDef: 0
+    weaponStr: 0
+    weaponDex: 0
+    weaponInt: 0
+    weaponLuck: 0
+    weaponCri: 0
+    section: 5
+    rareRank: 0
+  handleInstall:
+    id: 0
+    name: Default
+    icon: {fileID: 0}
+    price: 0
+    coreRank: 0
+    weaponAtk: 0
+    weaponDef: 0
+    weaponStr: 0
+    weaponDex: 0
+    weaponInt: 0
+    weaponLuck: 0
+    weaponCri: 0
+    section: 5
+    rareRank: 0
+  characterItem: []
+  characterSkill: []
+  installSkill: []
 --- !u!114 &11471650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6242,10 +6390,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStop: 0
+  soundEffect: {fileID: 8300000, guid: cd75696c2e08b104daa334164ba9db7e, type: 3}
   Effect: {fileID: 176414}
   Hit: {fileID: 6565478}
   skillingChainCount: 0
   runState: 0
+  skillCount: 6
 --- !u!136 &13625086
 CapsuleCollider:
   m_ObjectHideFlags: 1

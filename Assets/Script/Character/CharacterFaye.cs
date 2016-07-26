@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class CharacterFaye : MonoBehaviour
 {
 	public bool isStop = false;
+	AudioSource audioSource;
+	public AudioClip soundEffect;
 	//UI
 	public GameObject Effect;
 	public BoxCollider Hit;
@@ -95,6 +97,7 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Start()
 	{
+		audioSource = GetComponent<AudioSource> ();
 		respawnPoint = transform.position;
 		destination = this.transform.position;
 		animator = GetComponent<Animator>();
@@ -103,12 +106,17 @@ public class CharacterFaye : MonoBehaviour
 		this.GetComponent<Animator> ().speed = 1.5f;
 	}
 
+	public void ScytheSoundEffect(){
+		audioSource.PlayOneShot(soundEffect);
+	}
+
 	void Update()
 	{
 		SkillCoolTime ();
 		if (finish) {
 			isStop = true;
 			if (finishSkillcount >= 10) {
+				
 				finishSkillcount = 0;
 				animatorSpeed = 0.6f;
 				finish = false;
@@ -142,8 +150,9 @@ public class CharacterFaye : MonoBehaviour
 
 		if (isAlive)
 		{
-			if (normalAttackState || skillUsingState)
-				Hit.size = new Vector3(0.5f, 1.5f, 1f);
+			if (normalAttackState || skillUsingState) {
+				Hit.size = new Vector3 (0.5f, 1.5f, 1f);
+			}
 			else
 				Hit.size = new Vector3(0, 0, 0);
 			

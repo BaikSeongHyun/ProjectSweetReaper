@@ -446,6 +446,14 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.4538452
+        functionName: ScytheSoundEffect
+        data: 
+        objectReferenceParameter: {fileID: 154038, guid: 0999649fed7f6444d9aa3808a5e0fb8f,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
