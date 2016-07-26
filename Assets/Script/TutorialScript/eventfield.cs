@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class eventfield : MonoBehaviour {
-	public TutorialManager tutorialManager;
+	public ExplainImage explainImage;
 	public GameObject box;
 	// Use this for initialization
 	void Start () {
+
 	}
 	
 	// Update is called once per frame
@@ -14,7 +15,7 @@ public class eventfield : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision coll){
 		if (coll.gameObject.CompareTag("Player")) {
-			tutorialManager.SendMessage ("aa");
+			explainImage.SendMessage ("NextTutorialImage");
 			Destroy (this.gameObject);
 		}
 	}
