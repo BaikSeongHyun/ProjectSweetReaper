@@ -11,8 +11,6 @@ public class Pet : MonoBehaviour {
 	//pet status
 	public float petRunningSpeed;
 	public float petAttackcycle;
-	public int petFear;
-	public int petBelligerence;
 	public int petLiking;
 	public bool petStart;
 	public bool petAlive;
@@ -37,7 +35,9 @@ public class Pet : MonoBehaviour {
 	public GameObject petHitEffect;
 	public bool petIsAttack;
 	public float chaseDistance;
+
 	public bool isStun;
+	public float stunningTime;
 
 	//for chase
 	public Pet[] enemyPets;
@@ -46,22 +46,27 @@ public class Pet : MonoBehaviour {
 
 
 
-	public int NPCFrogPetRandomPattern = 1;
-	public float NPCFrogPetRandomPatternCycle;
+	public int randomPattern = 1;
+	public float randomPatternCycle;
 
 	// Use this for initialization
 
-//	public bool PetIsAttack
-//	{
-//		get{ return petIsAttack; }
-//
-//	}
-//
-//	public void PetAttackTrigger()
-//	{
-//		petIsAttack = false;
-//	}
-//
+	public bool PetIsAttack
+	{
+		get{ return petIsAttack; }
+
+	}
+
+	public void PetAttackTrigger()
+	{
+		petIsAttack = false;
+	}
+
+	//property
+	public bool IsStun
+	{
+		get { return isStun; }
+	}
 
 	public void AttackTrigger()
 	{

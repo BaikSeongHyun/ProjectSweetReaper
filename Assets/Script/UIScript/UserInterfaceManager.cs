@@ -436,13 +436,13 @@ public class UserInterfaceManager : MonoBehaviour
 				info.InstalledItem = true;
 			}
 		}
-		else if (CompareMode( Mode.NPC ))
+		else if (CompareMode( Mode.Race))
 		{
 			//update race mini map
-			raceMiniMapLogic.UpdateMinimap( 1.0f );
+			//raceMiniMapLogic.UpdateMinimap( 1.0f );
 
 			//update race pet status
-			racePetStatusLogic.UpdatePetStatus();
+			//racePetStatusLogic.UpdatePetStatus();
 		}
 		else if (CompareMode( Mode.Result ))
 		{

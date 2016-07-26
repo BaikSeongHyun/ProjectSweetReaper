@@ -46,7 +46,7 @@ GameObject:
   m_Layer: 0
   m_Name: Pet1
   m_TagString: Pet
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -348,7 +348,7 @@ Transform:
   m_LocalRotation: {x: 0.10138035, y: 0.72386557, z: 0.67585564, w: -0.094656296}
   m_LocalPosition: {x: 0.000000003713123, y: -8.8535207e-10, z: -0.29189038}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -86.0711, y: 179.9999, z: 15.945399}
   m_Children: []
   m_Father: {fileID: 480216}
   m_RootOrder: 0
@@ -472,7 +472,7 @@ Transform:
   m_LocalRotation: {x: -0.44016325, y: 0.58353716, z: 0.5448346, w: -0.4109695}
   m_LocalPosition: {x: 0.71999997, y: -0.5, z: 0.08999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -15.906899, y: -94.085594, z: -88.878494}
   m_Children:
   - {fileID: 439446}
   m_Father: {fileID: 411520}
@@ -599,7 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f02d033eb6f9e43bdadeca83263640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pet: {fileID: 114826}
+  root: {fileID: 0}
   petAttack: 0
 --- !u!114 &11419218
 MonoBehaviour:
@@ -649,8 +649,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a31494fbd00a9242a9320a0cca43a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petHp: 10
-  petDamage: 2
+  petFear: 100
+  maxFear: 200
+  petBelligerence: 5
+  moveSpeed: 4
+  petStunTime: 0.5
 --- !u!114 &11454486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -703,9 +706,11 @@ MonoBehaviour:
   petInfo: {fileID: 0}
   petRunningSpeed: 10
   petAttackcycle: 0
-  petFear: 0
-  petBelligerence: 0
   petLiking: 0
+  petStart: 0
+  petAlive: 0
+  goalObject: {fileID: 0}
+  startObject: {fileID: 0}
   onChase: 0
   isFallBack: 0
   disposition: 0
@@ -715,11 +720,13 @@ MonoBehaviour:
   petHitEffect: {fileID: 108318, guid: f316e3f5256d2524592523a7fda8e535, type: 2}
   petIsAttack: 0
   chaseDistance: 0
+  isStun: 0
+  stunningTime: 0
   enemyPets: []
   chaseTarget: {fileID: 0}
   targetCount: 0
-  NPCFrogPetRandomPattern: 1
-  NPCFrogPetRandomPatternCycle: 0
+  randomPattern: 1
+  randomPatternCycle: 0
   NPCFrogPetAiAnimator: {fileID: 0}
   presentState: 0
 --- !u!114 &11462182

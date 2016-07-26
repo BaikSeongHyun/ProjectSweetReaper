@@ -3,9 +3,8 @@ using System.Collections;
 
 public class PetWeapon : MonoBehaviour 
 {
-	public GameObject pet;
+	public Pet root;
 	float petDamege = 0;
-	Pet NPCPet;
 	public bool petAttack;
 	PetHealth petInfo;
 
@@ -18,47 +17,22 @@ public class PetWeapon : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		petInfo = pet.GetComponent<PetHealth>();
-
-		if (pet.gameObject.tag == "Pet")
-			NPCPet = transform.GetComponentInParent<Pet> ();
+		root = transform.GetComponentInParent<Pet> ();
 	}
 
 	void Update()
 	{
-
-		petAttack = NPCPet.petIsAttack;
-			
-
-
+		petAttack = root.petIsAttack;
 	}
 	
 	// Update is called once per frame
 	void OnTriggerEnter(Collider coll)
 	{
-		if (coll.gameObject.CompareTag("Pet"))
+		if (coll.gameObject.CompareTag("Pet") && root.PetIsAttack)
 		{
-			Pet petObject = coll.gameObject.GetComponent<NPCFrogPet> ();
-	
-			if (petObject != null) 
-			{
-				if (petAttack) 
-				{
-					petDamege = petInfo.PetDamage;
-				}
-
-				if (petDamege != 0) 
-				{
-					petObject.PetFrogHitDamege (petDamege);
-
-
-
-				}
-
-				petDamege = 0;
-			}
-
+			Pet temp = coll.gameObject.GetComponent<Pet>();
+			if(!temp.IsStun)
+				temp.PetFrogHitDamege( root.petInfo.PetStunTime );
 		}
-
 	}
 }
