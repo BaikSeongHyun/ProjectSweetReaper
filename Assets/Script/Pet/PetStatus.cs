@@ -1,17 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PetHealth : MonoBehaviour
+public class PetStatus : MonoBehaviour
 {
-	public float attackCycle;
 	public float moveSpeed;
 	public float petStunTime;
-
-	public float AttackCycle
-	{
-		get{ return attackCycle; }
-		set{ attackCycle = value; }
-	}
 
 	public float MoveSpeed
 	{

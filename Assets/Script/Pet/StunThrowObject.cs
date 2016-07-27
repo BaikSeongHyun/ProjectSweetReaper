@@ -11,7 +11,7 @@ public class StunThrowObject : MonoBehaviour
 	void Update()
 	{
 		if (chase)
-			transform.position = Vector3.Lerp( transform.position, target.position, Time.deltaTime * 4f );
+			transform.position = Vector3.Slerp( transform.position, target.position + new Vector3(0f, 1f, 2f), Time.deltaTime * 4f );
 	}
 
 	public void SetTarget( Transform _target, float _stunTime )
@@ -23,7 +23,7 @@ public class StunThrowObject : MonoBehaviour
 
 	void OnCollisionEnter( Collision col )
 	{
-		if (col.gameObject.CompareTag( "Pet" ))	
+		if (col.gameObject.CompareTag( "Pet" ))
 			col.gameObject.GetComponent<Pet>().PetFrogHitDamege( stunTime );
 		
 

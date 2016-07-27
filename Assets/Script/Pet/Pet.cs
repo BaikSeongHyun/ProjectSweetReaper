@@ -6,11 +6,9 @@ public class Pet : MonoBehaviour {
 
 	public bool playerPet;
 
-	public PetHealth petInfo;
+	public PetStatus petInfo;
 
 	//pet status
-	public float petRunningSpeed;
-	public float petAttackcycle;
 	public bool firstCycle;
 	public bool onRace;
 
@@ -37,7 +35,7 @@ public class Pet : MonoBehaviour {
 	public float attackCycleTime;
 	public GameObject stunThrowObject;
 
-	public int randomPattern = 1;
+	public int randomPattern;
 	public float randomPatternCycle;
 	public float patternCycleTime;
 

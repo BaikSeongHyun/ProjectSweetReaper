@@ -34,7 +34,7 @@ public class NPCFrogPet : Pet
 	{
 		NPCFrogPetAiAnimator = GetComponent<Animator>();
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogIdle );
-		petInfo = GetComponent<PetHealth>();
+		petInfo = GetComponent<PetStatus>();
 		FindChaseTarget();
 		firstCycle = true;
 		onTarget = false;
@@ -54,7 +54,10 @@ public class NPCFrogPet : Pet
 		if (onRace)
 		{
 			randomPatternCycle += Time.deltaTime;
-
+			if(Vector3.Distance(transform.position, goalObject.transform.position) <= 0.5f)
+			{
+				onRace = false;	
+			}
 			if (randomPatternCycle >= patternCycleTime)
 			{
 				randomPattern = Random.Range( 0, 4 );
@@ -159,8 +162,7 @@ public class NPCFrogPet : Pet
 		}
 		//make throw object
 		else 
-		{
-			attackCycleTime = 0.0f;
+		{			
 			NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogAttack );
 			GameObject temp = (GameObject) Instantiate( stunThrowObject, transform.position + new Vector3 ( 0f, 10f, 0f ), transform.rotation );
 			temp.GetComponent<StunThrowObject>().SetTarget( attackTarget.transform, petInfo.PetStunTime );
@@ -172,7 +174,7 @@ public class NPCFrogPet : Pet
 	{
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogSlow );
 		transform.LookAt( goalObject.transform );
-		transform.Translate( transform.forward * ( Time.deltaTime * petRunningSpeed / 2 ) );	
+		transform.Translate( transform.forward * ( Time.deltaTime * petInfo.MoveSpeed / 4 ) );	
 	}
 
 	public void Idle()

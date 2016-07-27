@@ -29,7 +29,7 @@ public class RaceStageManager : MonoBehaviour
 
 	public void EveryPet()
 	{
-		petList = new List<Pet> ();
+		petList = new List<Pet>();
 		GameObject[] temp = GameObject.FindGameObjectsWithTag( "Pet" );
 
 		for (int i = 0; i < temp.Length; i++)
@@ -47,14 +47,9 @@ public class RaceStageManager : MonoBehaviour
 	
 	}
 
-	public void PetPlacement()
-	{
-		int randomPlacement = Random.Range( 0, 5 );									
-	}
-
 	public void OrderMyPet( string data )
 	{		
-		if (data == " Run")
+		if (data == "Run")
 			myPet.UserOrder( "Run" );
 	}
 }
