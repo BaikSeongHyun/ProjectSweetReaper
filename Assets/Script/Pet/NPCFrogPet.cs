@@ -59,12 +59,29 @@ public class NPCFrogPet : Pet
 			{
 				randomPattern = Random.Range( 0, 4 );
 				randomPatternCycle = 0.0f;
+
+				//set pattern
+				switch (randomPattern)
+				{						
+					case 1:
+						presentState = PetState.Run;
+						break;
+					case 2:
+						presentState = PetState.Slow;
+						break;
+					case 3:						
+						presentState = PetState.Attack;
+						break;
+				}
 			}
 			else if (isStun)
 			{
 				stunningTime -= Time.deltaTime;
 				if (stunningTime <= 0)
+				{
 					isStun = false;
+					NPCFrogPetAiAnimator.SetBool( "Stun", false );
+				}
 			}
 			else
 			{
@@ -75,23 +92,6 @@ public class NPCFrogPet : Pet
 				}
 				else
 				{
-					//set pattern
-					switch (randomPattern)
-					{
-						case 0:
-							presentState = PetState.Idle;
-							break;
-						case 1:
-							presentState = PetState.Run;
-							break;
-						case 2:
-							presentState = PetState.Slow;
-							break;
-						case 3:						
-							presentState = PetState.Attack;
-							break;
-					}
-
 					// active pattern
 					switch (presentState)
 					{
@@ -103,10 +103,7 @@ public class NPCFrogPet : Pet
 							break;		
 						case PetState.Slow:
 							Slow();
-							break;
-						case PetState.Idle:
-							Idle();
-							break;
+							break;						
 					}
 				}
 			}
@@ -123,38 +120,25 @@ public class NPCFrogPet : Pet
 			enemyPets[i] = temp[i].GetComponent<Pet>();
 	}
 
-	void InitializeRaceData()
-	{
-		attackTarget = null;
-		attackCycleTime = 0.0f;
-	}
-
 	public void Run()
 	{
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogRun );
+		transform.LookAt( goalObject.transform );
+		transform.Translate( transform.forward * ( Time.deltaTime * petInfo.MoveSpeed ) );	
 
-		if (runStateNPCPetFrog.IsName( "NPCFrogRun" ))
-		{
-			transform.LookAt( goalObject.transform );
-			transform.Translate( transform.forward * ( Time.deltaTime * petInfo.MoveSpeed ) );	
-		}
-		runStateNPCPetFrog = this.NPCFrogPetAiAnimator.GetCurrentAnimatorStateInfo( 0 );
 	}
 
 	//find next target
 	public void CheckChaseTarget()
 	{
-		if (enemyPets.Length == targetCount)
-			targetCount = 0;
+		targetCount = 0;
 
-		while (!onTarget && !( enemyPets.Length == targetCount ))
+		while (!onTarget)
 		{
 			if (enemyPets[targetCount] == null)
 				targetCount++;
-			else if (enemyPets[targetCount].isStun)
-				targetCount++;
 			else if (enemyPets[targetCount] == this)
-				targetCount++;
+				targetCount++;						
 			else
 			{
 				attackTarget = enemyPets[targetCount];
@@ -167,32 +151,28 @@ public class NPCFrogPet : Pet
 	//method - attack
 	public void Attack()
 	{
-		attackCycleTime += Time.deltaTime;
 		//set target
 		if (!onTarget)
-			CheckChaseTarget();
-
-		//make throw object
-		if (attackCycleTime >= petInfo.AttackCycle)
 		{
-			GameObject temp = (GameObject) Instantiate( stunThrowObject, transform.position, transform.rotation );
-			temp.GetComponent<StunThrowObject>().SetTarget( attackTarget.transform.position, petInfo.PetStunTime );
-			NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogAttack );
+			NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogIdle );
+			CheckChaseTarget();
+		}
+		//make throw object
+		else 
+		{
 			attackCycleTime = 0.0f;
+			NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogAttack );
+			GameObject temp = (GameObject) Instantiate( stunThrowObject, transform.position + new Vector3 ( 0f, 10f, 0f ), transform.rotation );
+			temp.GetComponent<StunThrowObject>().SetTarget( attackTarget.transform, petInfo.PetStunTime );
+			presentState = PetState.Run;
 		}
 	}
 
 	public void Slow()
 	{
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogSlow );
-
-		if (runStateNPCPetFrog.IsName( "NPCFrogSlow" ))
-		{
-			transform.LookAt( goalObject.transform );
-			transform.Translate( transform.forward * ( Time.deltaTime * petRunningSpeed / 2 ) );	
-		}
-		runStateNPCPetFrog = this.NPCFrogPetAiAnimator.GetCurrentAnimatorStateInfo( 0 );
-
+		transform.LookAt( goalObject.transform );
+		transform.Translate( transform.forward * ( Time.deltaTime * petRunningSpeed / 2 ) );	
 	}
 
 	public void Idle()
@@ -214,7 +194,7 @@ public class NPCFrogPet : Pet
 				NPCFrogPetAiAnimator.SetInteger( "NPCFrogState", 3 );
 				break;		
 			case NPCFrogPetPatternName.NPCFrogAttack:
-				NPCFrogPetAiAnimator.SetInteger( "NPCFrogState", 4 );
+				NPCFrogPetAiAnimator.SetTrigger( "PetAttack" );
 				break;
 			case NPCFrogPetPatternName.NPCFrogHitDamege:
 				NPCFrogPetAiAnimator.SetInteger( "NPCFrogState", 5 );
@@ -238,12 +218,9 @@ public class NPCFrogPet : Pet
 
 	public override void PetFrogHitDamege( float _stunningTime )
 	{
-		
-//		Instantiate( petHitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
-//		Instantiate( petHitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
-				
 		stunningTime = _stunningTime;
 		isStun = true;
-		NPCFrogPetAiAnimator.SetTrigger( "PetHitTrigger" );
+		NPCFrogPetAiAnimator.Play( "NPCFrogHitDamage", -1, 0f );
+		NPCFrogPetAiAnimator.SetBool( "Stun", true );
 	}
 }

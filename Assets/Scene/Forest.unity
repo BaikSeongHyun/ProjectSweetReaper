@@ -897,6 +897,10 @@ Prefab:
       propertyPath: monsterArray.Array.data[6]
       value: 
       objectReference: {fileID: 454655588}
+    - target: {fileID: 466442, guid: 4a1dbc0141bcf9d408e54413680129fa, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4a1dbc0141bcf9d408e54413680129fa, type: 2}
   m_IsPrefabParent: 0

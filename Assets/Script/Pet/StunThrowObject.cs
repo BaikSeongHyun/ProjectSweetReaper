@@ -3,38 +3,30 @@ using System.Collections;
 
 public class StunThrowObject : MonoBehaviour
 {
-	public Vector3 target;
-	public float moveSpeed;
+	public Transform target;
 	public bool chase;
-	float stunTime;
-
-	void Start()
-	{
-		chase = false;
-	}
-
+	public float stunTime;
 
 	// Update is called once per frame
 	void Update()
 	{
-		if(chase)
-			transform.Translate( target * Time.deltaTime * moveSpeed );
+		if (chase)
+			transform.position = Vector3.Lerp( transform.position, target.position, Time.deltaTime * 4f );
 	}
 
-	public void SetTarget(Vector3 _target, float _stunTime)
+	public void SetTarget( Transform _target, float _stunTime )
 	{
+		chase = true;
 		target = _target;
 		stunTime = _stunTime;
-		moveSpeed = 2f;
-		chase = true;
 	}
 
-	void OnCollisionEnter(Collision col)
+	void OnCollisionEnter( Collision col )
 	{
-		if (col.gameObject.CompareTag( "Pet" ))
-		{
+		if (col.gameObject.CompareTag( "Pet" ))	
 			col.gameObject.GetComponent<Pet>().PetFrogHitDamege( stunTime );
-			Destroy( this.gameObject );
-		}
+		
+
+		Destroy( this.gameObject );
 	}
 }

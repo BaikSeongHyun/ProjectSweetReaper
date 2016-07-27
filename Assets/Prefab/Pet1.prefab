@@ -40,13 +40,13 @@ GameObject:
   - 4: {fileID: 456696}
   - 95: {fileID: 9504972}
   - 54: {fileID: 5455760}
-  - 64: {fileID: 6435156}
   - 114: {fileID: 11458970}
   - 114: {fileID: 11438468}
+  - 65: {fileID: 6535736}
   m_Layer: 0
   m_Name: Pet1
   m_TagString: Pet
-  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -398,7 +398,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 114826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0, z: -61.05}
+  m_LocalPosition: {x: 5.55, y: 0, z: -61.05}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -520,8 +520,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
---- !u!64 &6435156
-MeshCollider:
+--- !u!65 &6535736
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -530,8 +530,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 1
-  m_Mesh: {fileID: 4300000, guid: 198ffd4e27fc3214abc9bf6952adb29a, type: 3}
+  m_Size: {x: 2.0141504, y: 1.875684, z: 2.34346}
+  m_Center: {x: -0.071091466, y: 0.43784162, z: 0.04835968}
 --- !u!65 &6552678
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -599,8 +599,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f02d033eb6f9e43bdadeca83263640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 0}
-  petAttack: 0
 --- !u!114 &11419218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -649,11 +647,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a31494fbd00a9242a9320a0cca43a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  petFear: 100
-  maxFear: 200
-  petBelligerence: 5
+  attackCycle: 3
   moveSpeed: 4
-  petStunTime: 0.5
+  petStunTime: 1
 --- !u!114 &11454486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -706,27 +702,25 @@ MonoBehaviour:
   petInfo: {fileID: 0}
   petRunningSpeed: 10
   petAttackcycle: 0
-  petLiking: 0
-  petStart: 0
-  petAlive: 0
+  firstCycle: 0
+  onRace: 0
   goalObject: {fileID: 0}
-  startObject: {fileID: 0}
-  onChase: 0
-  isFallBack: 0
   disposition: 0
   violenceImage: {fileID: 0}
   peaceImage: {fileID: 0}
   petHitObject: {fileID: 154802, guid: 7b1d6670c52c13f478cf4da3be49a7bb, type: 2}
   petHitEffect: {fileID: 108318, guid: f316e3f5256d2524592523a7fda8e535, type: 2}
-  petIsAttack: 0
-  chaseDistance: 0
   isStun: 0
   stunningTime: 0
+  onTarget: 0
   enemyPets: []
-  chaseTarget: {fileID: 0}
+  attackTarget: {fileID: 0}
   targetCount: 0
+  attackCycleTime: 0
+  stunThrowObject: {fileID: 125590, guid: a72b3448f3d1bb34fac86e88c882405a, type: 2}
   randomPattern: 1
   randomPatternCycle: 0
+  patternCycleTime: 0
   NPCFrogPetAiAnimator: {fileID: 0}
   presentState: 0
 --- !u!114 &11462182
