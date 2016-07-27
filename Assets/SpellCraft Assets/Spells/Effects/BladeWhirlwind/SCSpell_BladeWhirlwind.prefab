@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 446640}
   - 198: {fileID: 19864108}
   - 199: {fileID: 19944672}
+  - 114: {fileID: 11434172}
   m_Layer: 0
   m_Name: Rings Up
   m_TagString: Untagged
@@ -27,6 +28,7 @@ GameObject:
   - 4: {fileID: 463018}
   - 198: {fileID: 19872086}
   - 199: {fileID: 19998624}
+  - 114: {fileID: 11438580}
   m_Layer: 0
   m_Name: Wind Whirl
   m_TagString: Untagged
@@ -44,6 +46,7 @@ GameObject:
   - 4: {fileID: 408694}
   - 198: {fileID: 19893164}
   - 199: {fileID: 19974018}
+  - 114: {fileID: 11411718}
   m_Layer: 0
   m_Name: Blade Whirl
   m_TagString: Untagged
@@ -77,6 +80,7 @@ GameObject:
   - 4: {fileID: 493334}
   - 198: {fileID: 19808048}
   - 199: {fileID: 19965232}
+  - 114: {fileID: 11489992}
   m_Layer: 0
   m_Name: Lines
   m_TagString: Untagged
@@ -153,6 +157,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 428178}
   m_RootOrder: 1
+--- !u!114 &11411718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44453161960d3f4584387f4fe05a220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11434172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 122858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44453161960d3f4584387f4fe05a220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11438580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44453161960d3f4584387f4fe05a220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11453296
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -165,6 +202,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellDuration: 7
+--- !u!114 &11489992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e44453161960d3f4584387f4fe05a220, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &19808048
 ParticleSystem:
   m_ObjectHideFlags: 1
