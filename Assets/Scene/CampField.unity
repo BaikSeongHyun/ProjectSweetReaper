@@ -13729,7 +13729,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 450822, guid: f61689885ad8efc42ab17088c2e84327, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 174014, guid: f61689885ad8efc42ab17088c2e84327, type: 2}
       propertyPath: m_Name
@@ -15103,7 +15103,7 @@ RectTransform:
   m_Children:
   - {fileID: 1033217601}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 8
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -18461,11 +18461,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 467628, guid: cc43b05c98e73e84281d3239caab58c4, type: 2}
       propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 8282284, guid: cc43b05c98e73e84281d3239caab58c4, type: 2}
-      propertyPath: m_PlayOnAwake
-      value: 1
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cc43b05c98e73e84281d3239caab58c4, type: 2}
@@ -22372,7 +22368,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 475042, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 11469258, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
+      propertyPath: monsterHp
+      value: 10000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}

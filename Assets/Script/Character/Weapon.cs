@@ -46,7 +46,6 @@ public class Weapon : MonoBehaviour
 		//IsAttack
 		if (coll.gameObject.layer == LayerMask.NameToLayer( "Enemy" ))
 		{
-
 			Monster monsterDamege = coll.gameObject.GetComponent<Monster> ();
 
 			if (monsterDamege != null) 
