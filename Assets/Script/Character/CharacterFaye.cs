@@ -118,11 +118,12 @@ public class CharacterFaye : MonoBehaviour
 
 	void Update()
 	{
+		
 		SkillCoolTime ();
 		if (finish) {
 			isStop = true;
 
-			if (finishSkillcount == 2 && !skillUsingState) {
+			if (finishSkillcount == 1 && !skillUsingState) {
 				Instantiate (finishSkillEffect, new Vector3(transform.position.x,0,transform.position.z), transform.rotation);
 				skillEffect.name = "DemonicScythe";
 			}

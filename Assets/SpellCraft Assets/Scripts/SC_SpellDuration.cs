@@ -9,11 +9,15 @@ using System.Collections;
  * @copyright GameMechanix.io 2016
  **/
 public class SC_SpellDuration : MonoBehaviour {
+	ParticleSystem particleSystem;
 
 	[Header("Config")]
 	public float spellDuration;
 
 	void Start () {
 		Destroy (gameObject, spellDuration);
+	}
+
+	void Update(){
 	}
 }
