@@ -446,6 +446,30 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.05810894
+        functionName: ScytheSoundEffect
+        data: 
+        objectReferenceParameter: {fileID: 179576, guid: cc43b05c98e73e84281d3239caab58c4,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4307689
+        functionName: ScytheSoundEffect
+        data: 
+        objectReferenceParameter: {fileID: 179576, guid: cc43b05c98e73e84281d3239caab58c4,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.87363327
+        functionName: ScytheSoundEffect
+        data: 
+        objectReferenceParameter: {fileID: 179576, guid: cc43b05c98e73e84281d3239caab58c4,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
