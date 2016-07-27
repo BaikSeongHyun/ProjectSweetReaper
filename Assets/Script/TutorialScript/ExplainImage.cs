@@ -81,8 +81,10 @@ public class ExplainImage : MonoBehaviour, IPointerDownHandler {
 
 	public void InventoryOpen(){
 		
-		if(imageCounter == 9)
-	}
+		if (imageCounter == 9) {
+		}
+	}	
+
 
 
 
