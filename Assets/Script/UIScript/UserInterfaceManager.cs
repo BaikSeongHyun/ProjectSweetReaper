@@ -60,15 +60,6 @@ public class UserInterfaceManager : MonoBehaviour
 	public Pet[] anotherPets;
 	public Pet myPet;
 
-
-	//initialize this script
-	void Start()
-	{		
-		LinkElement();
-		presentMode = Mode.Neutral;
-		InitializeModeNeutral();
-	}
-
 	public enum Mode{
 		Neutral,
 		Result,

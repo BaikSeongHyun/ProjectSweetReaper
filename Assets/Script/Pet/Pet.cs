@@ -11,18 +11,10 @@ public class Pet : MonoBehaviour {
 	//pet status
 	public float petRunningSpeed;
 	public float petAttackcycle;
-	public int petLiking;
-	public bool petStart;
-	public bool petAlive;
+	public bool firstCycle;
+	public bool onRace;
+
 	public GameObject goalObject;
-	public GameObject startObject;
-
-	//check pet chase another pet
-	public bool onChase;
-
-	//check Fall back per
-	public bool isFallBack;
-
 
 	//pet violence of peace
 	public bool disposition;
@@ -33,34 +25,22 @@ public class Pet : MonoBehaviour {
 	//pet Attack or hitDamege
 	public GameObject petHitObject;
 	public GameObject petHitEffect;
-	public bool petIsAttack;
-	public float chaseDistance;
 
 	public bool isStun;
 	public float stunningTime;
 
-	//for chase
+	//for attack
+	public bool onTarget;
 	public Pet[] enemyPets;
-	public Pet chaseTarget;
+	public Pet attackTarget;
 	public int targetCount;
-
-
+	public float attackCycleTime;
+	public GameObject stunThrowObject;
 
 	public int randomPattern = 1;
 	public float randomPatternCycle;
+	public float patternCycleTime;
 
-	// Use this for initialization
-
-	public bool PetIsAttack
-	{
-		get{ return petIsAttack; }
-
-	}
-
-	public void PetAttackTrigger()
-	{
-		petIsAttack = false;
-	}
 
 	//property
 	public bool IsStun
@@ -68,11 +48,6 @@ public class Pet : MonoBehaviour {
 		get { return isStun; }
 	}
 
-	public void AttackTrigger()
-	{
-		petIsAttack = false;
-
-	}
 	public virtual void PetFrogHitDamege(float _PetFrogDamege)
 	{
 		

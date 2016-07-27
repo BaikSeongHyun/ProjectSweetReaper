@@ -16,6 +16,7 @@ public class RaceStageManager : MonoBehaviour
 	{
 		EveryPet();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
+		mainUI.LinkElement();
 		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Race );
 		mainUI.LinkRaceData( petList.ToArray(), myPet );
 	}
