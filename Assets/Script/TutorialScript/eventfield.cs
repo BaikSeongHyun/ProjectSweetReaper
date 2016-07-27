@@ -15,7 +15,7 @@ public class eventfield : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision coll){
 		if (coll.gameObject.CompareTag("Player")) {
-			explainImage.SendMessage ("NextTutorialImage");
+			explainImage.SendMessage ("EventClearNext");
 			Destroy (this.gameObject);
 		}
 	}
