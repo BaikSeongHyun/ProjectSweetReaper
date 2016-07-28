@@ -31,11 +31,10 @@ public class NPCFrogPet : Pet
 
 	// Use this for initialization
 	void Start()
-	{
+	{		
 		NPCFrogPetAiAnimator = GetComponent<Animator>();
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogIdle );
 		petInfo = GetComponent<PetStatus>();
-		FindChaseTarget();
 		firstCycle = true;
 		onTarget = false;
 		isStun = false;
@@ -54,13 +53,13 @@ public class NPCFrogPet : Pet
 		if (onRace)
 		{
 			randomPatternCycle += Time.deltaTime;
-			if(Vector3.Distance(transform.position, goalObject.transform.position) <= 0.5f)
+			if(Vector3.Distance(transform.position, goalPoint.position) <= 0.5f)
 			{
 				onRace = false;	
 			}
 			if (randomPatternCycle >= patternCycleTime)
 			{
-				randomPattern = Random.Range( 0, 4 );
+				randomPattern = Random.Range( 1, 4 );
 				randomPatternCycle = 0.0f;
 
 				//set pattern
@@ -84,6 +83,7 @@ public class NPCFrogPet : Pet
 				{
 					isStun = false;
 					NPCFrogPetAiAnimator.SetBool( "Stun", false );
+					stunningTime = 0.0f;
 				}
 			}
 			else
@@ -113,55 +113,18 @@ public class NPCFrogPet : Pet
 		}
 	}
 
-	public void FindChaseTarget()
-	{
-		GameObject[] temp = GameObject.FindGameObjectsWithTag( "Pet" );
-
-		enemyPets = new Pet[temp.Length];
-
-		for (int i = 0; i < enemyPets.Length; i++)
-			enemyPets[i] = temp[i].GetComponent<Pet>();
-	}
-
 	public void Run()
 	{
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogRun );
-		transform.LookAt( goalObject.transform );
+		transform.LookAt( goalPoint.transform );
 		transform.Translate( transform.forward * ( Time.deltaTime * petInfo.MoveSpeed ) );	
-
-	}
-
-	//find next target
-	public void CheckChaseTarget()
-	{
-		targetCount = 0;
-
-		while (!onTarget)
-		{
-			if (enemyPets[targetCount] == null)
-				targetCount++;
-			else if (enemyPets[targetCount] == this)
-				targetCount++;						
-			else
-			{
-				attackTarget = enemyPets[targetCount];
-				targetCount++;
-				onTarget = true;
-			}
-		}
 	}
 
 	//method - attack
 	public void Attack()
 	{
-		//set target
-		if (!onTarget)
-		{
-			NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogIdle );
-			CheckChaseTarget();
-		}
 		//make throw object
-		else 
+		if(onTarget)
 		{			
 			NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogAttack );
 			GameObject temp = (GameObject) Instantiate( stunThrowObject, transform.position + new Vector3 ( 0f, 10f, 0f ), transform.rotation );
@@ -173,7 +136,7 @@ public class NPCFrogPet : Pet
 	public void Slow()
 	{
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogSlow );
-		transform.LookAt( goalObject.transform );
+		transform.LookAt( goalPoint.transform );
 		transform.Translate( transform.forward * ( Time.deltaTime * petInfo.MoveSpeed / 4 ) );	
 	}
 
@@ -212,13 +175,15 @@ public class NPCFrogPet : Pet
 
 	public override void UserOrder( string data )
 	{
+		Debug.Log( data );
 		if (data == "Attack")
-		{
-
-		}
+			presentState = PetState.Attack;
+		
+		else if(data == "Run")
+			presentState = PetState.Run;
 	}
 
-	public override void PetFrogHitDamege( float _stunningTime )
+	public override void HitDamege( float _stunningTime )
 	{
 		stunningTime = _stunningTime;
 		isStun = true;

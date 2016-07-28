@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Pet : MonoBehaviour {
+public class Pet : MonoBehaviour
+{
 
 	public bool playerPet;
 
@@ -12,7 +13,8 @@ public class Pet : MonoBehaviour {
 	public bool firstCycle;
 	public bool onRace;
 
-	public GameObject goalObject;
+	public Transform startPoint;
+	public Transform goalPoint;
 
 	//pet violence of peace
 	public bool disposition;
@@ -29,7 +31,6 @@ public class Pet : MonoBehaviour {
 
 	//for attack
 	public bool onTarget;
-	public Pet[] enemyPets;
 	public Pet attackTarget;
 	public int targetCount;
 	public float attackCycleTime;
@@ -41,17 +42,40 @@ public class Pet : MonoBehaviour {
 
 
 	//property
+	public bool OnRace
+	{
+		get{ return onRace; }	
+	}
+
 	public bool IsStun
 	{
 		get { return isStun; }
 	}
 
-	public virtual void PetFrogHitDamege(float _PetFrogDamege)
+	public bool PlayerPet
+	{
+		get { return playerPet; }
+		set { playerPet = value; }
+	}
+
+	//use minimap
+	public float PresentPosition
+	{
+		get { return( 1 - ( goalPoint.position.z - transform.position.z ) / ( goalPoint.position.z - startPoint.position.z ) ); }
+	}
+
+	public void SetPetAttackTarget( Pet target )
+	{
+		attackTarget = target;
+		onTarget = true;
+	}
+
+	public virtual void HitDamege( float _PetFrogDamege )
 	{
 		
 	}
 
-	public virtual void UserOrder(string data)
+	public virtual void UserOrder( string data )
 	{
 		
 	}

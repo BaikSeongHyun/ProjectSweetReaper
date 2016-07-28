@@ -37,6 +37,7 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 			string skillItem = "SkillSlot";
 			skillItem += ( i + 1 ).ToString();
 			elements[i] = transform.Find( skillItem ).GetComponent<SkillElement>();	
+			elements[i].LinkElement();
 		}				
 	}
 
@@ -47,10 +48,12 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 			if (elements[i].SkillInfo.Name == "Default" && skill.LearnLevel <= info.Level)
 			{
 				elements[i].SkillInfo = new Skill ( skill );
-				elements[i].UpdateSkillIcon(info);
+				elements[i].UpdateSkillIcon( info );
 				break;
 			}
 		}
+
+		mainUI.UpdateInstallSkillInfomationByQuickSkill( this );
 	}
 
 	public void UpdateSkillUI( CharacterInformation info )
@@ -58,7 +61,7 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 		for (int i = 0; i < elements.Length; i++)
 		{
 			elements[i].SkillInfo = info.InstallSkill[i];
-			elements[i].UpdateSkillIcon(info);
+			elements[i].UpdateSkillIcon( info );
 		}
 	}
 	
@@ -76,6 +79,8 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 			presentSkillElement.UpdateDefaultSkillIcon( defaultSprite );
 			presentSkillElement = null;
 		}
+
+		mainUI.UpdateInstallSkillInfomationByQuickSkill( this );
 	}
 
 	

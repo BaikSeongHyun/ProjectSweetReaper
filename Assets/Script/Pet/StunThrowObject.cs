@@ -24,7 +24,7 @@ public class StunThrowObject : MonoBehaviour
 	void OnCollisionEnter( Collision col )
 	{
 		if (col.gameObject.CompareTag( "Pet" ))
-			col.gameObject.GetComponent<Pet>().PetFrogHitDamege( stunTime );
+			col.gameObject.GetComponent<Pet>().HitDamege( stunTime );
 		
 
 		Destroy( this.gameObject );

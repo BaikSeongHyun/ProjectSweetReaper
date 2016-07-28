@@ -27,9 +27,11 @@ public class SkillElement : MonoBehaviour
 		skillIcon = GetComponent<Image>();
 	}
 
-	public void UpdateSkillPopUp()
+	public void UpdateSkillPopUp(CharacterInformation info)
 	{
 		if (skillInfo.Name == " Default")
+			return;
+		if (skillInfo.LearnLevel >= info.Level)
 			return;
 		
 		skillPopUp.LinkElement();

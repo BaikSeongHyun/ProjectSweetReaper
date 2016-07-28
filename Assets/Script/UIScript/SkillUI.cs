@@ -20,8 +20,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
 
 	public void LinkElement()
-	{		
-
+	{	
 		elements = new SkillElement[9];
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		for (int i = 0; i < elements.Length; i++)
@@ -29,6 +28,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 			string skillItem = "SkillItem";
 			skillItem += ( i + 1 ).ToString();
 			elements[i] = transform.Find( skillItem ).GetComponent<SkillElement>();	
+			elements[i].LinkElement();
 		}				
 	}
 
@@ -48,7 +48,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 			presentSkillElement = eventData.pointerEnter.GetComponent<SkillElement>();
 
 		if ((presentSkillElement != null) && !mainUI.OnClickMouse)
-			presentSkillElement.UpdateSkillPopUp();
+			presentSkillElement.UpdateSkillPopUp(mainUI.info);
 	}
 
 	//skill element out -> pop up skill information

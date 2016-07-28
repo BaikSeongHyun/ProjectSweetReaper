@@ -165,8 +165,10 @@ public class UserInterfaceManager : MonoBehaviour
 		//race UI & data
 		raceMiniMap = GameObject.Find( "RaceMiniMap" );
 		raceMiniMapLogic = raceMiniMap.GetComponent<RaceMiniMap>();
+		raceMiniMapLogic.LinkElement();
 		racePetStatus = GameObject.Find( "RacePetStatus" );
 		racePetStatusLogic = racePetStatus.GetComponent<RacePetStatus>();
+		racePetStatusLogic.LinkElement();
 		racePetOrder = GameObject.Find( "RacePetOrder" );
 	}
 
@@ -213,7 +215,7 @@ public class UserInterfaceManager : MonoBehaviour
 		enterDungeon.SetActive( false );
 		deathPopUp.SetActive( false );
 		itemPopUpLogic.ControlComponent( false );	
-		skillPopUp.SetActive( false );
+		skillPopUpLogic.ControlComponent( false );
 		exitDungeonPopUp.SetActive( false );
 		presentSelectItem.enabled = false;
 		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
@@ -243,7 +245,7 @@ public class UserInterfaceManager : MonoBehaviour
 		enterDungeon.SetActive( false );
 		deathPopUp.SetActive( false );
 		itemPopUpLogic.ControlComponent( false );	
-		skillPopUp.SetActive( false );
+		skillPopUpLogic.ControlComponent( false );
 		exitDungeonPopUp.SetActive( false );
 		presentSelectItem.enabled = false;
 		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
@@ -372,7 +374,7 @@ public class UserInterfaceManager : MonoBehaviour
 		for (int i = 0; i < info.InstallSkill.Length; i++)
 			info.InstallSkill[i] = quickSkill.InstallSkill[i].SkillInfo;	
 	}
-	
+		
 	//skill install in quick skill
 	public void InstallQuickSkill()
 	{
@@ -430,10 +432,10 @@ public class UserInterfaceManager : MonoBehaviour
 		else if (CompareMode( Mode.Race))
 		{
 			//update race mini map
-			//raceMiniMapLogic.UpdateMinimap( 1.0f );
+			raceMiniMapLogic.UpdateMinimap( myPet.PresentPosition );
 
 			//update race pet status
-			//racePetStatusLogic.UpdatePetStatus();
+			racePetStatusLogic.UpdatePetStatus(myPet);
 		}
 		else if (CompareMode( Mode.Result ))
 		{
