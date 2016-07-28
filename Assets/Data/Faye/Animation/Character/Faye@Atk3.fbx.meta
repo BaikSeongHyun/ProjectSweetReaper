@@ -438,14 +438,6 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.99746203
-        functionName: ChainTrigger
-        data: 
-        objectReferenceParameter: {fileID: 188320, guid: cc43b05c98e73e84281d3239caab58c4,
-          type: 2}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
       - time: 0.05810894
         functionName: ScytheSoundEffect
         data: 
@@ -464,6 +456,21 @@ ModelImporter:
         messageOptions: 0
       - time: 0.87363327
         functionName: ScytheSoundEffect
+        data: 
+        objectReferenceParameter: {fileID: 179576, guid: cc43b05c98e73e84281d3239caab58c4,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 1
+        functionName: ChainTrigger
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.97021234
+        functionName: SpecialSkill
         data: 
         objectReferenceParameter: {fileID: 179576, guid: cc43b05c98e73e84281d3239caab58c4,
           type: 2}
