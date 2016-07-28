@@ -912,6 +912,7 @@ MonoBehaviour:
   faye: {fileID: 0}
   info: {fileID: 0}
   mainUI: {fileID: 0}
+  tutorialUI: {fileID: 0}
 --- !u!114 &830414981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1150,6 +1151,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c8b90ed68134a04eb642afc05fde5fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ExplainText1: {fileID: 0}
+  ExplainText2: {fileID: 0}
+  ExplainText3: {fileID: 0}
+  ExplainText4: {fileID: 0}
+  ExplainText5: {fileID: 0}
+  ExplainText6: {fileID: 0}
+  ExplainText7: {fileID: 0}
 --- !u!1 &1229184441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,7 +1525,7 @@ GameObject:
   - 114: {fileID: 1423497423}
   m_Layer: 5
   m_Name: TutorialUI
-  m_TagString: Untagged
+  m_TagString: MainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

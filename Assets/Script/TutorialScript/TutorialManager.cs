@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class TutorialManager : MonoBehaviour {
-//	GameController controller; 대신쓴다
 
+	//	GameController controller; 대신쓴다
 	public Vector3 cameraDistance;
 	public GameObject temp;
 
@@ -15,6 +15,7 @@ public class TutorialManager : MonoBehaviour {
 	public CharacterInformation info;
 	public UserInterfaceManager mainUI;
 	public DataBase dataBase;
+	public TutorialUI tutorialUI;
 
 
 
@@ -25,8 +26,15 @@ public class TutorialManager : MonoBehaviour {
 	{
 		Application.targetFrameRate = 80;
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
+		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
-		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
+		mainUI.LinkElement ();
+		mainUI.LinkNeutralData (info);
+		mainUI.SwitchUIMode (UserInterfaceManager.Mode.Neutral);
+		cameraDistance = new Vector3 (0f, 7.5f, -8f);
+
+		tutorialUI = GameObject.FindWithTag ("MainUI").GetComponent<TutorialUI> ();
+
 	}
 
 
