@@ -420,14 +420,8 @@ public class UserInterfaceManager : MonoBehaviour
 		
 			//update present select item
 			if (presentSelectItem.enabled)
-				presentSelectItem.transform.position = Input.mousePosition;	
-		
-			if (!info.InstalledItem)
-			{
-				info.InstallDefaultItem();	
-				info.SetDefaultSkill();
-				info.InstalledItem = true;
-			}
+				presentSelectItem.transform.position = Input.mousePosition;		
+			
 		}
 		else if (CompareMode( Mode.Race))
 		{

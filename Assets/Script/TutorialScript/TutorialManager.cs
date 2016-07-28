@@ -37,10 +37,6 @@ public class TutorialManager : MonoBehaviour {
 		//start imagecounter;
 
 	}
-		
-
-
-
 	
 	// Update is called once per frame
 	void Update () {
@@ -50,21 +46,21 @@ public class TutorialManager : MonoBehaviour {
 			if (Input.GetButtonDown( "NormalAttack" ))
 				faye.Attack();
 			else if (Input.GetButtonDown( "Skill1" ))
-				faye.SkillCommand( "Q" );
+				faye.SkillCommand( 1 );
 			else if (Input.GetButtonDown( "Skill2" ))
-				faye.SkillCommand( "Skill2" );
+				faye.SkillCommand( 2 );
 			else if (Input.GetButtonDown( "Skill3" ))
-				faye.SkillCommand( "Skill3" );
+				faye.SkillCommand( 3 );
 			else if (Input.GetButtonDown( "Skill4" ))
-				faye.SkillCommand( "Skill4" );
+				faye.SkillCommand( 4 );
 			else if (Input.GetButtonDown( "Skill5" ))
-				faye.SkillCommand( "A" );
+				faye.SkillCommand( 5 );
 			else if (Input.GetButtonDown( "Skill6" ))
-				faye.SkillCommand( "S" );
+				faye.SkillCommand( 6 );
 			else if (Input.GetButtonDown( "Skill7" ))
-				faye.SkillCommand( "D" );
+				faye.SkillCommand( 7 );
 			else if (Input.GetButtonDown( "Skill8" ))
-				faye.SkillCommand( "Skill8" );
+				faye.SkillCommand( 8 );
 			else if (Input.GetButton( "Move" ))
 				MakeMovePoint();
 			//skill number - key

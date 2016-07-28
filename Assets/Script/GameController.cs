@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
 		mainUI.LinkElement();
 		mainUI.LinkNeutralData( info );
 		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
-		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
+		cameraDistance = new Vector3(0f, 7.5f, -8f);
 	}
 	
 	// Update is called once per frame
@@ -39,21 +39,21 @@ public class GameController : MonoBehaviour
 			if (Input.GetButtonDown( "NormalAttack" ))
 				faye.Attack();
 			else if (Input.GetButtonDown( "Skill1" ))
-				faye.SkillCommand( "Q" );
+				faye.SkillCommand( 0 );
 			else if (Input.GetButtonDown( "Skill2" ))
-				faye.SkillCommand( "Skill2" );
+				faye.SkillCommand( 1 );
 			else if (Input.GetButtonDown( "Skill3" ))
-				faye.SkillCommand( "Skill3" );
+				faye.SkillCommand( 2 );
 			else if (Input.GetButtonDown( "Skill4" ))
-				faye.SkillCommand( "Skill4" );
+				faye.SkillCommand( 3 );
 			else if (Input.GetButtonDown( "Skill5" ))
-				faye.SkillCommand( "A" );
+				faye.SkillCommand( 4 );
 			else if (Input.GetButtonDown( "Skill6" ))
-				faye.SkillCommand( "S" );
+				faye.SkillCommand( 5 );
 			else if (Input.GetButtonDown( "Skill7" ))
-				faye.SkillCommand( "D" );
+				faye.SkillCommand( 6 );
 			else if (Input.GetButtonDown( "Skill8" ))
-				faye.SkillCommand( "Skill8" );
+				faye.SkillCommand( 7 );
 			else if (Input.GetButton( "Move" ))
 				MakeMovePoint();
 			//skill number - key
@@ -139,7 +139,7 @@ public class GameController : MonoBehaviour
 			//position
 			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, faye.transform.position + cameraDistance, Time.deltaTime * 10 );
 			//rotation
-			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion ( 0.4f, 0.0f, 0.0f, 0.9f ), Time.deltaTime * 10 );
+			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion(0.4f, 0.0f, 0.0f, 0.9f), Time.deltaTime * 10 );
 		}
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.NPC ))
@@ -147,7 +147,7 @@ public class GameController : MonoBehaviour
 			//rotation -> use forward vector
 			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
 			//position
-			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + ( temp.transform.forward * 3 ) + new Vector3 ( 0f, 0.5f, 0f ), Time.deltaTime * 10 );
+			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + (temp.transform.forward * 3) + new Vector3(0f, 0.5f, 0f), Time.deltaTime * 10 );
 		}
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.Tranning ))

@@ -53,6 +53,16 @@ public class Skill
 		get { return information; }
 	}
 
+	public float CoolTime
+	{
+		get { return coolTime; }
+	}
+
+	public float SkillResource
+	{
+		get { return resource; }	
+	}
+
 	//constructor - no parameter
 	public Skill ()
 	{
@@ -66,7 +76,7 @@ public class Skill
 	}
 	
 	//constructor - all parameter
-	public Skill (int _id,string _name, int _learnLevel, float _coolTime, float _damage, float _resource, STATE _state)
+	public Skill (int _id, string _name, int _learnLevel, float _coolTime, float _damage, float _resource, STATE _state)
 	{
 		id = _id;
 		name = _name;

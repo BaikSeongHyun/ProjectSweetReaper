@@ -74,7 +74,10 @@ public class CharacterInformation : MonoBehaviour
 	//slot set up skill
 	public Skill[] characterSkill;
 	public Skill[] installSkill;
-
+	public bool[] onSkill;
+	public float[] skillCoolTimeSet;
+	
+	
 	//property
 
 	public string CharacterName
@@ -110,7 +113,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status health bar
 	public float FillHealthPoint
 	{
-		get { return( presentHealthPoint / originHealthPoint ); }
+		get { return(presentHealthPoint / originHealthPoint); }
 	}
 
 	public float OriginResourcePoint
@@ -126,7 +129,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status resource bar
 	public float FillResourcePoint
 	{
-		get { return ( presentResourcePoint / originResourcePoint ); }
+		get { return (presentResourcePoint / originResourcePoint); }
 	}
 
 	public float CriticalProability
@@ -165,7 +168,7 @@ public class CharacterInformation : MonoBehaviour
 	{
 		get { return overChain; }
 		set { overChain = value; }
-	}			
+	}
 
 	public Item TopInstall
 	{
@@ -202,12 +205,6 @@ public class CharacterInformation : MonoBehaviour
 		set { money = value; }
 	}
 
-	public bool InstalledItem
-	{
-		get { return installedItem; }
-		set { installedItem = value; }
-	}
-
 	public Skill[] CharacterSkill
 	{
 		get { return characterSkill; }
@@ -219,10 +216,17 @@ public class CharacterInformation : MonoBehaviour
 		set { installSkill = value; }
 	}
 
-	
-	//data base
-	DataBase dataBase;
-	bool installedItem;
+	public bool[] OnSkill
+	{
+		get { return onSkill; }
+		set{ onSkill = value; }
+	}
+
+	public float[] SkillCoolTime
+	{
+		get { return skillCoolTimeSet; }
+		set { skillCoolTimeSet = value; }
+	}
 
 	void Start()
 	{
@@ -240,8 +244,8 @@ public class CharacterInformation : MonoBehaviour
 
 		presentHealthPoint = 2614.0f;
 		originHealthPoint = 2614.0f;
-		presentResourcePoint = 120.0f;
-		originResourcePoint = 120.0f;
+		presentResourcePoint = 600.0f;
+		originResourcePoint = 600.0f;
 		rootCriticalProability = 10.0f;
 
 		presentExp = 345.0f;
@@ -256,6 +260,7 @@ public class CharacterInformation : MonoBehaviour
 		money = 1203;
 
 		InstallDefaultItem();
+		SetDefaultSkill();
 
 	}
 
@@ -268,7 +273,7 @@ public class CharacterInformation : MonoBehaviour
 		handleInstall = DataBase.Instance.FindItemByName( "IronHandle" );
 
 		for (int i = 0; i < characterItem.Length; i++)
-			characterItem[i] = new Item ();
+			characterItem[i] = new Item();
 	}
 
 	public void SetDefaultSkill()
@@ -281,7 +286,17 @@ public class CharacterInformation : MonoBehaviour
 		characterSkill[5] = DataBase.Instance.FindSkill( 5 );
 
 		for (int i = 6; i < characterSkill.Length; i++)
-			characterSkill[i] = new Skill ();
+			characterSkill[i] = new Skill();
+		
+		
+		onSkill = new bool[8];
+		skillCoolTimeSet = new float[onSkill.Length];
+
+		for (int i = 0; i < onSkill.Length; i++)
+		{
+			onSkill[i] = false;
+			skillCoolTimeSet[i] = 0.0f;
+		}
 
 	}
 
@@ -291,7 +306,7 @@ public class CharacterInformation : MonoBehaviour
 		{
 			if (characterItem[i].Name == "Default")
 			{
-				characterItem[i] = new Item ( item );
+				characterItem[i] = new Item(item);
 				return true;
 			}
 		}
@@ -318,6 +333,14 @@ public class CharacterInformation : MonoBehaviour
 		UpdateStatus( handleInstall );
 	}
 
+	public bool CheckSkillResource( int index )
+	{
+		if (presentResourcePoint >= installSkill[index].SkillResource)
+			return true;
+		else
+			return false;
+	}
+	
 	//save data load and apply
 	public void LoadCharacterInformation()
 	{

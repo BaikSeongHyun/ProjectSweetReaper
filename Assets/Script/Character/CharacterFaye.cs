@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
+using System;
+using System.Collections;
+
 
 public class CharacterFaye : MonoBehaviour
 {
@@ -41,23 +43,9 @@ public class CharacterFaye : MonoBehaviour
 	STATE presentState;
 
 	//skill
+	
+	public bool skillTrigger = false;
 
-	bool bash = false;
-	bool twinRush = false;
-	bool crescentCut = false;
-	bool kick = false;
-	bool landCrush = false;
-	bool wheelScythe = false;
-	bool upperScythe = false;
-	bool skillTrigger = false;
-
-	float kickCooltime = 0.0f;
-	float bashCooltime = 0.0f;
-	float twinRushCooltime = 0.0f;
-	float landCrushCooltime = 0.0f;
-	float crescentCutCooltime = 0.0f;
-	float WheelScythebashCooltime = 0.0f;
-	float upperScytheCooltime = 0.0f;
 
 	//State Event
 	public enum STATE
@@ -96,7 +84,7 @@ public class CharacterFaye : MonoBehaviour
 
 	public bool IsStop
 	{
-		get { return  isStop; }
+		get { return isStop; }
 	}
 
 	public bool IsAlive
@@ -106,31 +94,10 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Start()
 	{
-		audioSource = GetComponent<AudioSource>();
-		respawnPoint = transform.position;
-		destination = this.transform.position;
+		audioSource = GetComponent<AudioSource>();		
 		animator = GetComponent<Animator>();
 		charInfo = GetComponent<CharacterInformation>();
-		Hit.size = new Vector3 ( 0, 0, 0 );
-		this.GetComponent<Animator>().speed = 1.5f;
-	}
-
-	public void ScytheSoundEffect()
-	{
-		if (isSoundTrigger == false)
-		{
-			audioSource.PlayOneShot( soundEffect );
-		}
-	}
-
-
-	public void SpecialSkill()
-	{
-		finish = false;
-		isStop = false;
-		finishSkillcount = 0;
-		animatorSpeed = 0.6f;
-		skillTrigger = true;
+		InitializeData();		
 	}
 
 	void Update()
@@ -143,7 +110,7 @@ public class CharacterFaye : MonoBehaviour
 
 			if (finishSkillcount == 1 && !skillUsingState)
 			{
-				Instantiate( finishSkillEffect, new Vector3 ( transform.position.x, 0, transform.position.z ), transform.rotation );
+				Instantiate( finishSkillEffect, new Vector3(transform.position.x, 0, transform.position.z), transform.rotation );
 				skillEffect.name = "DemonicScythe";
 			}
 
@@ -174,8 +141,7 @@ public class CharacterFaye : MonoBehaviour
 		}
 
 		if (!skillUsingState)
-			isStop = false;
-		
+			isStop = false;		
 
 		if (isStop == true)
 			Time.timeScale = 0.01f;
@@ -187,10 +153,10 @@ public class CharacterFaye : MonoBehaviour
 		{
 			if (normalAttackState || skillUsingState)
 			{
-				Hit.size = new Vector3 ( 0.5f, 1.5f, 1f );
+				Hit.size = new Vector3(0.5f, 1.5f, 1f);
 			}
 			else
-				Hit.size = new Vector3 ( 0, 0, 0 );
+				Hit.size = new Vector3(0, 0, 0);
 			
 			if (skillChainTrigger == true)
 			{
@@ -208,11 +174,11 @@ public class CharacterFaye : MonoBehaviour
 				{				
 					skillChainWaitingTime += Time.deltaTime;
 					charInfo.ComboCounter = skillingChainCount;
-					charInfo.ComboTimeFill = 1 - ( skillChainWaitingTime / skillChainWaitingTimeMax );
+					charInfo.ComboTimeFill = 1 - (skillChainWaitingTime / skillChainWaitingTimeMax);
 				}
 			}
 			//fixed Y
-			transform.position = new Vector3 ( transform.position.x, 0, transform.position.z );
+			transform.position = new Vector3(transform.position.x, 0, transform.position.z);
 			Move();
 			
 			if (charInfo.PresentResourcePoint <= charInfo.OriginResourcePoint)
@@ -220,13 +186,17 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
+	void InitializeData()
+	{
+		respawnPoint = transform.position;
+		destination = this.transform.position;
+		Hit.size = new Vector3(0, 0, 0);
+		this.GetComponent<Animator>().speed = 1.5f;		
+	}
+
 	void Move()
 	{
-		if (skillUsingState == true)
-		{
-			SetState( "Idle" );
-		}
-		else
+		if (!skillUsingState)
 		{
 			attackState = this.animator.GetCurrentAnimatorStateInfo( 0 );
 
@@ -253,6 +223,24 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
+	public void ScytheSoundEffect()
+	{
+		if (isSoundTrigger == false)
+		{
+			audioSource.PlayOneShot( soundEffect );
+		}
+	}
+
+
+	public void SpecialSkill()
+	{
+		finish = false;
+		isStop = false;
+		finishSkillcount = 0;
+		animatorSpeed = 0.6f;
+		skillTrigger = true;
+	}
+
 	public void BashHitBoxIncease()
 	{
 		normalAttackState = false;
@@ -260,73 +248,24 @@ public class CharacterFaye : MonoBehaviour
 
 	public void SkillCoolTime()
 	{
-		if (bash)
+		for (int i = 0; i < charInfo.OnSkill.Length; i++)
 		{
-			bashCooltime += Time.deltaTime;
-			if (bashCooltime >= 5.0f)
+			if (charInfo.OnSkill[i])
 			{
-				bash = false;
-				bashCooltime = 0.0f;
-			}
-		}
-
-		if (twinRush)
-		{
-			twinRushCooltime += Time.deltaTime;
-			if (twinRushCooltime >= 5.0f)
-			{
-				twinRush = false;
-				twinRushCooltime = 0.0f;
-			}
-		}
-
-		if (crescentCut)
-		{
-			crescentCutCooltime += Time.deltaTime;
-			if (crescentCutCooltime >= 5.0f)
-			{
-				crescentCut = false;
-				crescentCutCooltime = 0.0f;
-			}
-		}
-
-		if (landCrush)
-		{
-			landCrushCooltime += Time.deltaTime;
-			if (landCrushCooltime >= 5.0f)
-			{
-				landCrush = false;
-				landCrushCooltime = 0.0f;
-			}
-		}
-
-		if (wheelScythe)
-		{
-			WheelScythebashCooltime += Time.deltaTime;
-			if (WheelScythebashCooltime >= 5.0f)
-			{
-				wheelScythe = false;
-				WheelScythebashCooltime = 0.0f;
-			}
-		}
-
-		if (upperScythe)
-		{
-			upperScytheCooltime += Time.deltaTime;
-			if (upperScytheCooltime >= 5.0f)
-			{
-				upperScythe = false;
-				upperScytheCooltime = 0.0f;
-			}
-		}
-
-		if (kick)
-		{
-			kickCooltime += Time.deltaTime;
-			if (kickCooltime >= 5.0f)
-			{
-				kick = false;
-				kickCooltime = 0.0f;
+				charInfo.SkillCoolTime[i] += Time.deltaTime;
+				try
+				{
+					if (charInfo.SkillCoolTime[i] >= charInfo.installSkill[i].CoolTime)
+					{
+						charInfo.OnSkill[i] = false;
+						charInfo.SkillCoolTime[i] = 0.0f;
+					}
+				}
+				catch (NullReferenceException e)
+				{
+					Debug.Log( e.InnerException );
+					charInfo.SkillCoolTime[i] = 0.0f;
+				}
 			}
 		}
 	}
@@ -389,101 +328,37 @@ public class CharacterFaye : MonoBehaviour
 		destination = transform.position;
 	}
 
-	public void SkillCommand( string _command )
+	public void SkillCommand( int index )
 	{
-		if (isAlive && charInfo.PresentResourcePoint >= 20f && !skillUsingState)
+		if (isAlive && !skillUsingState)
 		{
-
-			Effect.SetActive( true );
-			animator.Play( "Idle" );
-			destination = this.transform.position;
-
-			switch (_command)
+			//check active skill -> exit
+			if ((charInfo.InstallSkill[index] == null) || (charInfo.InstallSkill[index].Name == "Default"))
+				return;
+			else if (!charInfo.OnSkill[index] && charInfo.CheckSkillResource(index))
 			{
-				case "A":
-					if (!bash)
-					{
-						isSoundTrigger = false;
-						skillChainTrigger = false;
-						SetState( "Bash" );
-						skillUsingState = true;
-						bash = true;
-					}
-					break;
-
-				case "S":
-					if (!twinRush)
-					{
-						isSoundTrigger = false;
-						skillChainTrigger = false;
-						SetState( "TwinRush" );
-						skillUsingState = true;
-						twinRush = true;
-					}
-					break;
-
-				case "D":
-					if (!landCrush)
-					{
-						isSoundTrigger = false;
-						skillChainTrigger = false;
-						SetState( "LandCrush" );
-						skillUsingState = true;
-						landCrush = true;
-					}
-					break;
-
-				case "Skill8":
-					if (!kick)
-					{
-						skillChainTrigger = false;
-						SetState( "Kick" );
-						skillUsingState = true;
-						kick = true;
-					}
-					break;
-
-				case "Q":
-					if (!wheelScythe)
-					{
-						isSoundTrigger = false;
-						skillChainTrigger = false;
-						SetState( "WheelScythe" );
-						skillUsingState = true;
-						wheelScythe = true;
-					}
-					break;
-
-				case "Skill2":
-					if (!upperScythe)
-					{
-						isSoundTrigger = false;
-						skillChainTrigger = false;
-						SetState( "UpperScythe" );
-						skillUsingState = true;
-						upperScythe = true;
-					}
-					break;
-
-				case "Skill3":
-					if (!crescentCut)
-					{
-						isSoundTrigger = false;
-						skillChainTrigger = false;
-						SetState( "CrescentCut" );
-						skillUsingState = true;
-						crescentCut = true;
-						//finish = true;
-					}
-					break;
-
+				//set faye idle
+				Effect.SetActive( true );
+				SetState( "Idle" );
+				
+				//animator force move
+				animator.Play( "Idle" );
+				destination = this.transform.position;
+				
+				//action skill
+				charInfo.PresentResourcePoint -= charInfo.InstallSkill[index].SkillResource;
+				isSoundTrigger = false;
+				skillChainTrigger = false;
+				SetState( charInfo.InstallSkill[index].Name );
+				skillUsingState = true;
+				charInfo.OnSkill[index] = true;
 			}
 
+			
+			//skill chain section
 			if (skillUsingState)
-			{
-				skillChainWaitingTime = 0.0f;
-				charInfo.PresentResourcePoint -= 20f;
-			}
+				skillChainWaitingTime = 0.0f;				
+			
 
 			if (skillingChainCount < 4 && skillUsingState)
 			{
@@ -529,37 +404,37 @@ public class CharacterFaye : MonoBehaviour
 				break;
 
 			case "Bash":
-				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				Instantiate( skillEffect, new Vector3(transform.position.x, 0.3f, transform.position.z), transform.rotation );
 				animator.SetTrigger( "Bash" );
 				break;
 
 			case "TwinRush":
-				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				Instantiate( skillEffect, new Vector3(transform.position.x, 0.3f, transform.position.z), transform.rotation );
 				animator.SetTrigger( "TwinRush" );
 				break;
 
 			case "CrescentCut":
-				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				Instantiate( skillEffect, new Vector3(transform.position.x, 0.3f, transform.position.z), transform.rotation );
 				animator.SetTrigger( "CrescentCut" );
 				break;
 
 			case "LandCrush":
-				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				Instantiate( skillEffect, new Vector3(transform.position.x, 0.3f, transform.position.z), transform.rotation );
 				animator.SetTrigger( "LandCrush" );
 				break;
 
 			case "WheelScythe":
-				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				Instantiate( skillEffect, new Vector3(transform.position.x, 0.3f, transform.position.z), transform.rotation );
 				animator.SetTrigger( "WheelScythe" );
 				break;
 
 			case "UpperScythe":
-				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				Instantiate( skillEffect, new Vector3(transform.position.x, 0.3f, transform.position.z), transform.rotation );
 				animator.SetTrigger( "UpperScythe" );
 				break;
 
 			case "Skill_E":
-				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				Instantiate( skillEffect, new Vector3(transform.position.x, 0.3f, transform.position.z), transform.rotation );
 				animator.SetTrigger( "Skill_E" );
 				break;
 
@@ -571,7 +446,7 @@ public class CharacterFaye : MonoBehaviour
 				if (skillingChainCount >= 4)
 				{
 					skillTrigger = false;
-					Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.2f, transform.position.z ), transform.rotation );
+					Instantiate( skillEffect, new Vector3(transform.position.x, 0.2f, transform.position.z), transform.rotation );
 
 					isSoundTrigger = false;
 					Effect.SetActive( false );
