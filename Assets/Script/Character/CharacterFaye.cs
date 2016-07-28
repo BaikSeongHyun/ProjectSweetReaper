@@ -26,12 +26,12 @@ public class CharacterFaye : MonoBehaviour
 	float skillChainWaitingTimeMax = 6.0f;
 	public int skillingChainCount = 0;
 	public bool runState = false;
-	public int skillCount=6;
+	public int skillCount = 6;
 	bool skillChainTrigger = false;
 	bool skillUsingState = false;
 	bool normalAttackState = false;
 
-	bool isSoundTrigger=false;
+	bool isSoundTrigger = false;
 
 	//finish Skill
 	bool isAlive = true;
@@ -42,30 +42,29 @@ public class CharacterFaye : MonoBehaviour
 
 	//skill
 
-	bool bash=false;
-	bool twinRush=false;
-	bool crescentCut=false;
-	bool kick=false;
-	bool landCrush=false;
-	bool wheelScythe=false;
-	bool upperScythe=false;
+	bool bash = false;
+	bool twinRush = false;
+	bool crescentCut = false;
+	bool kick = false;
+	bool landCrush = false;
+	bool wheelScythe = false;
+	bool upperScythe = false;
 	bool skillTrigger = false;
 
-	float kickCooltime=0.0f;
-	float bashCooltime=0.0f;
-	float twinRushCooltime=0.0f;
-	float landCrushCooltime=0.0f;
-	float crescentCutCooltime=0.0f;
-	float WheelScythebashCooltime=0.0f;
-	float upperScytheCooltime=0.0f;
+	float kickCooltime = 0.0f;
+	float bashCooltime = 0.0f;
+	float twinRushCooltime = 0.0f;
+	float landCrushCooltime = 0.0f;
+	float crescentCutCooltime = 0.0f;
+	float WheelScythebashCooltime = 0.0f;
+	float upperScytheCooltime = 0.0f;
 
 	//State Event
 	public enum STATE
 	{
 		Default,
 		Idle,
-		Run
-	}
+		Run}
 	;
 
 	//property
@@ -107,59 +106,71 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Start()
 	{
-		audioSource = GetComponent<AudioSource> ();
+		audioSource = GetComponent<AudioSource>();
 		respawnPoint = transform.position;
 		destination = this.transform.position;
 		animator = GetComponent<Animator>();
 		charInfo = GetComponent<CharacterInformation>();
-		Hit.size = new Vector3(0, 0, 0);
-		this.GetComponent<Animator> ().speed = 1.5f;
+		Hit.size = new Vector3 ( 0, 0, 0 );
+		this.GetComponent<Animator>().speed = 1.5f;
 	}
 
-	public void ScytheSoundEffect(){
-		if (isSoundTrigger == false) {
-			audioSource.PlayOneShot (soundEffect);
+	public void ScytheSoundEffect()
+	{
+		if (isSoundTrigger == false)
+		{
+			audioSource.PlayOneShot( soundEffect );
 		}
 	}
 
 
-	public void SpecialSkill(){
+	public void SpecialSkill()
+	{
 		finish = false;
 		isStop = false;
 		finishSkillcount = 0;
 		animatorSpeed = 0.6f;
 		skillTrigger = true;
 	}
+
 	void Update()
 	{
 		
-		SkillCoolTime ();
-		if (finish) {
+		SkillCoolTime();
+		if (finish)
+		{
 			isStop = true;
 
-			if (finishSkillcount == 1 && !skillUsingState) {
-				Instantiate (finishSkillEffect, new Vector3(transform.position.x,0,transform.position.z), transform.rotation);
+			if (finishSkillcount == 1 && !skillUsingState)
+			{
+				Instantiate( finishSkillEffect, new Vector3 ( transform.position.x, 0, transform.position.z ), transform.rotation );
 				skillEffect.name = "DemonicScythe";
 			}
 
-			if (finishSkillcount >= 10) {
+			if (finishSkillcount >= 10)
+			{
 				isSoundTrigger = false;
-			} else if (finishSkillcount == 9 && !skillUsingState) {
+			}
+			else if (finishSkillcount == 9 && !skillUsingState)
+			{
 				isSoundTrigger = false;
-				this.GetComponent<Animator> ().speed = 1.5f;
+				this.GetComponent<Animator>().speed = 1.5f;
 				finishSkillcount++;
 				skillUsingState = true;
-			} else if (finishSkillcount < 9 && !skillUsingState) {
+			}
+			else if (finishSkillcount < 9 && !skillUsingState)
+			{
 				isSoundTrigger = false;
 				animatorSpeed = animatorSpeed + 0.4f;
-				this.GetComponent<Animator> ().speed = animatorSpeed;
+				this.GetComponent<Animator>().speed = animatorSpeed;
 				finishSkillcount++;
 				skillUsingState = true;
 			}
 		}
 
-		if (Input.GetKeyDown (KeyCode.Z)) {
-			SetState ("DemonicScythe");
+		if (Input.GetKeyDown( KeyCode.Z ))
+		{
+			SetState( "DemonicScythe" );
 		}
 
 		if (!skillUsingState)
@@ -174,11 +185,12 @@ public class CharacterFaye : MonoBehaviour
 
 		if (isAlive)
 		{
-			if (normalAttackState || skillUsingState) {
-				Hit.size = new Vector3 (0.5f, 1.5f, 1f);
+			if (normalAttackState || skillUsingState)
+			{
+				Hit.size = new Vector3 ( 0.5f, 1.5f, 1f );
 			}
 			else
-				Hit.size = new Vector3(0, 0, 0);
+				Hit.size = new Vector3 ( 0, 0, 0 );
 			
 			if (skillChainTrigger == true)
 			{
@@ -196,11 +208,11 @@ public class CharacterFaye : MonoBehaviour
 				{				
 					skillChainWaitingTime += Time.deltaTime;
 					charInfo.ComboCounter = skillingChainCount;
-					charInfo.ComboTimeFill = 1 - (skillChainWaitingTime / skillChainWaitingTimeMax);
+					charInfo.ComboTimeFill = 1 - ( skillChainWaitingTime / skillChainWaitingTimeMax );
 				}
 			}
 			//fixed Y
-			transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+			transform.position = new Vector3 ( transform.position.x, 0, transform.position.z );
 			Move();
 			
 			if (charInfo.PresentResourcePoint <= charInfo.OriginResourcePoint)
@@ -241,62 +253,78 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
-	public void BashHitBoxIncease(){
+	public void BashHitBoxIncease()
+	{
 		normalAttackState = false;
 	}
 
-	public void SkillCoolTime(){
-		if (bash) {
+	public void SkillCoolTime()
+	{
+		if (bash)
+		{
 			bashCooltime += Time.deltaTime;
-			if (bashCooltime >= 5.0f) {
+			if (bashCooltime >= 5.0f)
+			{
 				bash = false;
 				bashCooltime = 0.0f;
 			}
 		}
 
-		if (twinRush) {
+		if (twinRush)
+		{
 			twinRushCooltime += Time.deltaTime;
-			if (twinRushCooltime >= 5.0f) {
+			if (twinRushCooltime >= 5.0f)
+			{
 				twinRush = false;
 				twinRushCooltime = 0.0f;
 			}
 		}
 
-		if (crescentCut) {
+		if (crescentCut)
+		{
 			crescentCutCooltime += Time.deltaTime;
-			if (crescentCutCooltime >= 5.0f) {
+			if (crescentCutCooltime >= 5.0f)
+			{
 				crescentCut = false;
 				crescentCutCooltime = 0.0f;
 			}
 		}
 
-		if (landCrush) {
+		if (landCrush)
+		{
 			landCrushCooltime += Time.deltaTime;
-			if (landCrushCooltime >= 5.0f) {
+			if (landCrushCooltime >= 5.0f)
+			{
 				landCrush = false;
 				landCrushCooltime = 0.0f;
 			}
 		}
 
-		if (wheelScythe) {
+		if (wheelScythe)
+		{
 			WheelScythebashCooltime += Time.deltaTime;
-			if (WheelScythebashCooltime >= 5.0f) {
+			if (WheelScythebashCooltime >= 5.0f)
+			{
 				wheelScythe = false;
 				WheelScythebashCooltime = 0.0f;
 			}
 		}
 
-		if (upperScythe) {
+		if (upperScythe)
+		{
 			upperScytheCooltime += Time.deltaTime;
-			if (upperScytheCooltime >= 5.0f) {
+			if (upperScytheCooltime >= 5.0f)
+			{
 				upperScythe = false;
 				upperScytheCooltime = 0.0f;
 			}
 		}
 
-		if (kick) {
+		if (kick)
+		{
 			kickCooltime += Time.deltaTime;
-			if (kickCooltime >= 5.0f) {
+			if (kickCooltime >= 5.0f)
+			{
 				kick = false;
 				kickCooltime = 0.0f;
 			}
@@ -363,97 +391,113 @@ public class CharacterFaye : MonoBehaviour
 
 	public void SkillCommand( string _command )
 	{
-		if (isAlive && charInfo.PresentResourcePoint >= 20f && !skillUsingState) {
+		if (isAlive && charInfo.PresentResourcePoint >= 20f && !skillUsingState)
+		{
 
-			Effect.SetActive (true);
-			animator.Play ("Idle");
+			Effect.SetActive( true );
+			animator.Play( "Idle" );
 			destination = this.transform.position;
 
-			switch (_command) {
-			case "A":
-				if (!bash) {
-					isSoundTrigger = false;
-					skillChainTrigger = false;
-					SetState ("Bash");
-					skillUsingState = true;
-					bash = true;
-				}
-				break;
+			switch (_command)
+			{
+				case "A":
+					if (!bash)
+					{
+						isSoundTrigger = false;
+						skillChainTrigger = false;
+						SetState( "Bash" );
+						skillUsingState = true;
+						bash = true;
+					}
+					break;
 
-			case "S":
-				if (!twinRush) {
-					isSoundTrigger = false;
-					skillChainTrigger = false;
-					SetState ("TwinRush");
-					skillUsingState = true;
-					twinRush = true;
-				}
-				break;
+				case "S":
+					if (!twinRush)
+					{
+						isSoundTrigger = false;
+						skillChainTrigger = false;
+						SetState( "TwinRush" );
+						skillUsingState = true;
+						twinRush = true;
+					}
+					break;
 
-			case "D":
-				if (!landCrush) {
-					isSoundTrigger = false;
-					skillChainTrigger = false;
-					SetState ("LandCrush");
-					skillUsingState = true;
-					landCrush = true;
-				}
-				break;
+				case "D":
+					if (!landCrush)
+					{
+						isSoundTrigger = false;
+						skillChainTrigger = false;
+						SetState( "LandCrush" );
+						skillUsingState = true;
+						landCrush = true;
+					}
+					break;
 
-			case "Skill8":
-				if (!kick) {
-					skillChainTrigger = false;
-					SetState ("Kick");
-					skillUsingState = true;
-					kick = true;
-				}
-				break;
+				case "Skill8":
+					if (!kick)
+					{
+						skillChainTrigger = false;
+						SetState( "Kick" );
+						skillUsingState = true;
+						kick = true;
+					}
+					break;
 
-			case "Q":
-				if (!wheelScythe) {
-					isSoundTrigger = false;
-					skillChainTrigger = false;
-					SetState ("WheelScythe");
-					skillUsingState = true;
-					wheelScythe = true;
-				}
-				break;
+				case "Q":
+					if (!wheelScythe)
+					{
+						isSoundTrigger = false;
+						skillChainTrigger = false;
+						SetState( "WheelScythe" );
+						skillUsingState = true;
+						wheelScythe = true;
+					}
+					break;
 
-			case "Skill2":
-				if (!upperScythe) {
-					isSoundTrigger = false;
-					skillChainTrigger = false;
-					SetState ("UpperScythe");
-					skillUsingState = true;
-					upperScythe = true;
-				}
-				break;
+				case "Skill2":
+					if (!upperScythe)
+					{
+						isSoundTrigger = false;
+						skillChainTrigger = false;
+						SetState( "UpperScythe" );
+						skillUsingState = true;
+						upperScythe = true;
+					}
+					break;
 
-			case "Skill3":
-				if (!crescentCut) {
-					isSoundTrigger = false;
-					skillChainTrigger = false;
-					SetState ("CrescentCut");
-					skillUsingState = true;
-					crescentCut = true;
-					//finish = true;
-				}
-				break;
+				case "Skill3":
+					if (!crescentCut)
+					{
+						isSoundTrigger = false;
+						skillChainTrigger = false;
+						SetState( "CrescentCut" );
+						skillUsingState = true;
+						crescentCut = true;
+						//finish = true;
+					}
+					break;
 
 			}
 
-			if (skillUsingState) {
+			if (skillUsingState)
+			{
 				skillChainWaitingTime = 0.0f;
 				charInfo.PresentResourcePoint -= 20f;
 			}
 
-			if (skillingChainCount < 4 && skillUsingState) {
+			if (skillingChainCount < 4 && skillUsingState)
+			{
 				skillChainWaitingTimeMax = skillChainWaitingTimeMax - 1;
 				skillingChainCount++;
-			} else if (skillingChainCount >=4 && skillUsingState) {
-				if (!finish) {
+			}
+			else if (skillingChainCount >= 4 && skillUsingState)
+			{
+				if (!finish)
+				{
 					skillingChainCount = 4;
-				} else {
+				}
+				else
+				{
 					finish = false;
 					skillingChainCount = 0;
 					charInfo.ComboCounter = 0;
@@ -464,78 +508,80 @@ public class CharacterFaye : MonoBehaviour
 
 		}
 	}
-		
+
 	public void SetState( string state )
 	{
 		SetStateDefault();
-		switch (state) {
-		case "Idle":
-			presentState = STATE.Idle;
-			animator.SetBool ("Idle", true);
-			break;
+		switch (state)
+		{
+			case "Idle":
+				presentState = STATE.Idle;
+				animator.SetBool( "Idle", true );
+				break;
 
-		case "Run":
-			presentState = STATE.Run;
-			animator.SetBool ("Run", true);
-			break;
+			case "Run":
+				presentState = STATE.Run;
+				animator.SetBool( "Run", true );
+				break;
 
-		case "NormalAttack":
-			animator.SetTrigger ("NormalAttack");
-			break;
+			case "NormalAttack":
+				animator.SetTrigger( "NormalAttack" );
+				break;
 
-		case "Bash":
-			Instantiate (skillEffect, new Vector3(transform.position.x,0.3f,transform.position.z), transform.rotation);
-			animator.SetTrigger ("Bash");
-			break;
+			case "Bash":
+				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				animator.SetTrigger( "Bash" );
+				break;
 
-		case "TwinRush":
-			Instantiate (skillEffect, new Vector3(transform.position.x,0.3f,transform.position.z), transform.rotation);
-			animator.SetTrigger ("TwinRush");
-			break;
+			case "TwinRush":
+				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				animator.SetTrigger( "TwinRush" );
+				break;
 
-		case "CrescentCut":
-			Instantiate (skillEffect, new Vector3(transform.position.x,0.3f,transform.position.z), transform.rotation);
-			animator.SetTrigger ("CrescentCut");
-			break;
+			case "CrescentCut":
+				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				animator.SetTrigger( "CrescentCut" );
+				break;
 
-		case "LandCrush":
-			Instantiate (skillEffect, new Vector3(transform.position.x,0.3f,transform.position.z), transform.rotation);
-			animator.SetTrigger ("LandCrush");
-			break;
+			case "LandCrush":
+				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				animator.SetTrigger( "LandCrush" );
+				break;
 
-		case "WheelScythe":
-			Instantiate (skillEffect, new Vector3(transform.position.x,0.3f,transform.position.z), transform.rotation);
-			animator.SetTrigger ("WheelScythe");
-			break;
+			case "WheelScythe":
+				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				animator.SetTrigger( "WheelScythe" );
+				break;
 
-		case "UpperScythe":
-			Instantiate (skillEffect, new Vector3(transform.position.x,0.3f,transform.position.z), transform.rotation);
-			animator.SetTrigger ("UpperScythe");
-			break;
+			case "UpperScythe":
+				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				animator.SetTrigger( "UpperScythe" );
+				break;
 
-		case "Skill_E":
-			Instantiate (skillEffect, new Vector3(transform.position.x,0.3f,transform.position.z), transform.rotation);
-			animator.SetTrigger ("Skill_E");
-			break;
+			case "Skill_E":
+				Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.3f, transform.position.z ), transform.rotation );
+				animator.SetTrigger( "Skill_E" );
+				break;
 
-		case "Kick":
-			animator.SetTrigger ("Kick");
-			break;
+			case "Kick":
+				animator.SetTrigger( "Kick" );
+				break;
 
-		case "DemonicScythe":
-			if (skillingChainCount >= 4) {
-				skillTrigger = false;
-				Instantiate (skillEffect, new Vector3(transform.position.x,0.2f,transform.position.z), transform.rotation);
+			case "DemonicScythe":
+				if (skillingChainCount >= 4)
+				{
+					skillTrigger = false;
+					Instantiate( skillEffect, new Vector3 ( transform.position.x, 0.2f, transform.position.z ), transform.rotation );
 
-				isSoundTrigger = false;
-				Effect.SetActive (false);
-				animator.SetTrigger ("DemonicScythe");
-				this.GetComponent<Animator> ().speed = animatorSpeed;
-				finish = true;
-				skillUsingState = true;
-				skillingChainCount = 0;
-			}
-			break;
+					isSoundTrigger = false;
+					Effect.SetActive( false );
+					animator.SetTrigger( "DemonicScythe" );
+					this.GetComponent<Animator>().speed = animatorSpeed;
+					finish = true;
+					skillUsingState = true;
+					skillingChainCount = 0;
+				}
+				break;
 		}
 	}
 

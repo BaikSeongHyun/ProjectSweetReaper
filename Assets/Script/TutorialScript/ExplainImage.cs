@@ -134,7 +134,10 @@ public class ExplainImage : MonoBehaviour, IPointerDownHandler {
 		}
 	}
 
-	public void OnButtonDown(BaseEventData)
+	public void OnButtonDown(BaseEventData eventData)
+	{
+
+	}
 
 	public void InventoryOpen(){
 		

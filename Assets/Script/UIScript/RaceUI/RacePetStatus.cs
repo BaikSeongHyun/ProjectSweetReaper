@@ -4,10 +4,10 @@ using System.Collections;
 
 public class RacePetStatus : MonoBehaviour
 {
-	Image fearFill;
-	Image belligerenceFill;
-	Text attack;
-	Text moveSpeed;
+	public Image fearFill;
+	public Image belligerenceFill;
+	public Text attack;
+	public Text moveSpeed;
 
 	public void LinkElement()
 	{

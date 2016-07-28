@@ -111,8 +111,8 @@ public class FrogAI : Monster
 
 	public override void HitDamage( float _Damage )
 	{
-		Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
-		Instantiate( hitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
+//		Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
+	//	Instantiate( hitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
 		frogInfo.MonsterHp -= _Damage;
 		if (isAlive)
 		{
