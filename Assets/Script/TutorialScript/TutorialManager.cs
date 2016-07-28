@@ -17,9 +17,7 @@ public class TutorialManager : MonoBehaviour {
 	public DataBase dataBase;
 	public TutorialUI tutorialUI;
 
-
-
-
+	//imagecounter need control;
 
 	// initialize this script
 	void Start()
@@ -33,9 +31,14 @@ public class TutorialManager : MonoBehaviour {
 		mainUI.SwitchUIMode (UserInterfaceManager.Mode.Neutral);
 		cameraDistance = new Vector3 (0f, 7.5f, -8f);
 
-		tutorialUI = GameObject.FindWithTag ("MainUI").GetComponent<TutorialUI> ();
+		//tutorialUI = GameObject.FindWithTag ("MainUI").GetComponent<TutorialUI> ();
+		tutorialUI = GameObject.Find ("TutorialUI").GetComponent<TutorialUI> ();
+
+		//start imagecounter;
 
 	}
+		
+
 
 
 	
