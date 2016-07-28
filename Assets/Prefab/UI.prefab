@@ -4371,7 +4371,7 @@ MonoBehaviour:
   mainUI: {fileID: 0}
   elements: []
   presentSkillElement: {fileID: 0}
-  defaultSprite: {fileID: 0}
+  defaultSprite: {fileID: 21300000, guid: 95ede7a97c2a09644b2bcc7f66633bdb, type: 3}
 --- !u!114 &11414478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4943,6 +4943,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a0edc025e60c954ebce9b3cfe1e5b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fearFill: {fileID: 0}
+  belligerenceFill: {fileID: 0}
+  attack: {fileID: 0}
+  moveSpeed: {fileID: 0}
 --- !u!114 &11424896
 MonoBehaviour:
   m_ObjectHideFlags: 1
