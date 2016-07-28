@@ -49,6 +49,7 @@ public class CharacterFaye : MonoBehaviour
 	bool landCrush=false;
 	bool wheelScythe=false;
 	bool upperScythe=false;
+	bool skillTrigger = false;
 
 	float kickCooltime=0.0f;
 	float bashCooltime=0.0f;
@@ -84,6 +85,11 @@ public class CharacterFaye : MonoBehaviour
 		get { return normalAttackState; }
 	}
 
+	public bool SkillTrigger
+	{
+		get { return skillTrigger; }
+	}
+
 	public bool SkillUsingState
 	{
 		get { return skillUsingState; }
@@ -116,6 +122,14 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
+
+	public void SpecialSkill(){
+		finish = false;
+		isStop = false;
+		finishSkillcount = 0;
+		animatorSpeed = 0.6f;
+		skillTrigger = true;
+	}
 	void Update()
 	{
 		
@@ -130,10 +144,6 @@ public class CharacterFaye : MonoBehaviour
 
 			if (finishSkillcount >= 10) {
 				isSoundTrigger = false;
-				finishSkillcount = 0;
-				animatorSpeed = 0.6f;
-				finish = false;
-				isStop = false;
 			} else if (finishSkillcount == 9 && !skillUsingState) {
 				isSoundTrigger = false;
 				this.GetComponent<Animator> ().speed = 1.5f;
@@ -145,7 +155,6 @@ public class CharacterFaye : MonoBehaviour
 				this.GetComponent<Animator> ().speed = animatorSpeed;
 				finishSkillcount++;
 				skillUsingState = true;
-				Debug.Log (finishSkillcount);
 			}
 		}
 
@@ -158,7 +167,7 @@ public class CharacterFaye : MonoBehaviour
 		
 
 		if (isStop == true)
-			Time.timeScale = 0.0f;
+			Time.timeScale = 0.01f;
 		else
 			Time.timeScale = 1.0f;
 		
@@ -311,6 +320,7 @@ public class CharacterFaye : MonoBehaviour
 			skillUsingState = false;
 			isSoundTrigger = true;
 		}
+
 		destination = transform.position;
 	}
 
@@ -514,6 +524,7 @@ public class CharacterFaye : MonoBehaviour
 
 		case "DemonicScythe":
 			if (skillingChainCount >= 4) {
+				skillTrigger = false;
 				Instantiate (skillEffect, new Vector3(transform.position.x,0.2f,transform.position.z), transform.rotation);
 
 				isSoundTrigger = false;
