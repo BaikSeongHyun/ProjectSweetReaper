@@ -17,9 +17,9 @@ public class RacePetStatus : MonoBehaviour
 		moveSpeed = transform.Find( "MoveSpeedBack" ).Find( "Text" ).GetComponent<Text>();
 	}
 
-	public void UpdatePetStatus(Pet myPet)
+	public void UpdatePetStatus( Pet myPet )
 	{
-		attack.text = myPet.petInfo.petStunTime.ToString() + " sec";
-		moveSpeed.text = myPet.petInfo.MoveSpeed.ToString() + " m/s";
+		attack.text = myPet.petInfo.petStunTime.ToString() + " m/s";
+		moveSpeed.text = myPet.petInfo.MoveSpeed.ToString() + " sec";
 	}
 }

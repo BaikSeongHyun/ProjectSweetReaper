@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 450844}
   - 114: {fileID: 11420552}
   m_Layer: 0
-  m_Name: DemonicScythe
+  m_Name: SCSpell_ArmourAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

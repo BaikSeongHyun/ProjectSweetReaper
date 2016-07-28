@@ -8,7 +8,8 @@ public class SystemUI : MonoBehaviour
 	//complex data field
 	public UserInterfaceManager mainUI;
 	public Text[] elements;
-	public List<string> elementsText;
+	public Queue<string> elementsText;
+
 
 	public void LinkElement()
 	{
@@ -19,21 +20,22 @@ public class SystemUI : MonoBehaviour
 			string name = "Element" + (i + 1).ToString();
 			elements[i] = transform.Find( name ).GetComponent<Text>();
 		}
-		elementsText = new List<string>();
+		elementsText = new Queue<string>();
 	}
 
 	public void AddData( string data )
 	{
-		elementsText.Add( data );
+		elementsText.Enqueue( data );
 		
 		if (elementsText.Count > 5)
-			elementsText.RemoveAt( 0 );
+			elementsText.Dequeue();
 	}
 
 	public void UpdateSystem()
 	{
+		string[] temp = elementsText.ToArray();
 		for (int i = 0; i < elementsText.Count; i++)
-			elements[i].text = elementsText[i];		
+			elements[i].text = temp[i];		
 	}
 	
 	
