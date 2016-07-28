@@ -16,11 +16,11 @@ public class TutorialUI : MonoBehaviour {
 		explainImage = transform.Find ("ExplainImage").GetComponent<ExplainImage>();
 	}
 
-	void Update()
-	{
-		if (info.transform.position == pos1.position)
-			explainImage.ControlExplainImage (true);	
-	}
+//	void Update()
+//	{
+//		if (info.transform.position == pos1.position)
+//			explainImage.ControlExplainImage (true);	
+//	}
 
 
 //	//tutorial text

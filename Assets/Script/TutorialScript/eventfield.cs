@@ -6,7 +6,7 @@ public class eventfield : MonoBehaviour {
 	public GameObject box;
 	// Use this for initialization
 	void Start () {
-
+		explainImage = GameObject.Find ("ExplainImage").GetComponent<ExplainImage>();
 	}
 	
 	// Update is called once per frame
@@ -15,6 +15,7 @@ public class eventfield : MonoBehaviour {
 	}
 	void OnCollisionEnter(Collision coll){
 		if (coll.gameObject.CompareTag("Player")) {
+			
 			explainImage.SendMessage ("EventClearNext");
 			Destroy (this.gameObject);
 		}
