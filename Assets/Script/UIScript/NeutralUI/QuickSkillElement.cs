@@ -15,14 +15,18 @@ public class QuickSkillElement : SkillElement
 		setUse = transform.Find( "SetUse" ).GetComponent<Image>();
 	}
 
-	public override void UpdateSkillIcon(CharacterInformation info)
+	public override void UpdateSkillElement( CharacterInformation info, int index )
 	{
-		if (skillInfo.Name == " Default")
-			return;
-
-		skillPopUp.LinkElement();
-		skillPopUp.ControlComponent( true );
-		skillPopUp.UpdateSkillInformation( skillInfo, transform.position );
-
+		if (info.OnSkill[index])
+		{
+			setUse.enabled = true;
+			coolTime.enabled = true;
+			coolTime.text = string.Format( "{0:###.0}", info.InstallSkill[index].CoolTime - info.SkillCoolTime[index] );
+		}
+		else
+		{
+			setUse.enabled = false;
+			coolTime.enabled = false;
+		}
 	}
 }

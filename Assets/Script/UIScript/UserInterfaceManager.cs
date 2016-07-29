@@ -187,11 +187,12 @@ public class UserInterfaceManager : MonoBehaviour
 		}
 	}
 
-	public void LinkNeutralData(CharacterInformation _info)
+	public void LinkNeutralData( CharacterInformation _info )
 	{
 		info = _info;
 	}
-	public void LinkRaceData(Pet[] _anotherPets, Pet _myPet)
+
+	public void LinkRaceData( Pet[] _anotherPets, Pet _myPet )
 	{
 		anotherPets = _anotherPets;
 		myPet = _myPet;
@@ -420,16 +421,19 @@ public class UserInterfaceManager : MonoBehaviour
 		
 			//update present select item
 			if (presentSelectItem.enabled)
-				presentSelectItem.transform.position = Input.mousePosition;		
+				presentSelectItem.transform.position = Input.mousePosition;	
+
+			//update quick skill
+			quickSkillLogic.UpdateQuickSkillElement( info );
 			
 		}
-		else if (CompareMode( Mode.Race))
+		else if (CompareMode( Mode.Race ))
 		{
 			//update race mini map
 			raceMiniMapLogic.UpdateMinimap( myPet.PresentPosition );
 
 			//update race pet status
-			racePetStatusLogic.UpdatePetStatus(myPet);
+			racePetStatusLogic.UpdatePetStatus( myPet );
 		}
 		else if (CompareMode( Mode.Result ))
 		{

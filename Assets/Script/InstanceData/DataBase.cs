@@ -83,6 +83,16 @@ public class DataBase
 		return itemInformation[index - 1];
 	}
 
+	public Item FindItemById(int id)
+	{
+		for (int i = 0; i < itemInformation.Count; i++)
+		{
+			if (id == itemInformation[i].Id)
+				return itemInformation[i];			
+		}
+		return null;
+	}
+
 	public Item FindItemByName( string name )
 	{
 		for (int i = 0; i < itemInformation.Count; i++)
@@ -96,6 +106,26 @@ public class DataBase
 	//find skill
 	public Skill FindSkill( int index )
 	{
-		return skillInformation[index];
+		return skillInformation[index - 1];
+	}
+
+	public Skill FindSkillById( int id )
+	{
+		for (int i = 0; i < skillInformation.Count; i++)
+		{
+			if (id == skillInformation[i].id)
+				return skillInformation[i];			
+		}
+		return null;
+	}
+
+	public Skill FindSkillByName( string name )
+	{
+		for (int i = 0; i < skillInformation.Count; i++)
+		{
+			if (name == skillInformation[i].Name)
+				return skillInformation[i];			
+		}
+		return null;
 	}
 }

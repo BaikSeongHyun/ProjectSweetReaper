@@ -11,8 +11,6 @@ public class RacePetStatus : MonoBehaviour
 
 	public void LinkElement()
 	{
-		fearFill = transform.Find( "FearGaugeBack" ).GetComponent<Image>();
-		belligerenceFill = transform.Find( "BelligerenceGaugeFill" ).GetComponent<Image>();
 		attack = transform.Find( "AttackBack" ).Find( "Text" ).GetComponent<Text>();
 		moveSpeed = transform.Find( "MoveSpeedBack" ).Find( "Text" ).GetComponent<Text>();
 	}

@@ -27,7 +27,7 @@ public class SkillElement : MonoBehaviour
 		skillIcon = GetComponent<Image>();
 	}
 
-	public void UpdateSkillPopUp(CharacterInformation info)
+	public void UpdateSkillPopUp( CharacterInformation info )
 	{
 		if (skillInfo.Name == " Default")
 			return;
@@ -44,12 +44,16 @@ public class SkillElement : MonoBehaviour
 		skillPopUp.ControlComponent( false );	
 	}
 
-	public virtual void UpdateSkillIcon(CharacterInformation info)
+	public void UpdateSkillIcon( CharacterInformation info )
 	{		
 		skillInfo.SetSpriteIcon();
 		SkillIcon.sprite = skillInfo.Icon;
 		if (skillInfo.Name == "Default" || skillInfo.LearnLevel >= info.Level)
 			skillIcon.sprite = Resources.Load<Sprite>( "Skill/SkillDefault" );
+	}
+
+	public virtual void UpdateSkillElement( CharacterInformation info, int index )
+	{
 	}
 
 	//use default only

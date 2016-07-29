@@ -56,6 +56,7 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 		mainUI.UpdateInstallSkillInfomationByQuickSkill( this );
 	}
 
+	//set skill icon
 	public void UpdateSkillUI( CharacterInformation info )
 	{
 		for (int i = 0; i < elements.Length; i++)
@@ -63,6 +64,13 @@ public class QuickSkill : MonoBehaviour, IPointerDownHandler
 			elements[i].SkillInfo = info.InstallSkill[i];
 			elements[i].UpdateSkillIcon( info );
 		}
+	}
+
+	//update in user interface manager
+	public void UpdateQuickSkillElement(CharacterInformation info)
+	{
+		for (int i = 0; i < elements.Length; i++)
+			elements[i].UpdateSkillElement(info, i);
 	}
 	
 	//skill element out item

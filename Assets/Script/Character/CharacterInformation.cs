@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class CharacterInformation : MonoBehaviour
 {
 	// char status
 	//name
-	string characterName;
+	public string characterName;
 
 	//level
 	public int characterLevel;
@@ -113,7 +114,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status health bar
 	public float FillHealthPoint
 	{
-		get { return(presentHealthPoint / originHealthPoint); }
+		get { return( presentHealthPoint / originHealthPoint ); }
 	}
 
 	public float OriginResourcePoint
@@ -129,7 +130,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status resource bar
 	public float FillResourcePoint
 	{
-		get { return (presentResourcePoint / originResourcePoint); }
+		get { return ( presentResourcePoint / originResourcePoint ); }
 	}
 
 	public float CriticalProability
@@ -230,74 +231,73 @@ public class CharacterInformation : MonoBehaviour
 
 	void Start()
 	{
+		InitializeData();
+		PlayerPrefs.DeleteAll();
+		LoadCharacterInformation();
+
+	}
+
+	//initialize data
+	public void InitializeData()
+	{
 		characterItem = new Item[35];
 		characterSkill = new Skill[9];
 		installSkill = new Skill[8];
-		DefaultStatus();
+
+		onSkill = new bool[8];
+		skillCoolTimeSet = new float[onSkill.Length];
+
+		for (int i = 0; i < onSkill.Length; i++)
+		{
+			installSkill[i] = new Skill ();
+			onSkill[i] = false;
+			skillCoolTimeSet[i] = 0.0f;
+		}
 	}
 
 	//set default status
 	public void	DefaultStatus()
 	{
 		characterName = "Faye";
-		characterLevel = 4;
+		characterLevel = 1;
 
-		presentHealthPoint = 2614.0f;
-		originHealthPoint = 2614.0f;
-		presentResourcePoint = 600.0f;
-		originResourcePoint = 600.0f;
-		rootCriticalProability = 10.0f;
+		presentHealthPoint = 1000.0f;
+		originHealthPoint = 1000.0f;
+		presentResourcePoint = 200.0f;
+		originResourcePoint = 200.0f;
+		rootCriticalProability = 0.0f;
 
-		presentExp = 345.0f;
-		requireExp = 4035.0f;
+		presentExp = 0.0f;
+		requireExp = 3000.0f;
 		
-		rootStrength = 35; 
-		rootIntelligence = 25;
-		rootDexterity = 25;
-		rootLuck = 15;
+		rootStrength = 20; 
+		rootIntelligence = 20;
+		rootDexterity = 20;
+		rootLuck = 20;
 		
-		rootDamage = 85.0f;	
-		money = 1203;
+		rootDamage = 20.0f;	
+		money = 1000;
 
 		InstallDefaultItem();
 		SetDefaultSkill();
-
 	}
 
 	//set default item
 	public void InstallDefaultItem()
 	{
-		bladeInstall = DataBase.Instance.FindItemByName( "FearBlade" );
-		bottomInstall = DataBase.Instance.FindItemByName( "DropOfSorcerer" );
-		topInstall = DataBase.Instance.FindItemByName( "TheHolySpear" );
-		handleInstall = DataBase.Instance.FindItemByName( "IronHandle" );
+		bladeInstall = new Item ();
+		bottomInstall = new Item ();
+		topInstall = new Item ();
+		handleInstall = new Item ();
 
 		for (int i = 0; i < characterItem.Length; i++)
-			characterItem[i] = new Item();
+			characterItem[i] = new Item ();
 	}
 
 	public void SetDefaultSkill()
 	{
-		characterSkill[0] = DataBase.Instance.FindSkill( 0 );
-		characterSkill[1] = DataBase.Instance.FindSkill( 1 );
-		characterSkill[2] = DataBase.Instance.FindSkill( 2 );
-		characterSkill[3] = DataBase.Instance.FindSkill( 3 );
-		characterSkill[4] = DataBase.Instance.FindSkill( 4 );
-		characterSkill[5] = DataBase.Instance.FindSkill( 5 );
-
-		for (int i = 6; i < characterSkill.Length; i++)
-			characterSkill[i] = new Skill();
-		
-		
-		onSkill = new bool[8];
-		skillCoolTimeSet = new float[onSkill.Length];
-
-		for (int i = 0; i < onSkill.Length; i++)
-		{
-			onSkill[i] = false;
-			skillCoolTimeSet[i] = 0.0f;
-		}
-
+		for (int i = 0; i < characterSkill.Length; i++)
+			characterSkill[i] = new Skill ();
 	}
 
 	public bool AddItem( Item item )
@@ -306,7 +306,7 @@ public class CharacterInformation : MonoBehaviour
 		{
 			if (characterItem[i].Name == "Default")
 			{
-				characterItem[i] = new Item(item);
+				characterItem[i] = new Item ( item );
 				return true;
 			}
 		}
@@ -314,23 +314,36 @@ public class CharacterInformation : MonoBehaviour
 		return false;
 	}
 
-	public void UpdateStatus( Item item )
+	public void UpdateStatus( Item item, int mode )
 	{
-		presentDamage = rootDamage + item.WeaponAtk;
-		originHealthPoint = rootHealthPoint + item.WeaponDef;
-		presentStrength = rootStrength + item.WeaponStr;
-		presentDexterity = rootDexterity + item.WeaponDex;
-		presentIntelligence = rootIntelligence + item.WeaponInt;
-		presentLuck = rootLuck + item.WeaponLuck;
-		presentCriticalProability = rootCriticalProability + item.WeaponCri;
+		if (mode == 0)
+		{
+			presentDamage = rootDamage + item.WeaponAtk;
+			originHealthPoint = rootHealthPoint + item.WeaponDef;
+			presentStrength = rootStrength + item.WeaponStr;
+			presentDexterity = rootDexterity + item.WeaponDex;
+			presentIntelligence = rootIntelligence + item.WeaponInt;
+			presentLuck = rootLuck + item.WeaponLuck;
+			presentCriticalProability = rootCriticalProability + item.WeaponCri;
+		}
+		else if (mode == 1)
+		{
+			presentDamage += item.WeaponAtk;
+			originHealthPoint += item.WeaponDef;
+			presentStrength += item.WeaponStr;
+			presentDexterity += item.WeaponDex;
+			presentIntelligence += item.WeaponInt;
+			presentLuck += item.WeaponLuck;
+			presentCriticalProability += item.WeaponCri;
+		}
 	}
 
 	public void UpdateInventoryStatus()
 	{
-		UpdateStatus( topInstall );
-		UpdateStatus( bottomInstall );
-		UpdateStatus( bladeInstall );
-		UpdateStatus( handleInstall );
+		UpdateStatus( topInstall, 0 );
+		UpdateStatus( bottomInstall, 1 );
+		UpdateStatus( bladeInstall, 1 );
+		UpdateStatus( handleInstall, 1 );
 	}
 
 	public bool CheckSkillResource( int index )
@@ -344,7 +357,126 @@ public class CharacterInformation : MonoBehaviour
 	//save data load and apply
 	public void LoadCharacterInformation()
 	{
+		try
+		{
+			characterName = PlayerPrefs.GetString( "characterName" );
+			characterLevel = PlayerPrefs.GetInt( "characterLevel" );
+			presentExp = PlayerPrefs.GetFloat( "presentExp" );
+			requireExp = PlayerPrefs.GetFloat( "requireExp" );
 
+			presentDamage = PlayerPrefs.GetFloat( "presentDamage" );
+			rootDamage = PlayerPrefs.GetFloat( "rootDamage" );
+			presentHealthPoint = PlayerPrefs.GetFloat( "presentHealthPoint" );
+			rootHealthPoint = PlayerPrefs.GetFloat( "rootHealthPoint" );
+			originHealthPoint = PlayerPrefs.GetFloat( "originHealthPoint" );
+			presentResourcePoint = PlayerPrefs.GetFloat( "presentResourcePoint" );
+			rootResourcePoint = PlayerPrefs.GetFloat( "rootResourcePoint" );
+			originResourcePoint = PlayerPrefs.GetFloat( "originResourcePoint" );
+			rootCriticalProability = PlayerPrefs.GetFloat( "rootCriticalProability" );
+			presentCriticalProability = PlayerPrefs.GetFloat( "presentCriticalProability" );
+
+			rootStrength = PlayerPrefs.GetInt( "rootStrength" );
+			presentStrength = PlayerPrefs.GetInt( "presentStrength" );
+			rootIntelligence = PlayerPrefs.GetInt( "rootIntelligence" );
+			presentIntelligence = PlayerPrefs.GetInt( "presentIntelligence" );
+			rootDexterity = PlayerPrefs.GetInt( "rootDexterity" );
+			presentDexterity = PlayerPrefs.GetInt( "presentDexterity" );
+			rootLuck = PlayerPrefs.GetInt( "rootLuck" );
+			presentLuck = PlayerPrefs.GetInt( "presentLuck" );
+
+			topInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "topInstall" ) ) );
+			bottomInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bottomInstall" ) ) );
+			bladeInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bladeInstall" ) ) );
+			handleInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "handleInstall" ) ) );
+
+			money = PlayerPrefs.GetInt( "money" );
+
+			for (int i = 0; i < characterItem.Length; i++)
+			{
+				string temp = "characterItem" + i.ToString();
+				if (PlayerPrefs.GetInt( temp ) == 0)
+					characterItem[i] = new Item ();
+				else
+					characterItem[i] = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( temp ) ) );
+			}
+
+			for (int i = 0; i < characterSkill.Length; i++)
+			{
+				string temp = "characterSkill" + i.ToString();
+				if (PlayerPrefs.GetInt( temp ) == 0)
+					characterSkill[i] = new Skill ();
+				else
+					characterSkill[i] = new Skill ( DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ) );			
+			}
+
+			for (int i = 0; i < installSkill.Length; i++)
+			{
+				string temp = "installSkill" + i.ToString();
+				if (PlayerPrefs.GetInt( temp ) == 0)
+					installSkill[i] = new Skill ();
+				else
+					installSkill[i] = new Skill ( DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ) );
+			}
+		}
+		catch (NullReferenceException e)
+		{
+			Debug.Log( e.InnerException );
+			DefaultStatus();
+		}
 	}
 
+	public void SaveCharacterInformation()
+	{
+		PlayerPrefs.SetString( "characterName", characterName );
+		PlayerPrefs.SetInt( "characterLevel", characterLevel );
+		PlayerPrefs.SetFloat( "presentExp", presentExp );
+		PlayerPrefs.SetFloat( "requireExp", requireExp );
+
+		PlayerPrefs.SetFloat( "presentDamage", presentDamage );
+		PlayerPrefs.SetFloat( "rootDamage", rootDamage );
+		PlayerPrefs.SetFloat( "presentHealthPoint", presentHealthPoint );
+		PlayerPrefs.SetFloat( "rootHealthPoint", rootHealthPoint );
+		PlayerPrefs.SetFloat( "originHealthPoint", originHealthPoint );
+		PlayerPrefs.SetFloat( "presentResourcePoint", presentResourcePoint );
+		PlayerPrefs.SetFloat( "rootResourcePoint", rootResourcePoint );
+		PlayerPrefs.SetFloat( "originResourcePoint", originResourcePoint );
+		PlayerPrefs.SetFloat( "rootCriticalProability", rootCriticalProability );
+		PlayerPrefs.SetFloat( "presentCriticalProability", presentCriticalProability );
+
+		PlayerPrefs.SetInt( "rootStrength", rootStrength );
+		PlayerPrefs.SetInt( "presentStrength", presentStrength );
+		PlayerPrefs.SetInt( "rootIntelligence", rootIntelligence );
+		PlayerPrefs.SetInt( "presentIntelligence", presentIntelligence );
+		PlayerPrefs.SetInt( "rootDexterity", rootDexterity );
+		PlayerPrefs.SetInt( "presentDexterity", presentDexterity );
+		PlayerPrefs.SetInt( "rootLuck", rootLuck );
+		PlayerPrefs.SetInt( "presentLuck", presentLuck );
+
+		PlayerPrefs.SetInt( "topInstall", topInstall.Id );
+		PlayerPrefs.SetInt( "bottomInstall", bottomInstall.Id );
+		PlayerPrefs.SetInt( "bladeInstall", bladeInstall.Id );
+		PlayerPrefs.SetInt( "handleInstall", handleInstall.Id );
+
+		for (int i = 0; i < characterItem.Length; i++)
+		{
+			string temp = "characterItem" + i.ToString();
+			PlayerPrefs.SetInt( temp, characterItem[i].Id );
+		}
+
+		PlayerPrefs.SetInt( "money", money );
+
+		for (int i = 0; i < characterSkill.Length; i++)
+		{
+			string temp = "characterSkill" + i.ToString();
+			PlayerPrefs.SetInt( temp, characterSkill[i].Id );
+		}
+
+		for (int i = 0; i < installSkill.Length; i++)
+		{
+			string temp = "installSkill" + i.ToString();
+			PlayerPrefs.SetInt( temp, installSkill[i].Id );
+		}
+
+		PlayerPrefs.Save();
+	}
 }
