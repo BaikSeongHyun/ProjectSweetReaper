@@ -28,7 +28,7 @@ public class DungeonLerp : MonoBehaviour
 			InsertDungeonImage.color = Color.Lerp( InsertDungeonImage.color, endColor, Time.deltaTime );
 			if (InsertDungeonImage.color.a < 0.1f)
 			{
-				InsertDungeonImage.enabled = false;
+				Destroy( this.gameObject );
 				//send massage kill this script for UIM
 			}
 		}

@@ -63,7 +63,7 @@ public class Skill
 		get { return resource; }	
 	}
 
-	//constructor - no parameter
+	//constructor - no parameter (default)
 	public Skill ()
 	{
 		id = 0;

@@ -44,12 +44,12 @@ public class SkillElement : MonoBehaviour
 		skillPopUp.ControlComponent( false );	
 	}
 
-	public void UpdateSkillIcon( CharacterInformation info )
+	public void UpdateSkillIcon( CharacterInformation info, Sprite data )
 	{		
 		skillInfo.SetSpriteIcon();
 		SkillIcon.sprite = skillInfo.Icon;
 		if (skillInfo.Name == "Default" || skillInfo.LearnLevel > info.Level)
-			skillIcon.sprite = Resources.Load<Sprite>( "Skill/SkillDefault" );
+			skillIcon.sprite = data;
 	}
 
 	public virtual void UpdateSkillElement( CharacterInformation info, int index )

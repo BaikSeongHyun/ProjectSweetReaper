@@ -11,6 +11,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 	public UserInterfaceManager mainUI;
 	public SkillElement[] elements;
 	public SkillElement presentSkillElement;
+	public Sprite defaultSprite;
 
 	public SkillElement[] CharacterSkill
 	{
@@ -37,7 +38,7 @@ public class SkillUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 		for (int i = 0; i < elements.Length; i++)
 		{
 			elements[i].SkillInfo = info.CharacterSkill[i];
-			elements[i].UpdateSkillIcon( info );
+			elements[i].UpdateSkillIcon( info, defaultSprite );
 		}
 	}
 	

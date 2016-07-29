@@ -247,7 +247,6 @@ public class CharacterInformation : MonoBehaviour
 
 		for (int i = 0; i < onSkill.Length; i++)
 		{
-			installSkill[i] = new Skill ();
 			onSkill[i] = false;
 			skillCoolTimeSet[i] = 0.0f;
 		}

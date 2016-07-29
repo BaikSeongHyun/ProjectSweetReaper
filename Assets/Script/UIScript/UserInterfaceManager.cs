@@ -60,7 +60,8 @@ public class UserInterfaceManager : MonoBehaviour
 	public Pet[] anotherPets;
 	public Pet myPet;
 
-	public enum Mode{
+	public enum Mode
+	{
 		Neutral,
 		Result,
 		NPC,
@@ -68,7 +69,7 @@ public class UserInterfaceManager : MonoBehaviour
 		Race,
 		SubContent,
 		Default}
-;
+	;
 
 	//property
 	public Mode PresentMode

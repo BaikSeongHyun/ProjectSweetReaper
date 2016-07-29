@@ -14,7 +14,7 @@ public class QuickSkillElement : SkillElement
 		coolTime = transform.Find( "CoolTime" ).GetComponent<Text>();
 		setUse = transform.Find( "SetUse" ).GetComponent<Image>();
 	}
-
+	
 	public override void UpdateSkillElement( CharacterInformation info, int index )
 	{
 		if (info.OnSkill[index])
