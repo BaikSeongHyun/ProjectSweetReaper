@@ -440,7 +440,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 144216}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 318.1, y: 0, z: 241.41}
+  m_LocalPosition: {x: -11.39, y: 0, z: -2.7199998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -615,12 +615,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92268231e139f1a429c6d0bfe1eeefc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitObject: {fileID: 154802, guid: 7b1d6670c52c13f478cf4da3be49a7bb, type: 2}
-  hitEffect: {fileID: 108318, guid: f316e3f5256d2524592523a7fda8e535, type: 2}
+  hitObject: {fileID: 100000, guid: ec259451f52d4534b8569e21213dc1bb, type: 2}
+  hitEffect: {fileID: 100000, guid: ec259451f52d4534b8569e21213dc1bb, type: 2}
   player: {fileID: 0}
   frogInfo: {fileID: 0}
   runRange: 10
-  attackRange: 1
+  attackRange: 2
   attackCycle: 0
   frogBossSpeed: 0.5
   isAlive: 1
@@ -631,6 +631,7 @@ MonoBehaviour:
   frogAiAnimator: {fileID: 0}
   angryImage: {fileID: 11452688}
   warningRange: 30
+  myObject: {fileID: 174482}
 --- !u!114 &11448098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -706,9 +707,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d147af1e0db5a3c47be1a99f3e1806fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterHp: 100
+  monsterHp: 500
   monsterDamage: 30
-  monsterMaxHp: 100
+  monsterMaxHp: 500
 --- !u!114 &11479018
 MonoBehaviour:
   m_ObjectHideFlags: 1

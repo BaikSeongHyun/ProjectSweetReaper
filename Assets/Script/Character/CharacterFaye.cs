@@ -61,6 +61,14 @@ public class CharacterFaye : MonoBehaviour
 		get { return presentState; }
 	}
 
+	public float _animateSpeed {
+		get {
+			return animator.speed;
+		}set {
+			animator.speed = value;
+		}
+	}
+
 	public Vector3 Destinaton
 	{
 		get { return destination; }
@@ -94,6 +102,7 @@ public class CharacterFaye : MonoBehaviour
 
 	public void Start()
 	{
+
 		audioSource = GetComponent<AudioSource>();		
 		animator = GetComponent<Animator>();
 		charInfo = GetComponent<CharacterInformation>();
