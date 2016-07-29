@@ -9,6 +9,11 @@ public class ThrowFrogAI : Monster
 
 	public Animator throwFrogAiAnimator;
 	AnimatorStateInfo throwFrogState;
+	public GameObject throwObject;
+
+	public Vector3 targetPos;
+
+	public bool throwTrigger;
 
 	public enum ThrowFrogPatternName
 	{
@@ -26,8 +31,14 @@ public class ThrowFrogAI : Monster
 		throwFrogAiAnimator = GetComponent<Animator> ();	
 		player = GameObject.FindGameObjectWithTag ("Player");
 		ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
-
+		health = transform.Find ("ThrowFrogHpBar").GetComponent<Image> ();
+		throwTrigger = false;
 //		health = transform.Find ("").GetComponent<Image> ();
+	}
+
+	public void ThrowTrigger()
+	{
+		throwTrigger = true;
 	}
 	
 	// Update is called once per frame
@@ -38,32 +49,64 @@ public class ThrowFrogAI : Monster
 		{
 			float searchRange = Vector3.Distance( player.transform.position, transform.position );
 
-			if (searchRange < attackRange) {
-				if (attackCycle >= 2 && !throwFrogState.IsName ("TakeDamage")) {
+			if (searchRange < attackRange)
+			{
+				if (attackCycle >= 5 && !throwFrogState.IsName ("ThrowFrogTakeDamage")) 
+				{
+
 					ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogAttack);
-					attackCycle = 0;
-				} else {
+
+
+					if (throwTrigger) 
+					{
+						
+						GameObject throwTemp = (GameObject)Instantiate (throwObject, transform.position + new Vector3 (0f, 10f, 0f), transform.rotation);
+						targetPos = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z);
+						throwTemp.GetComponent<ThrowFrogObject> ().IsAttackCheck (targetPos);
+
+						attackCycle = 0;
+
+						ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
+
+
+
+					}
+				} 
+				else 
+				{
+					throwTrigger = false;					
+
 					ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
 					attackCycle += Time.deltaTime;
+					Debug.Log ("in");
 				}
-			} else if (searchRange <= runRange) {
+
+			}
+			else if (searchRange <= runRange || searchRange<= attackRange)
+			{
+
 				ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogWalk);
-				if (throwFrogState.IsName ("Walk")) {
+				if (throwFrogState.IsName ("ThrowFrogWalk"))
+				{
 					transform.LookAt (player.transform.position);
 					transform.position = Vector3.Lerp (transform.position, player.transform.position, Time.deltaTime * frogBossSpeed);
 
 				}
 			}
+//			else if (searchRange > attackRange)
+//			{
+//				
+//			}
 
 			if (searchRange > runRange) 
 
 				ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
 				throwFrogState = this.throwFrogAiAnimator.GetCurrentAnimatorStateInfo (0);
 
-				transform.rotation = new Quaternion(0f, transform.rotation.y, 0f, 0f);
-				transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-				transform.LookAt( player.transform.position );
-
+				transform.rotation = new Quaternion (0f, transform.rotation.y, 0f, 0f);
+				transform.position = new Vector3 (transform.position.x, 0f, transform.position.z);
+				transform.LookAt (player.transform.position);
+			
 				//update hp
 				health.fillAmount = frogInfo.FillFrogHp;
 				RotateHealthBar ();
@@ -92,6 +135,7 @@ public class ThrowFrogAI : Monster
 		//Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
 		//Instantiate( hitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
 		frogInfo.MonsterHp -= _Damage;
+		Debug.Log ("in");
 		if (isAlive)
 		{
 			frogInfo.monsterHp -= _Damage;
@@ -126,7 +170,7 @@ public class ThrowFrogAI : Monster
 					gold.name = "DropGold";
 				}
 
-				throwFrogAiAnimator.SetTrigger( "MonsterDie" );
+				throwFrogAiAnimator.SetTrigger( "ThrowFrogDeath" );
 				isAlive = false;
 				Destroy( this.gameObject, 3.0f );
 				return;
@@ -147,7 +191,7 @@ public class ThrowFrogAI : Monster
 				break;
 
 			case ThrowFrogPatternName.ThrowFrogAttack:
-				throwFrogAiAnimator.SetInteger ("state",3);
+				throwFrogAiAnimator.SetInteger ("state", 3);
 				break;
 
 			case ThrowFrogPatternName.ThrowFrogTakeDamage:
