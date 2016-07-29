@@ -45,6 +45,7 @@ public class SkillWeapon : MonoBehaviour
 				Monster monsterDamege = coll.gameObject.GetComponent<Monster> ();
 				damage = info.Damage;
 				monsterDamege.HitDamage (damage);
+				Camera.main.GetComponent<Shaking> ().ShakeCamera (0.1f);
 			}
 			skillTime = 0.0f;
 		}

@@ -10,17 +10,18 @@ public class FrogAI : Monster
 
 	//Boss Pattern Range
 	int bossAngryPattern = 0;
-
-
 	//Boss Angry Image or Warning
 	public Image angryImage;
 	Image warningImage;
 	float imageDelayTime;
 	public float warningRange = 30.0f;
-
-	
+	//public GameObject mesh;
+	public GameObject myObject;
+	Renderer colorRenderer;
+	Color TempColor;
 	//hp image
-
+	bool colorChanage = false;
+	float colorTime=0.0f;
 	public enum FrogPatternName
 	{
 		BossIdle = 1,
@@ -37,6 +38,7 @@ public class FrogAI : Monster
 	// Use this for initialization
 	void Start()
 	{
+		colorRenderer = myObject.GetComponent<Renderer> ();
 		frogInfo = GetComponent<MonsterHealth>();
 		frogAiAnimator = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag( "Player" );
@@ -44,7 +46,7 @@ public class FrogAI : Monster
 		angryImage = transform.Find( "StoneFrogAngryImage" ).GetComponent<Image>();
 		angryImage.enabled = false;
 		health = transform.Find("StoneFrogHpBar").GetComponent<Image>();
-		
+		TempColor = colorRenderer.material.color;
 	}
 
 
@@ -54,7 +56,14 @@ public class FrogAI : Monster
 		if (isAlive)
 		{
 			float searchRange = Vector3.Distance( player.transform.position, transform.position );
-
+			if (!colorChanage) {
+				colorTime += Time.deltaTime;
+				if (colorTime >= 0.4f) {
+					colorRenderer.material.color = Color.white;
+					colorTime = 0.0f;
+					colorChanage = false;
+				}
+			}
 			if (searchRange < attackRange)
 			{
 				if (attackCycle >= 2 && !attackStateBoss.IsName( "TakeDamage" ))
@@ -111,11 +120,11 @@ public class FrogAI : Monster
 
 	public override void HitDamage( float _Damage )
 	{
-//		Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
-	//	Instantiate( hitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
+		Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y+1, transform.position.z), transform.rotation );
 		frogInfo.MonsterHp -= _Damage;
 
-	
+		colorRenderer.material.color = new Color (255, 255, 255, 255);
+
 		if (isAlive)
 		{
 			
@@ -125,7 +134,8 @@ public class FrogAI : Monster
 			{
 				
 				frogAiAnimator.SetTrigger( "MonsterHitTrigger" );
-				return;
+
+				return;		
 			}
 
 			if (frogInfo.MonsterHp <= 0)
@@ -150,13 +160,16 @@ public class FrogAI : Monster
 					var gold = Instantiate( dropGold, transform.position, new Quaternion(0, 0, 0, 0) );					
 					gold.name = "DropGold";
 				}
-
+				colorRenderer.material.color = Color.white;
 				frogAiAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
 				Destroy( this.gameObject, 3.0f );
 				return;
 			}
+
+
 		}
+
 	}
 
 	public void FrogPattern( FrogPatternName state )
