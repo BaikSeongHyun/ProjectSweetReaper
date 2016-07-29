@@ -16,7 +16,6 @@ public class TutorialManager : MonoBehaviour {
 	public UserInterfaceManager mainUI;
 	public DataBase dataBase;
 	public TutorialUI tutorialUI;
-
 	//imagecounter need control;
 
 	// initialize this script
@@ -111,6 +110,10 @@ public class TutorialManager : MonoBehaviour {
 //		death popup
 		if (!faye.IsAlive)
 			mainUI.ControlDeathPopUp( true );
+
+
+
+
 	}
 	void MakeMovePoint()
 	{		
@@ -123,6 +126,8 @@ public class TutorialManager : MonoBehaviour {
 			faye.Destinaton = hitInfo.point;
 		}
 	}
+
+
 
 	void SetUIState()
 	{
@@ -165,6 +170,8 @@ public class TutorialManager : MonoBehaviour {
 	{
 		SceneManager.LoadScene( "CampField" );
 	}
+
+
 
 //	delegate void StartTutorial();
 //
