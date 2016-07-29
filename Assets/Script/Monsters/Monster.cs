@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Monster : MonoBehaviour 
 {
-
+	public GameController expThrow;
 	public GameObject hitObject;
 	public GameObject hitEffect;
 	public GameObject player;
@@ -15,6 +15,7 @@ public class Monster : MonoBehaviour
 	public float attackRange;
 	public float attackCycle;
 	public float frogBossSpeed;
+	public float exp;
 
 	public bool isAlive = true;
 	public bool isAttack = false;
@@ -22,8 +23,6 @@ public class Monster : MonoBehaviour
 	public Image health;
 	public GameObject dropItem;
 	public GameObject dropGold;
-
-
 
 
 	public bool IsAttack
@@ -34,13 +33,15 @@ public class Monster : MonoBehaviour
 	public void AttackTrigger()
 	{
 		isAttack = false;
+	}
 
+	public float Experience
+	{
+		get { return exp; }
 	}
 
 	public virtual void HitDamage( float _Damage )
 	{
-
-
 	}
 
 	public void RotateHealthBar()

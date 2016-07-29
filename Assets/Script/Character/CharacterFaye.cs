@@ -240,7 +240,6 @@ public class CharacterFaye : MonoBehaviour
 		}
 	}
 
-
 	public void SpecialSkill()
 	{
 		finish = false;
@@ -483,7 +482,11 @@ public class CharacterFaye : MonoBehaviour
 			return charInfo.AddItem( item.ItemInfo );			
 		}
 		else
-			return false;
-		
+			return false;		
+	}
+
+	public void AddExperience(float exp)
+	{
+		charInfo.ExpProcess( exp );
 	}
 }

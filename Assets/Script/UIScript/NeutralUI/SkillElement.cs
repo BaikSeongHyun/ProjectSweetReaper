@@ -29,9 +29,9 @@ public class SkillElement : MonoBehaviour
 
 	public void UpdateSkillPopUp( CharacterInformation info )
 	{
-		if (skillInfo.Name == " Default")
+		if (skillInfo.Name == "Default")
 			return;
-		if (skillInfo.LearnLevel >= info.Level)
+		if (skillInfo.LearnLevel > info.Level)
 			return;
 		
 		skillPopUp.LinkElement();
@@ -48,7 +48,7 @@ public class SkillElement : MonoBehaviour
 	{		
 		skillInfo.SetSpriteIcon();
 		SkillIcon.sprite = skillInfo.Icon;
-		if (skillInfo.Name == "Default" || skillInfo.LearnLevel >= info.Level)
+		if (skillInfo.Name == "Default" || skillInfo.LearnLevel > info.Level)
 			skillIcon.sprite = Resources.Load<Sprite>( "Skill/SkillDefault" );
 	}
 

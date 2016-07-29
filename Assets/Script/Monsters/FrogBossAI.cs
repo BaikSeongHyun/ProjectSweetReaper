@@ -38,6 +38,7 @@ public class FrogBossAI : Monster
 		BossPattern( BossPatternName.AttackIdle );
 		bossAngryImage.gameObject.SetActive( false );
 		health = transform.Find( "BossFrogHpBar" ).GetComponent<Image>();
+		exp = 2000.0f;
 	}
 
 	void Update()

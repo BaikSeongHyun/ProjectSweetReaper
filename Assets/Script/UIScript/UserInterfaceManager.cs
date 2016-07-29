@@ -121,6 +121,7 @@ public class UserInterfaceManager : MonoBehaviour
 
 		enterDungeon = GameObject.Find( "EnterDungeon" );
 		enterDungeonLogic = enterDungeon.GetComponent<EnterDungeon>();
+		enterDungeonLogic.LinkElement( info );
 
 		quickStatus = GameObject.Find( "QuickStatus" );
 		quickStatusLogic = quickStatus.GetComponent<QuickStatus>();
@@ -367,6 +368,7 @@ public class UserInterfaceManager : MonoBehaviour
 			info.CharacterItem[i] = inventory.ItemSlot[i].ItemInfo;
 
 		info.UpdateInventoryStatus();
+		inventoryLogic.UpdateInventory( info );
 	}
 	
 	//update by quick skill

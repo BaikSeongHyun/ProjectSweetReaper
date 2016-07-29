@@ -7,15 +7,12 @@ using System.Collections;
 public class GameController : MonoBehaviour
 {
 	//simple data field
-	public Vector3 cameraDistance;
-	public GameObject temp;
+	Vector3 cameraDistance;
 
 	//complex data field
 	public CharacterFaye faye;
 	public CharacterInformation info;
 	public UserInterfaceManager mainUI;
-	public DataBase dataBase;
-
 
 	// initialize this script
 	void Start()
@@ -24,15 +21,21 @@ public class GameController : MonoBehaviour
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
-		mainUI.LinkElement();
 		mainUI.LinkNeutralData( info );
+		mainUI.LinkElement();
 		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
-		cameraDistance = new Vector3(0f, 7.5f, -8f);
+		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
+		if (Input.GetKeyDown( KeyCode.F12 ))
+		{
+			PlayerPrefs.DeleteAll();
+			info.DefaultStatus();
+		}
+
 		//charaecter section
 		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)
 		{
@@ -77,10 +80,8 @@ public class GameController : MonoBehaviour
 
 		//item / skill drag object check
 		if (mainUI.PresentSelectItem.enabled && !mainUI.OnClickMouse)
-		{
-			mainUI.ClosePresentElement();
-		}		
-		SetUIState();
+			mainUI.ClosePresentElement();				
+
 		mainUI.UpdateMainUI();
 		
 		//raycast mode
@@ -127,11 +128,7 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	void SetUIState()
-	{
-
-	}
-
+	//set camera
 	public void CameraControl()
 	{
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
@@ -139,29 +136,33 @@ public class GameController : MonoBehaviour
 			//position
 			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, faye.transform.position + cameraDistance, Time.deltaTime * 10 );
 			//rotation
-			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion(0.4f, 0.0f, 0.0f, 0.9f), Time.deltaTime * 10 );
+			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion ( 0.4f, 0.0f, 0.0f, 0.9f ), Time.deltaTime * 10 );
 		}
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.NPC ))
 		{
-			//rotation -> use forward vector
-			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
-			//position
-			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + (temp.transform.forward * 3) + new Vector3(0f, 0.5f, 0f), Time.deltaTime * 10 );
+//			//rotation -> use forward vector
+//			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
+//			//position
+//			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + ( temp.transform.forward * 3 ) + new Vector3 ( 0f, 0.5f, 0f ), Time.deltaTime * 10 );
 		}
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.Tranning ))
 		{
-		}
+		}			
+	}
 
-
-			
+	public void ExpThrow( float exp )
+	{
+		faye.AddExperience( exp );
+		mainUI.AsynchronousSystemUI( ( (int) exp ).ToString() + "의 경험치를 획득하셨습니다." );
 	}
 
 	//button event
 	//return camp field
 	public void ReturnCampField()
 	{
+		info.SaveCharacterInformation();
 		SceneManager.LoadScene( "CampField" );
 	}
 }

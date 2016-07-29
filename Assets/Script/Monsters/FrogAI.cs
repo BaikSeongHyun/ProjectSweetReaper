@@ -21,7 +21,8 @@ public class FrogAI : Monster
 	Color TempColor;
 	//hp image
 	bool colorChanage = false;
-	float colorTime=0.0f;
+	float colorTime = 0.0f;
+
 	public enum FrogPatternName
 	{
 		BossIdle = 1,
@@ -38,15 +39,17 @@ public class FrogAI : Monster
 	// Use this for initialization
 	void Start()
 	{
-		colorRenderer = myObject.GetComponent<Renderer> ();
+		expThrow = GameObject.FindWithTag( "GameController" ).GetComponent<GameController>();
+		colorRenderer = myObject.GetComponent<Renderer>();
 		frogInfo = GetComponent<MonsterHealth>();
 		frogAiAnimator = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag( "Player" );
 		FrogPattern( FrogPatternName.AttackIdle );
 		angryImage = transform.Find( "StoneFrogAngryImage" ).GetComponent<Image>();
 		angryImage.enabled = false;
-		health = transform.Find("StoneFrogHpBar").GetComponent<Image>();
+		health = transform.Find( "StoneFrogHpBar" ).GetComponent<Image>();
 		TempColor = colorRenderer.material.color;
+		exp = 1000.0f;
 	}
 
 
@@ -56,9 +59,11 @@ public class FrogAI : Monster
 		if (isAlive)
 		{
 			float searchRange = Vector3.Distance( player.transform.position, transform.position );
-			if (!colorChanage) {
+			if (!colorChanage)
+			{
 				colorTime += Time.deltaTime;
-				if (colorTime >= 0.4f) {
+				if (colorTime >= 0.4f)
+				{
 					colorRenderer.material.color = Color.white;
 					colorTime = 0.0f;
 					colorChanage = false;
@@ -103,13 +108,13 @@ public class FrogAI : Monster
 			attackStateBoss = this.frogAiAnimator.GetCurrentAnimatorStateInfo( 0 );
 
 			//set default rotation
-			transform.rotation = new Quaternion(0f, transform.rotation.y, 0f, 0f);
-			transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+			transform.rotation = new Quaternion ( 0f, transform.rotation.y, 0f, 0f );
+			transform.position = new Vector3 ( transform.position.x, 0f, transform.position.z );
 			transform.LookAt( player.transform.position );
 			
 			//update hp
 			health.fillAmount = frogInfo.FillFrogHp;
-			RotateHealthBar ();
+			RotateHealthBar();
 		}
 	}
 
@@ -120,17 +125,17 @@ public class FrogAI : Monster
 
 	public override void HitDamage( float _Damage )
 	{
-		Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y+1, transform.position.z), transform.rotation );
+		Instantiate( hitEffect, new Vector3 ( transform.position.x, transform.position.y + 1, transform.position.z ), transform.rotation );
 		frogInfo.MonsterHp -= _Damage;
 
-		colorRenderer.material.color = new Color (255, 255, 255, 255);
+		colorRenderer.material.color = new Color ( 255, 255, 255, 255 );
 
 		if (isAlive)
 		{
 			
 			frogInfo.monsterHp -= _Damage;
 
-			if (frogInfo.MonsterHp > 0 )
+			if (frogInfo.MonsterHp > 0)
 			{
 				
 				frogAiAnimator.SetTrigger( "MonsterHitTrigger" );
@@ -145,24 +150,25 @@ public class FrogAI : Monster
 
 				if (randomItem == 0)
 				{
-					var item = Instantiate( dropItem, transform.position, new Quaternion(0, 0, 0, 0) );
+					var item = Instantiate( dropItem, transform.position, new Quaternion ( 0, 0, 0, 0 ) );
 					item.name = "DropItem";
 				}
 				else if (randomItem == 1)
 				{
-					var gold = Instantiate( dropGold, transform.position, new Quaternion(0, 0, 0, 0) );
+					var gold = Instantiate( dropGold, transform.position, new Quaternion ( 0, 0, 0, 0 ) );
 					gold.name = "DropGold";
 				}
 				else
 				{
-					var item = Instantiate( dropItem, transform.position, new Quaternion(0, 0, 0, 0) );
+					var item = Instantiate( dropItem, transform.position, new Quaternion ( 0, 0, 0, 0 ) );
 					item.name = "DropItem";
-					var gold = Instantiate( dropGold, transform.position, new Quaternion(0, 0, 0, 0) );					
+					var gold = Instantiate( dropGold, transform.position, new Quaternion ( 0, 0, 0, 0 ) );					
 					gold.name = "DropGold";
 				}
 				colorRenderer.material.color = Color.white;
 				frogAiAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
+				expThrow.ExpThrow( exp );
 				Destroy( this.gameObject, 3.0f );
 				return;
 			}

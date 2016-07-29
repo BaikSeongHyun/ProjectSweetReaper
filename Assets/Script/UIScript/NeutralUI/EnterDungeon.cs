@@ -5,25 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class EnterDungeon : MonoBehaviour
 {
-	
-	public Image dungeonCheck;
+	public CharacterInformation charInfo;
 
-	// initialize this script
-	void start()
+	public void LinkElement(CharacterInformation info)
 	{
-		dungeonCheck = transform.Find( "Forest" ).Find( "ForestCheck" ).GetComponent<Image>();
+		charInfo = info;
 	}
-
 
 	public void FirstAreaDungeonSelect( string name )
 	{
 		switch (name)
 		{
 			case "Forest":
+				charInfo.SaveCharacterInformation();
 				SceneManager.LoadScene( "Forest" );
+				break;
+			case "Cave":
+				charInfo.SaveCharacterInformation();
+				SceneManager.LoadScene( "Cave" );
 				break;
 		}
 	}
-
-
 }

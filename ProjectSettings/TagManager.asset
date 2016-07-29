@@ -12,6 +12,7 @@ TagManager:
   - Pet
   - PetRaceGoal
   - StartPosition
+  - GameController
   layers:
   - Default
   - TransparentFX
