@@ -15,7 +15,7 @@ public class eventfield : MonoBehaviour {
 	void Update () {
 	
 	}
-	void OnCollisionEnter(Collision coll){
+	void OnCollisionStay(Collision coll){
 		if(explainImage.imageCounter == 3)
 		{
 			if (coll.gameObject.CompareTag ("Player")) {
