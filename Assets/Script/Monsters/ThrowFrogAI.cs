@@ -60,8 +60,11 @@ public class ThrowFrogAI : Monster
 					if (throwTrigger) 
 					{
 						
-						GameObject throwTemp = (GameObject)Instantiate (throwObject, transform.position + new Vector3 (0f, 10f, 0f), transform.rotation);
+						GameObject throwTemp = (GameObject)Instantiate (throwObject, transform.position + new Vector3 (1.3f, 0f, 0f), transform.rotation);
 						targetPos = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z);
+
+						Destroy (throwTemp, 4.0f);
+
 						throwTemp.GetComponent<ThrowFrogObject> ().IsAttackCheck (targetPos);
 
 						attackCycle = 0;
@@ -135,12 +138,9 @@ public class ThrowFrogAI : Monster
 		//Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
 		//Instantiate( hitObject, new Vector3(transform.position.x, transform.position.y + 2, transform.position.z), transform.rotation );
 		frogInfo.MonsterHp -= _Damage;
-		Debug.Log ("in");
+
 		if (isAlive)
 		{
-			frogInfo.monsterHp -= _Damage;
-
-
 			if (frogInfo.MonsterHp > 0)
 			{
 				throwFrogAiAnimator.SetTrigger( "MonsterHitTrigger" );
@@ -170,7 +170,7 @@ public class ThrowFrogAI : Monster
 					gold.name = "DropGold";
 				}
 
-				throwFrogAiAnimator.SetTrigger( "ThrowFrogDeath" );
+				throwFrogAiAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
 				Destroy( this.gameObject, 3.0f );
 				return;
