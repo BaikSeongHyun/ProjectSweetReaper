@@ -51,8 +51,13 @@ public class UserInterfaceManager : MonoBehaviour
 	//child UI & data - use race
 	public GameObject raceMiniMap;
 	public RaceMiniMap raceMiniMapLogic;
+
 	public GameObject racePetStatus;
 	public RacePetStatus racePetStatusLogic;
+
+	public GameObject raceAnotherPetStatus;
+	public RaceAnotherPetStatus raceAnotherPetStatusLogic;
+
 	public GameObject racePetOrder;
 
 	//another information data
@@ -168,9 +173,15 @@ public class UserInterfaceManager : MonoBehaviour
 		raceMiniMap = GameObject.Find( "RaceMiniMap" );
 		raceMiniMapLogic = raceMiniMap.GetComponent<RaceMiniMap>();
 		raceMiniMapLogic.LinkElement();
+
 		racePetStatus = GameObject.Find( "RacePetStatus" );
 		racePetStatusLogic = racePetStatus.GetComponent<RacePetStatus>();
 		racePetStatusLogic.LinkElement();
+
+		raceAnotherPetStatus = GameObject.Find( "RaceAnotherPetStatus" );
+		raceAnotherPetStatusLogic = raceAnotherPetStatus.GetComponent<RaceAnotherPetStatus>();
+		raceAnotherPetStatusLogic.LinkElement();
+
 		racePetOrder = GameObject.Find( "RacePetOrder" );
 	}
 
@@ -227,6 +238,7 @@ public class UserInterfaceManager : MonoBehaviour
 		raceMiniMap.SetActive( false );
 		racePetStatus.SetActive( false );
 		racePetOrder.SetActive( false );
+		raceAnotherPetStatus.SetActive( false );
 
 	}
 
@@ -257,6 +269,7 @@ public class UserInterfaceManager : MonoBehaviour
 		raceMiniMap.SetActive( true );
 		racePetStatus.SetActive( true );
 		racePetOrder.SetActive( true );
+		raceAnotherPetStatus.SetActive( true );
 
 	}
 
@@ -437,6 +450,9 @@ public class UserInterfaceManager : MonoBehaviour
 
 			//update race pet status
 			racePetStatusLogic.UpdatePetStatus( myPet );
+
+			//update race another pet status
+			raceAnotherPetStatusLogic.UpdateRaceAnotherPetStatus( anotherPets );
 		}
 		else if (CompareMode( Mode.Result ))
 		{

@@ -12,6 +12,7 @@ public class Pet : MonoBehaviour
 	//pet status
 	public bool firstCycle;
 	public bool onRace;
+	public int grade;
 
 	public Transform startPoint;
 	public Transform goalPoint;
@@ -58,6 +59,12 @@ public class Pet : MonoBehaviour
 		set { playerPet = value; }
 	}
 
+	public int Grade
+	{
+		get { return grade; }
+		set { grade = value; }
+	}
+
 	//use minimap
 	public float PresentPosition
 	{
@@ -71,13 +78,21 @@ public class Pet : MonoBehaviour
 	}
 
 	public virtual void HitDamege( float _PetFrogDamege )
-	{
-		
+	{		
 	}
 
 	public virtual void UserOrder( string data )
-	{
-		
+	{		
 	}
 
+	public void SetGoal(Transform endPoint)
+	{
+		goalPoint = endPoint;
+	}
+
+	public void RandomStatus()
+	{
+		petInfo.MoveSpeed = Random.Range( 1, 3 );
+		petInfo.PetStunTime = Random.Range( 1, 3 );
+	}
 }

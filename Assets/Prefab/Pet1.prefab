@@ -647,7 +647,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a31494fbd00a9242a9320a0cca43a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCycle: 3
   moveSpeed: 4
   petStunTime: 1
 --- !u!114 &11454486
@@ -700,11 +699,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPet: 0
   petInfo: {fileID: 0}
-  petRunningSpeed: 10
-  petAttackcycle: 0
   firstCycle: 0
   onRace: 0
-  goalObject: {fileID: 0}
+  grade: 0
+  startPoint: {fileID: 0}
+  goalPoint: {fileID: 0}
   disposition: 0
   violenceImage: {fileID: 0}
   peaceImage: {fileID: 0}
@@ -713,7 +712,6 @@ MonoBehaviour:
   isStun: 0
   stunningTime: 0
   onTarget: 0
-  enemyPets: []
   attackTarget: {fileID: 0}
   targetCount: 0
   attackCycleTime: 0

@@ -77,7 +77,10 @@ public class CharacterInformation : MonoBehaviour
 	public Skill[] installSkill;
 	public bool[] onSkill;
 	public float[] skillCoolTimeSet;
-	
+
+	//pet information
+	public float petMoveSpeed;
+	public float petStunTime;
 	
 	//property
 
@@ -229,6 +232,18 @@ public class CharacterInformation : MonoBehaviour
 		set { skillCoolTimeSet = value; }
 	}
 
+	public float PetMoveSpeed
+	{
+		get { return petMoveSpeed; }
+		set { petMoveSpeed = value; }
+	}
+
+	public float PetStunTime
+	{
+		get { return petStunTime; }
+		set { petStunTime = value; }
+	}
+
 	void Start()
 	{
 		InitializeData();
@@ -250,6 +265,9 @@ public class CharacterInformation : MonoBehaviour
 			onSkill[i] = false;
 			skillCoolTimeSet[i] = 0.0f;
 		}
+
+		petMoveSpeed = 4.0f;
+		petStunTime = 4.0f;
 	}
 
 	//set default status
