@@ -1,10 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PetStatus : MonoBehaviour
+[System.Serializable]
+public class PetStatus
 {
 	public float moveSpeed;
 	public float petStunTime;
+	
+	//no parameter - default
+	public PetStatus()
+	{
+		moveSpeed = Random.Range(8.0f, 12.0f);	
+		petStunTime = Random.Range(2f, 4f);
+	}
+	
+	public PetStatus(float myPetSpeed, float myPetAttack)
+	{
+		moveSpeed = myPetSpeed;
+		petStunTime = myPetAttack;
+	}
 
 	public float MoveSpeed
 	{

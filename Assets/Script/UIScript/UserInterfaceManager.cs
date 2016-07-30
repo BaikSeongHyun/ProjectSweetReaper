@@ -41,6 +41,9 @@ public class UserInterfaceManager : MonoBehaviour
 
 	public GameObject skillPopUp;
 	public SkillInformationPopUpControl skillPopUpLogic;
+	
+	public GameObject skillCutScene;
+	public SkillCutScene skillCutSceneLogic;
 
 	public Image presentSelectItem;
 	public SkillElement presentSelectSkill;
@@ -158,6 +161,10 @@ public class UserInterfaceManager : MonoBehaviour
 		skillPopUp = GameObject.Find( "SkillPopUp" );
 		skillPopUpLogic = skillPopUp.GetComponent<SkillInformationPopUpControl>();
 		skillPopUpLogic.LinkElement();
+		
+		skillCutScene = GameObject.Find( "SkillCutScene" );
+		skillCutSceneLogic = skillCutScene.GetComponent<SkillCutScene>();
+		skillCutSceneLogic.LinkElement();
 
 		presentSelectItem = transform.Find( "PresentSelectItem" ).GetComponent<Image>();
 		presentSelectItem.enabled = false;
@@ -222,6 +229,7 @@ public class UserInterfaceManager : MonoBehaviour
 		systemUI.SetActive( true );
 		expGauge.SetActive( true );
 		quickButton.SetActive( true );
+		skillCutScene.SetActive( true );
 
 		//off asynchronous item
 		inventory.SetActive( false );
@@ -253,6 +261,7 @@ public class UserInterfaceManager : MonoBehaviour
 		systemUI.SetActive( false );
 		expGauge.SetActive( false );
 		quickButton.SetActive( false );
+		skillCutScene.SetActive( false );
 
 		//off asynchronous item
 		inventory.SetActive( false );
@@ -395,7 +404,7 @@ public class UserInterfaceManager : MonoBehaviour
 	//skill install in quick skill
 	public void InstallQuickSkill()
 	{
-		if (PresentSelectSkill.SkillInfo.Name != "Default")
+		if (quickSkillLogic.CheckSkill( PresentSelectSkill.SkillInfo ))
 			quickSkillLogic.InstallQuickSkill( PresentSelectSkill.SkillInfo, info );
 	}
 	
@@ -419,6 +428,11 @@ public class UserInterfaceManager : MonoBehaviour
 		systemUILogic.AddData( data );
 		systemUILogic.UpdateSystem();
 	}
+	
+	public void TestCutScene()
+	{
+		skillCutSceneLogic.ActiveSkillCutScene();
+	}
 
 	//direct update
 	//quick status update
@@ -441,6 +455,9 @@ public class UserInterfaceManager : MonoBehaviour
 
 			//update quick skill
 			quickSkillLogic.UpdateQuickSkillElement( info );
+			
+			//ready to skill cut scene
+			skillCutSceneLogic.UpdateSkillCutScene();
 			
 		}
 		else if (CompareMode( Mode.Race ))

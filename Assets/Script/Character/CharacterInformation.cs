@@ -266,8 +266,8 @@ public class CharacterInformation : MonoBehaviour
 			skillCoolTimeSet[i] = 0.0f;
 		}
 
-		petMoveSpeed = 4.0f;
-		petStunTime = 4.0f;
+		petMoveSpeed = 10.0f;
+		petStunTime = 10.0f;
 	}
 
 	//set default status

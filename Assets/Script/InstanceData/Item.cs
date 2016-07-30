@@ -194,7 +194,7 @@ public class Item
 			case Rarity.Rare:
 				return Color.yellow;
 			case Rarity.Normal:
-				return Color.black;
+				return Color.white;
 		}
 
 		return Color.clear;

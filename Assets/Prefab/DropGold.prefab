@@ -151,7 +151,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126402}
   m_LocalRotation: {x: -0.000000029807776, y: 0, z: 2.3283062e-10, w: 1}
-  m_LocalPosition: {x: -13.780996, y: -0.00000014901161, z: -3.0070553}
+  m_LocalPosition: {x: 50.00681, y: 2.4795778e-16, z: -93.10155}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 405638}
@@ -166,7 +166,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4999998, y: 0.38999987, z: -0.08001709}
+  m_LocalPosition: {x: 0, y: 0, z: -0.1}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 22472562}
@@ -262,7 +262,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9ab09d660daa0eb41afe233df687754a, type: 3}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -338,17 +338,17 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196936}
-  m_Text: 501 Gold
+  m_Text: 1000 Gold
   m_OffsetZ: 0
   m_CharacterSize: 0.3
   m_LineSpacing: 1
-  m_Anchor: 0
+  m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
   m_FontSize: 0
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 0}
+  m_Font: {fileID: 12800000, guid: 9ab09d660daa0eb41afe233df687754a, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
@@ -387,6 +387,7 @@ MonoBehaviour:
   power: 6
   rigid: {fileID: 5461232}
   itemInfo:
+    id: 0
     name: Default
     icon: {fileID: 0}
     price: 0
@@ -399,8 +400,10 @@ MonoBehaviour:
     weaponLuck: 0
     weaponCri: 0
     section: 5
+    rareRank: 0
   gold: 501
   text: {fileID: 10259486}
+  onCreate: 0
 --- !u!114 &11495180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -420,7 +423,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 95ede7a97c2a09644b2bcc7f66633bdb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 528368c73b5438042b1e853551c371f6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

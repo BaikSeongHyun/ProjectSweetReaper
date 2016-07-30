@@ -35,6 +35,11 @@ public class GameController : MonoBehaviour
 			PlayerPrefs.DeleteAll();
 			info.DefaultStatus();
 		}
+		
+		if(Input.GetKeyDown(KeyCode.F11))
+		{
+			mainUI.TestCutScene();	
+		}
 
 		//charaecter section
 		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)

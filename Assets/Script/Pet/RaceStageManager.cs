@@ -21,6 +21,7 @@ public class RaceStageManager : MonoBehaviour
 		charInfo = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		CreatePets();
 		SetPetInformation();
+		SortPetGrade();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		mainUI.LinkElement();
 		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Race );
@@ -30,37 +31,41 @@ public class RaceStageManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		mainUI.UpdateMainUI();
 		SortPetGrade();
 		SetPetAttackTarget();
+		mainUI.UpdateMainUI();		
+	}
+
+	void LateUpdate()
+	{
+		CameraUpdate();	
 	}
 
 	public void CreatePets()
 	{
 		for (int i = 0; i < petNumber; i++)
 		{
-			GameObject temp = (GameObject) Instantiate( petType, startPoint[i].position, new Quaternion ( 0f, 0f, 0f, 0f ) );
+			GameObject temp = (GameObject)Instantiate( petType, startPoint[i].position, new Quaternion(0f, 0f, 0f, 0f) );
 			petList.Add( temp.GetComponent<Pet>() );
-			petList[i].SetGoal(endPoint[i]);
-			//petList[i].RandomStatus();
+			petList[i].SetStartAndGoal( startPoint[i], endPoint[i] );
+			petList[i].SetLane( i + 1 );
 		}
 	}
 
 	public void SetPetInformation()
 	{
-		select = Random.Range( 0, 8 );
+		select = Random.Range( 2, 6 );
 		petList[select].PlayerPet = true;
 
 		//set player pet status
-		petList[select].petInfo.MoveSpeed = charInfo.PetMoveSpeed;
-		petList[select].petInfo.PetStunTime = charInfo.PetStunTime;
+		petList[select].SetStatus( charInfo.PetMoveSpeed, charInfo.PetStunTime );
 
 		myPet = petList[select];
 		anotherPets = new Pet[7];
 
 		int tempCounter = 0;
 
-		for(int i = 0; i < petList.Count; i++)
+		for (int i = 0; i < petList.Count; i++)
 		{
 			if (!petList[i].PlayerPet)
 			{	
@@ -70,13 +75,17 @@ public class RaceStageManager : MonoBehaviour
 		}
 	}
 
-	// sort
+	// sort grade
 	void SortPetGrade()
 	{
-		petList.Sort( delegate(Pet x, Pet y ) {
+		petList.Sort( delegate(Pet x, Pet y )
+		{
 			return x.transform.position.z.CompareTo( y.transform.position.z );
 		} );
 		petList.Reverse();
+		
+		for (int i = 0; i < petList.Count; i++)
+			petList[i].Grade = (i + 1);		
 	}
 
 	void SetPetAttackTarget()
@@ -94,4 +103,10 @@ public class RaceStageManager : MonoBehaviour
 		else if (data == "Attack")
 			myPet.UserOrder( "Attack" );
 	}
+
+	void CameraUpdate()
+	{
+		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, myPet.transform.position.z - 30f);
+	}
+		
 }

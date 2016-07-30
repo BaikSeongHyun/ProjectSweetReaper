@@ -8,6 +8,7 @@ public class Pet : MonoBehaviour
 	public bool playerPet;
 
 	public PetStatus petInfo;
+	public int lane;
 
 	//pet status
 	public bool firstCycle;
@@ -68,7 +69,7 @@ public class Pet : MonoBehaviour
 	//use minimap
 	public float PresentPosition
 	{
-		get { return( 1 - ( goalPoint.position.z - transform.position.z ) / ( goalPoint.position.z - startPoint.position.z ) ); }
+		get { return(1 - (goalPoint.position.z - transform.position.z) / (goalPoint.position.z - startPoint.position.z)); }
 	}
 
 	public void SetPetAttackTarget( Pet target )
@@ -85,14 +86,18 @@ public class Pet : MonoBehaviour
 	{		
 	}
 
-	public void SetGoal(Transform endPoint)
-	{
-		goalPoint = endPoint;
+	public virtual void SetStatus( float myPetSpeed, float myPetAttack )
+	{		
 	}
 
-	public void RandomStatus()
+	public void SetStartAndGoal( Transform start, Transform end )
 	{
-		petInfo.MoveSpeed = Random.Range( 1, 3 );
-		petInfo.PetStunTime = Random.Range( 1, 3 );
+		startPoint = start;
+		goalPoint = end;
+	}
+
+	public void SetLane( int data )
+	{
+		lane = data;	
 	}
 }

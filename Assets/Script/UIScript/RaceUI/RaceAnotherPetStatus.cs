@@ -13,6 +13,7 @@ public class RaceAnotherPetStatus : MonoBehaviour
 		{
 			string temp = "RaceElement" + ( i + 1 ).ToString();
 			elements[i] = transform.Find( temp ).GetComponent<RaceAnotherPetElement>();
+			elements[i].LinkElement();
 		}
 	}
 

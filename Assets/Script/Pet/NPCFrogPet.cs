@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class NPCFrogPet : Pet
 {
-
 	public Animator NPCFrogPetAiAnimator;
 	AnimatorStateInfo runStateNPCPetFrog;
 	public PetState presentState;
+	public Image checkLane;
+	public TextMesh laneText;
 
 	public enum NPCFrogPetPatternName
 	{
@@ -18,7 +20,7 @@ public class NPCFrogPet : Pet
 		NPCFrogWin,
 		NPCFrogLose,
 		NPCFrogCounterAttack}
-;
+	;
 
 	public enum PetState
 	{
@@ -27,14 +29,14 @@ public class NPCFrogPet : Pet
 		Slow = 3,
 		Idle = 4,
 		Stun = 5}
-;
+	;
 
 	// Use this for initialization
 	void Start()
-	{		
+	{	
+		checkLane = transform.Find( "CheckLane" ).GetComponent<Image>();
 		NPCFrogPetAiAnimator = GetComponent<Animator>();
-		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogIdle );
-		petInfo = GetComponent<PetStatus>();
+		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogIdle );	
 		firstCycle = true;
 		onTarget = false;
 		isStun = false;
@@ -44,6 +46,17 @@ public class NPCFrogPet : Pet
 		presentState = PetState.Idle;
 		onRace = true;
 		patternCycleTime = 5f;
+		if (!playerPet)
+		{
+			petInfo = new PetStatus();
+			checkLane.sprite = Resources.Load<Sprite>( "Race/RacePetBack" );
+			checkLane.transform.Find("LaneText").GetComponent<TextMesh>().text = lane.ToString();;
+		}
+		else
+		{
+			checkLane.sprite = Resources.Load<Sprite>( "Race/RaceMyPetBack" );
+			checkLane.transform.Find("LaneText").GetComponent<TextMesh>().text = "";
+		}
 	}
 
 	
@@ -53,7 +66,7 @@ public class NPCFrogPet : Pet
 		if (onRace)
 		{
 			randomPatternCycle += Time.deltaTime;
-			if(Vector3.Distance(transform.position, goalPoint.position) <= 0.5f)
+			if (Vector3.Distance( transform.position, goalPoint.position ) <= 0.5f)
 			{
 				onRace = false;	
 			}
@@ -117,17 +130,17 @@ public class NPCFrogPet : Pet
 	{
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogRun );
 		transform.LookAt( goalPoint.transform );
-		transform.Translate( transform.forward * ( Time.deltaTime * petInfo.MoveSpeed ) );	
+		transform.Translate( transform.forward * (Time.deltaTime * petInfo.MoveSpeed) );	
 	}
 
 	//method - attack
 	public void Attack()
 	{
 		//make throw object
-		if(onTarget)
+		if (onTarget)
 		{			
 			NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogAttack );
-			GameObject temp = (GameObject) Instantiate( stunThrowObject, transform.position + new Vector3 ( 0f, 10f, 0f ), transform.rotation );
+			GameObject temp = (GameObject)Instantiate( stunThrowObject, transform.position + new Vector3(0f, 10f, 0f), transform.rotation );
 			temp.GetComponent<StunThrowObject>().SetTarget( attackTarget.transform, petInfo.PetStunTime );
 			presentState = PetState.Run;
 		}
@@ -137,7 +150,7 @@ public class NPCFrogPet : Pet
 	{
 		NPCFrogPetPattern( NPCFrogPetPatternName.NPCFrogSlow );
 		transform.LookAt( goalPoint.transform );
-		transform.Translate( transform.forward * ( Time.deltaTime * petInfo.MoveSpeed / 4 ) );	
+		transform.Translate( transform.forward * (Time.deltaTime * petInfo.MoveSpeed / 4) );	
 	}
 
 	public void Idle()
@@ -178,8 +191,7 @@ public class NPCFrogPet : Pet
 		Debug.Log( data );
 		if (data == "Attack")
 			presentState = PetState.Attack;
-		
-		else if(data == "Run")
+		else if (data == "Run")
 			presentState = PetState.Run;
 	}
 
@@ -189,5 +201,10 @@ public class NPCFrogPet : Pet
 		isStun = true;
 		NPCFrogPetAiAnimator.Play( "NPCFrogHitDamage", -1, 0f );
 		NPCFrogPetAiAnimator.SetBool( "Stun", true );
+	}
+
+	public override void SetStatus( float myPetSpeed, float myPetAttack )
+	{
+		petInfo = new PetStatus(myPetSpeed, myPetAttack);
 	}
 }

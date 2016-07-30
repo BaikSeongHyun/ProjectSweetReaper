@@ -4,13 +4,13 @@ using System.Collections;
 
 public class RaceAnotherPetElement : MonoBehaviour
 {
-	Image raceGrade;
-	Scrollbar miniMap;
+	public Image raceGrade;
+	public Scrollbar miniMap;
 
 	public void LinkElement()
 	{
-		raceGrade = transform.Find( "PetMiniMap" ).GetComponent<Image>();
-		miniMap = transform.Find( "RaceGrade" ).GetComponent<Scrollbar>();		                        
+		raceGrade = transform.Find( "RaceGrade" ).GetComponent<Image>();
+		miniMap = transform.Find( "PetMiniMap" ).GetComponent<Scrollbar>();		                        
 	}
 
 	public void UpdateAnotherPet(Pet status)
