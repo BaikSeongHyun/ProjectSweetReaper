@@ -470,7 +470,7 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.97021234
-        functionName: SpecialSkill
+        functionName: AfterDemonicCyclone
         data: 
         objectReferenceParameter: {fileID: 179576, guid: cc43b05c98e73e84281d3239caab58c4,
           type: 2}

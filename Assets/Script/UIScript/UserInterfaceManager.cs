@@ -429,7 +429,7 @@ public class UserInterfaceManager : MonoBehaviour
 		systemUILogic.UpdateSystem();
 	}
 	
-	public void TestCutScene()
+	public void ActiveSkillCutScene()
 	{
 		skillCutSceneLogic.ActiveSkillCutScene();
 	}

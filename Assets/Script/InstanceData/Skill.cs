@@ -18,12 +18,14 @@ public class Skill
 	public float coolTime;
 	public float damage;
 	public float resource;
-	public STATE state;
+	public int resourceComboCounter;
+	public Classify type;
 
-	public enum STATE
+	public enum Classify
 	{
 		Default,
 		Active,
+		SpecialActive,
 		Passive,
 		Buff}
 	;
@@ -63,6 +65,16 @@ public class Skill
 		get { return resource; }	
 	}
 
+	public int SkillComboResource
+	{
+		get { return resourceComboCounter; }
+	}
+
+	public Classify Type
+	{
+		get { return type; }
+	}
+
 	//constructor - no parameter (default)
 	public Skill ()
 	{
@@ -72,11 +84,12 @@ public class Skill
 		coolTime = 0f;
 		damage = 0f;
 		resource = 0f;
-		state = STATE.Default;
+		resourceComboCounter = 0;
+		type = Classify.Default;
 	}
 	
 	//constructor - all parameter
-	public Skill (int _id, string _name, int _learnLevel, float _coolTime, float _damage, float _resource, STATE _state)
+	public Skill (int _id, string _name, int _learnLevel, float _coolTime, float _damage, float _resource, int _resourceComboCounter, Classify _type)
 	{
 		id = _id;
 		name = _name;
@@ -84,7 +97,8 @@ public class Skill
 		coolTime = _coolTime;
 		damage = _damage;
 		resource = _resource;
-		state = _state;
+		resourceComboCounter = _resourceComboCounter;
+		type = _type;
 	}
 
 	//constructor - self parameter
@@ -96,7 +110,8 @@ public class Skill
 		coolTime = data.coolTime;
 		damage = data.damage;
 		resource = data.resource;
-		state = data.state;
+		resourceComboCounter = data.resourceComboCounter;
+		type = data.type;
 		icon = data.icon;
 	}
 	

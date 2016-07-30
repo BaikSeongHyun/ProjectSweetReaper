@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour
 {
 	//simple data field
 	Vector3 cameraDistance;
+	public AudioSource backgroundMusic;
+	public GameObject[] temp;
 
 	//complex data field
 	public CharacterFaye faye;
@@ -17,14 +19,18 @@ public class GameController : MonoBehaviour
 	// initialize this script
 	void Start()
 	{
+		temp = GameObject.FindGameObjectsWithTag( "Player" );
 		Application.targetFrameRate = 80;
+		backgroundMusic = Camera.main.GetComponent<AudioSource>();
+		
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		mainUI.LinkNeutralData( info );
 		mainUI.LinkElement();
 		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
-		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
+		cameraDistance = new Vector3(0f, 7.5f, -8f);
+		PlayBackgroundMusic();
 	}
 	
 	// Update is called once per frame
@@ -36,11 +42,7 @@ public class GameController : MonoBehaviour
 			info.DefaultStatus();
 		}
 		
-		if(Input.GetKeyDown(KeyCode.F11))
-		{
-			mainUI.TestCutScene();	
-		}
-
+	
 		//charaecter section
 		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)
 		{
@@ -104,8 +106,13 @@ public class GameController : MonoBehaviour
 			mainUI.SwitchUIMode( UserInterfaceManager.Mode.Race );
 		else if (Input.GetKeyDown( KeyCode.F7 ))
 			mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
-			
-			
+		
+		//check cut Scene
+		if (faye.OnSpecialActive)
+		{
+			mainUI.ActiveSkillCutScene();
+			faye.OnSpecialActive = false;
+		}
 		
 		//death popup
 		if (!faye.IsAlive)
@@ -119,7 +126,28 @@ public class GameController : MonoBehaviour
 	}
 
 	//another method
-
+	//play background music
+	void PlayBackgroundMusic()
+	{
+		string sceneName = Application.loadedLevelName;
+		switch (sceneName)
+		{
+			case "CampField":
+				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/CampField" );
+				break;
+			case "Forest":
+				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/DarkForestField" );
+				break;
+			case "Cave":
+				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/CaveField" );
+				break;
+			case "Nightmare":
+				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/NightmareField" );
+				break;
+		}
+		backgroundMusic.Play();
+	}
+	
 	//set destination for player character
 	void MakeMovePoint()
 	{		
@@ -141,7 +169,7 @@ public class GameController : MonoBehaviour
 			//position
 			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, faye.transform.position + cameraDistance, Time.deltaTime * 10 );
 			//rotation
-			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion ( 0.4f, 0.0f, 0.0f, 0.9f ), Time.deltaTime * 10 );
+			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion(0.4f, 0.0f, 0.0f, 0.9f), Time.deltaTime * 10 );
 		}
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.NPC ))
@@ -160,7 +188,7 @@ public class GameController : MonoBehaviour
 	public void ExpThrow( float exp )
 	{
 		faye.AddExperience( exp );
-		mainUI.AsynchronousSystemUI( ( (int) exp ).ToString() + "의 경험치를 획득하셨습니다." );
+		mainUI.AsynchronousSystemUI( ((int)exp).ToString() + "의 경험치를 획득하셨습니다." );
 	}
 
 	//button event

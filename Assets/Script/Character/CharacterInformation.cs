@@ -117,7 +117,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status health bar
 	public float FillHealthPoint
 	{
-		get { return( presentHealthPoint / originHealthPoint ); }
+		get { return(presentHealthPoint / originHealthPoint); }
 	}
 
 	public float OriginResourcePoint
@@ -133,7 +133,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status resource bar
 	public float FillResourcePoint
 	{
-		get { return ( presentResourcePoint / originResourcePoint ); }
+		get { return (presentResourcePoint / originResourcePoint); }
 	}
 
 	public float CriticalProability
@@ -247,6 +247,13 @@ public class CharacterInformation : MonoBehaviour
 	void Start()
 	{
 		InitializeData();
+		//characterCheck
+		GameObject[] checkClone = GameObject.FindGameObjectsWithTag( "Player" );
+		for (int i = 0; i < checkClone.Length; i++)
+		{
+			if (checkClone[i].name == "Faye(Clone)")
+				Destroy( checkClone[i] );
+		}
 		LoadCharacterInformation();
 	}
 
@@ -310,13 +317,13 @@ public class CharacterInformation : MonoBehaviour
 	//set default item
 	public void InstallDefaultItem()
 	{
-		bladeInstall = new Item ();
-		bottomInstall = new Item ();
-		topInstall = new Item ();
-		handleInstall = new Item ();
+		bladeInstall = new Item();
+		bottomInstall = new Item();
+		topInstall = new Item();
+		handleInstall = new Item();
 
 		for (int i = 0; i < characterItem.Length; i++)
-			characterItem[i] = new Item ();
+			characterItem[i] = new Item();
 	}
 
 	public void SetDefaultSkill()
@@ -327,12 +334,14 @@ public class CharacterInformation : MonoBehaviour
 		characterSkill[3] = DataBase.Instance.FindSkillById( 4 );
 		characterSkill[4] = DataBase.Instance.FindSkillById( 5 );
 		characterSkill[5] = DataBase.Instance.FindSkillById( 6 );
+		characterSkill[6] = DataBase.Instance.FindSkillById( 7 );
+		characterSkill[7] = DataBase.Instance.FindSkillById( 8 );
 
-		for (int i = 6; i < characterSkill.Length; i++)
-			characterSkill[i] = new Skill ();
+		for (int i = 8; i < characterSkill.Length; i++)
+			characterSkill[i] = new Skill();
 	}
 
-	public void ExpProcess(float exp)
+	public void ExpProcess( float exp )
 	{
 		presentExp += exp;
 
@@ -371,7 +380,7 @@ public class CharacterInformation : MonoBehaviour
 		{
 			if (characterItem[i].Name == "Default")
 			{
-				characterItem[i] = new Item ( item );
+				characterItem[i] = new Item(item);
 				return true;
 			}
 		}
@@ -419,6 +428,14 @@ public class CharacterInformation : MonoBehaviour
 		else
 			return false;
 	}
+
+	public bool CheckSkillComboResource( int index )
+	{
+		if (comboCounter >= installSkill[index].SkillComboResource)
+			return true;
+		else
+			return false;
+	}
 	
 	//save data load and apply
 	public void LoadCharacterInformation()
@@ -455,24 +472,24 @@ public class CharacterInformation : MonoBehaviour
 
 			//item install
 			if (PlayerPrefs.GetInt( "topInstall" ) == 0)
-				topInstall = new Item ();
+				topInstall = new Item();
 			else
-				topInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "topInstall" ) ) );
+				topInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "topInstall" ) ));
 
 			if (PlayerPrefs.GetInt( "bottomInstall" ) == 0)
-				bottomInstall = new Item ();
+				bottomInstall = new Item();
 			else
-				bottomInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bottomInstall" ) ) );
+				bottomInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bottomInstall" ) ));
 
 			if (PlayerPrefs.GetInt( "bladeInstall" ) == 0)
-				bladeInstall = new Item ();
+				bladeInstall = new Item();
 			else
-				bladeInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bladeInstall" ) ) );
+				bladeInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bladeInstall" ) ));
 
 			if (PlayerPrefs.GetInt( "handleInstall" ) == 0)
-				handleInstall = new Item ();
+				handleInstall = new Item();
 			else
-				handleInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "handleInstall" ) ) );
+				handleInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "handleInstall" ) ));
 
 			money = PlayerPrefs.GetInt( "money" );
 
@@ -480,27 +497,27 @@ public class CharacterInformation : MonoBehaviour
 			{
 				string temp = "characterItem" + i.ToString();
 				if (PlayerPrefs.GetInt( temp ) == 0)
-					characterItem[i] = new Item ();
+					characterItem[i] = new Item();
 				else
-					characterItem[i] = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( temp ) ) );
+					characterItem[i] = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( temp ) ));
 			}
 
 			for (int i = 0; i < characterSkill.Length; i++)
 			{
 				string temp = "characterSkill" + i.ToString();
 				if (PlayerPrefs.GetInt( temp ) == 0)
-					characterSkill[i] = new Skill ();
+					characterSkill[i] = new Skill();
 				else
-					characterSkill[i] = new Skill ( DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ) );			
+					characterSkill[i] = new Skill(DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ));			
 			}
 
 			for (int i = 0; i < installSkill.Length; i++)
 			{
 				string temp = "installSkill" + i.ToString();
 				if (PlayerPrefs.GetInt( temp ) == 0)
-					installSkill[i] = new Skill ();
+					installSkill[i] = new Skill();
 				else
-					installSkill[i] = new Skill ( DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ) );
+					installSkill[i] = new Skill(DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ));
 			}
 		}
 		catch (NullReferenceException e)
@@ -508,7 +525,6 @@ public class CharacterInformation : MonoBehaviour
 			Debug.Log( e.InnerException );
 			DefaultStatus();
 		}
-
 	}
 
 	//data save

@@ -31,7 +31,7 @@ public class DataBase
 	//constructor - mode static;
 	static DataBase ()
 	{
-		dataBaseInstance = new DataBase ();
+		dataBaseInstance = new DataBase();
 	}
 	//constructor - no parameter
 	private DataBase ()
@@ -50,11 +50,11 @@ public class DataBase
 	void CreateItemInformation()
 	{
 		//name, price, coreRank, weaponAtk, weaponDef, weaponStr, weaponDex, weaponInt, weaponLuck, weaponCri, section, rareRank)
-		itemInformation = new List<Item> ();
-		itemInformation.Add( new Item ( 1, "Fear Blade", 1000, 30, 100, 0, 10, 10, 0, 0, 1, Item.Section.Blade, Item.Rarity.Legendary ) );
-		itemInformation.Add( new Item ( 2, "Iron Handle", 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.Section.Handle, Item.Rarity.Normal ) );
-		itemInformation.Add( new Item ( 3, "Drop Of Sorcerer", 300, 5, 60, 0, 0, 0, 7, 4, 1, Item.Section.Bottom, Item.Rarity.Unique ) );
-		itemInformation.Add( new Item ( 4, "The Holy Spear", 800, 10, 50, 0, 19, 10, 0, 0, 10, Item.Section.Top, Item.Rarity.Rare ) );
+		itemInformation = new List<Item>();
+		itemInformation.Add( new Item(1, "Fear Blade", 1000, 30, 100, 0, 10, 10, 0, 0, 1, Item.Section.Blade, Item.Rarity.Legendary) );
+		itemInformation.Add( new Item(2, "Iron Handle", 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.Section.Handle, Item.Rarity.Normal) );
+		itemInformation.Add( new Item(3, "Drop Of Sorcerer", 300, 5, 60, 0, 0, 0, 7, 4, 1, Item.Section.Bottom, Item.Rarity.Unique) );
+		itemInformation.Add( new Item(4, "The Holy Spear", 800, 10, 50, 0, 19, 10, 0, 0, 10, Item.Section.Top, Item.Rarity.Rare) );
 				
 		for (int i = 0; i < itemInformation.Count; i++)
 			itemInformation[i].SetSpriteIcon();
@@ -63,16 +63,18 @@ public class DataBase
 	//initialize skill data
 	void CreateSkillInformation()
 	{
-		// name, learnLevel,coolTime, damage, resource, state
+		// name, learnLevel, coolTime, damage, resource, resourceComboCounter, state
 		
-		skillInformation = new List<Skill> ();
-		skillInformation.Add( new Skill ( 1, "Bash", 1, 0f, 350, 20, Skill.STATE.Active ) );
-		skillInformation.Add( new Skill ( 2, "TwinRush", 1, 10.0f, 342, 10, Skill.STATE.Active ) );
-		skillInformation.Add( new Skill ( 3, "CrescentCut", 1, 6f, 560, 15, Skill.STATE.Active ) );
-		skillInformation.Add( new Skill ( 4, "LandCrush", 5, 18f, 1025, 90, Skill.STATE.Active ) );
-		skillInformation.Add( new Skill ( 5, "WheelScythe", 5, 20f, 767, 20, Skill.STATE.Active ) );
-		skillInformation.Add( new Skill ( 6, "UpperScythe", 5, 10f, 412, 20, Skill.STATE.Active ) );
-		skillInformation.Add( new Skill ( 7, "DemonicCyclone", 10, 30f, 4120, 50, Skill.STATE.Active ) );	
+		skillInformation = new List<Skill>();
+		skillInformation.Add( new Skill(1, "Bash", 1, 0f, 3.50f, 20, 0, Skill.Classify.Active) );
+		skillInformation.Add( new Skill(2, "TwinRush", 1, 3.0f, 3.42f, 10, 0, Skill.Classify.Active) );
+		skillInformation.Add( new Skill(3, "CrescentCut", 1, 3.0f, 5.60f, 15, 0, Skill.Classify.Active) );
+		skillInformation.Add( new Skill(4, "LandCrush", 5, 6.0f, 10.25f, 90, 0, Skill.Classify.Active) );
+		skillInformation.Add( new Skill(5, "WheelScythe", 5, 4.0f, 7.67f, 20, 0, Skill.Classify.Active) );
+		skillInformation.Add( new Skill(6, "UpperScythe", 5, 3.0f, 4.12f, 20, 0, Skill.Classify.Active) );
+		skillInformation.Add( new Skill(7, "DemonicCyclone", 10, 30f, 4.120f, 0, 4, Skill.Classify.SpecialActive) );	
+		skillInformation.Add( new Skill(8, "InsaneReaper", 10, 40f, 4.120f, 0, 3, Skill.Classify.SpecialActive) );	
+		
 		for (int i = 0; i < skillInformation.Count; i++)
 			skillInformation[i].SetSpriteIcon();
 	}
@@ -83,7 +85,7 @@ public class DataBase
 		return itemInformation[index - 1];
 	}
 
-	public Item FindItemById(int id)
+	public Item FindItemById( int id )
 	{
 		for (int i = 0; i < itemInformation.Count; i++)
 		{

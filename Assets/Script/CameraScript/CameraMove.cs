@@ -21,7 +21,7 @@ public class CameraMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		CameraMoveMethod (faye.Finish);
+		CameraMoveMethod (faye.OnSpecialActive);
 	}
 
 	public void SaveCameraPosition(){
