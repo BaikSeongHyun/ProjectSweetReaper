@@ -72,7 +72,7 @@ public class DataBase
 		skillInformation.Add( new Skill ( 4, "LandCrush", 5, 18f, 1025, 90, Skill.STATE.Active ) );
 		skillInformation.Add( new Skill ( 5, "WheelScythe", 5, 20f, 767, 20, Skill.STATE.Active ) );
 		skillInformation.Add( new Skill ( 6, "UpperScythe", 5, 10f, 412, 20, Skill.STATE.Active ) );
-			
+		skillInformation.Add( new Skill ( 7, "DemonicCyclone", 10, 30f, 4120, 50, Skill.STATE.Active ) );	
 		for (int i = 0; i < skillInformation.Count; i++)
 			skillInformation[i].SetSpriteIcon();
 	}
