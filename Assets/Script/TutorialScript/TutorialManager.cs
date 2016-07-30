@@ -4,19 +4,19 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class TutorialManager : MonoBehaviour {
-
-	//	GameController controller; 대신쓴다
-	public Vector3 cameraDistance;
-	public GameObject temp;
+public class TutorialManager : MonoBehaviour
+{
+	//simple data field
+	Vector3 cameraDistance;
 
 	//complex data field
 	public CharacterFaye faye;
 	public CharacterInformation info;
 	public UserInterfaceManager mainUI;
+
+	//tutorialui upload
 	public DataBase dataBase;
 	public TutorialUI tutorialUI;
-	//imagecounter need control;
 
 	// initialize this script
 	void Start()
@@ -25,41 +25,45 @@ public class TutorialManager : MonoBehaviour {
 		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
-		mainUI.LinkElement ();
-		mainUI.LinkNeutralData (info);
-		mainUI.SwitchUIMode (UserInterfaceManager.Mode.Neutral);
-		cameraDistance = new Vector3 (0f, 7.5f, -8f);
+		mainUI.LinkNeutralData( info );
+		mainUI.LinkElement();
+		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
+		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
 
-		//tutorialUI = GameObject.FindWithTag ("MainUI").GetComponent<TutorialUI> ();
 		tutorialUI = GameObject.Find ("TutorialUI").GetComponent<TutorialUI> ();
 
-		//start imagecounter;
-
 	}
-	
+
 	// Update is called once per frame
-	void Update () {
-		if (!EventSystem.current.IsPointerOverGameObject() )
+	void Update()
+	{
+		if (Input.GetKeyDown( KeyCode.F12 ))
 		{
-			//&& !mainUI.PresentSelectItem.enabled
+			PlayerPrefs.DeleteAll();
+			info.DefaultStatus();
+		}
+
+		//charaecter section
+		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)
+		{
 			if (Input.GetButtonDown( "NormalAttack" ))
 				faye.Attack();
 			else if (Input.GetButtonDown( "Skill1" ))
-				faye.SkillCommand( 1 );
+				faye.SkillCommand( 0 );
 			else if (Input.GetButtonDown( "Skill2" ))
-				faye.SkillCommand( 2 );
+				faye.SkillCommand( 1 );
 			else if (Input.GetButtonDown( "Skill3" ))
-				faye.SkillCommand( 3 );
+				faye.SkillCommand( 2 );
 			else if (Input.GetButtonDown( "Skill4" ))
-				faye.SkillCommand( 4 );
+				faye.SkillCommand( 3 );
 			else if (Input.GetButtonDown( "Skill5" ))
-				faye.SkillCommand( 5 );
+				faye.SkillCommand( 4 );
 			else if (Input.GetButtonDown( "Skill6" ))
-				faye.SkillCommand( 6 );
+				faye.SkillCommand( 5 );
 			else if (Input.GetButtonDown( "Skill7" ))
-				faye.SkillCommand( 7 );
+				faye.SkillCommand( 6 );
 			else if (Input.GetButtonDown( "Skill8" ))
-				faye.SkillCommand( 8 );
+				faye.SkillCommand( 7 );
 			else if (Input.GetButton( "Move" ))
 				MakeMovePoint();
 			//skill number - key
@@ -83,10 +87,8 @@ public class TutorialManager : MonoBehaviour {
 
 		//item / skill drag object check
 		if (mainUI.PresentSelectItem.enabled && !mainUI.OnClickMouse)
-		{
-			mainUI.ClosePresentElement();
-		}		
-		SetUIState();
+			mainUI.ClosePresentElement();				
+
 		mainUI.UpdateMainUI();
 
 		//raycast mode
@@ -107,14 +109,20 @@ public class TutorialManager : MonoBehaviour {
 
 
 
-//		death popup
+		//death popup
 		if (!faye.IsAlive)
-			mainUI.ControlDeathPopUp( true );
-
-
-
-
+			mainUI.ControlDeathPopUp( true );		
 	}
+
+	public void LateUpdate()
+	{
+		//update camera sight
+		CameraControl();
+	}
+
+	//another method
+
+	//set destination for player character
 	void MakeMovePoint()
 	{		
 		mainUI.ClearUI();
@@ -127,19 +135,7 @@ public class TutorialManager : MonoBehaviour {
 		}
 	}
 
-
-
-	void SetUIState()
-	{
-
-	}
-
-	public void LateUpdate()
-	{
-		//update camera sight
-		CameraControl();
-	}
-
+	//set camera
 	public void CameraControl()
 	{
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
@@ -152,36 +148,28 @@ public class TutorialManager : MonoBehaviour {
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.NPC ))
 		{
-			//rotation -> use forward vector
-			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
-			//position
-			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + ( temp.transform.forward * 3 ) + new Vector3 ( 0f, 0.5f, 0f ), Time.deltaTime * 10 );
+			//			//rotation -> use forward vector
+			//			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
+			//			//position
+			//			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + ( temp.transform.forward * 3 ) + new Vector3 ( 0f, 0.5f, 0f ), Time.deltaTime * 10 );
 		}
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.Tranning ))
 		{
-		}
-
-
-
+		}			
 	}
 
+	public void ExpThrow( float exp )
+	{
+		faye.AddExperience( exp );
+		mainUI.AsynchronousSystemUI( ( (int) exp ).ToString() + "의 경험치를 획득하셨습니다." );
+	}
+
+	//button event
+	//return camp field
 	public void ReturnCampField()
 	{
+		info.SaveCharacterInformation();
 		SceneManager.LoadScene( "CampField" );
 	}
-
-
-
-//	delegate void StartTutorial();
-//
-//	event StartTutorial advancement;
-//
-
-
-
-
-	//public void ()
-
-
 }

@@ -16,6 +16,7 @@ public class ExplainImage : MonoBehaviour, IPointerDownHandler {
 		showImage = gameObject.GetComponent<Image> ();
 		imageCounter = 1;	
 		StartImage();
+
 	}
 
 	void Update()
@@ -48,13 +49,13 @@ public class ExplainImage : MonoBehaviour, IPointerDownHandler {
 			||imageCounter==11
 			||imageCounter== 13
 			||imageCounter==14
-			||imageCounter==15
 			||imageCounter==18
 			||imageCounter==19 
 			)
 			{
 				EventClearNext ();
 			}
+		
 		}
 
 
