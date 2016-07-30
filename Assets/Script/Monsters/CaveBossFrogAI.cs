@@ -8,8 +8,11 @@ public class CaveBossFrogAI : Monster
 
 	AnimatorStateInfo caveBossState;
 
+	public GameObject suicideFrogSummon;
 
-	public enum CaveFrogBossPatternName
+	public bool summonTrigger;
+
+	public enum CaveBossFrogPatternName
 	{
 		CaveBossFrogIdle =1,
 		CaveBossFrogRun,
@@ -31,58 +34,76 @@ public class CaveBossFrogAI : Monster
 		health = transform.Find ("CaveBossFrogHpBar").GetComponent<Image> ();
 	
 	}
-	
+
+	public void SummonTrigger()
+	{
+		summonTrigger = true;
+	}
 	// Update is called once per frame
 	void Update () 
 	{
-//		if (isAlive)
-//		{
-//			float searchRange = Vector3.Distance (player.transform.position, transform.position);
-//
-//			if (searchRange < attackRange)
-//			{
-//				if (attackCycle >= 5 && !caveBossState.IsName ("ThrowFrogTakeDamage"))
-//				{
-//
-//					ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogAttack);
-//
-//
-//				}
-//				else
-//				{
-//					throwTrigger = false;					
-//
-//					ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
-//					attackCycle += Time.deltaTime;
-//					Debug.Log ("in");
-//				}
-//
-//			}
-//			else if (searchRange <= runRange || searchRange <= attackRange)
-//			{
-//
-//				ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogWalk);
-//				if (throwFrogState.IsName ("ThrowFrogWalk"))
-//				{
-//					transform.LookAt (player.transform.position);
-//					transform.position = Vector3.Lerp (transform.position, player.transform.position, Time.deltaTime * frogBossSpeed);
-//
-//				}
-//			}
-//		
-//
-//			if (searchRange > runRange)
-//				ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
-//			throwFrogState = this.throwFrogAiAnimator.GetCurrentAnimatorStateInfo (0);
-//
-//			transform.rotation = new Quaternion (0f, transform.rotation.y, 0f, 0f);
-//			transform.position = new Vector3 (transform.position.x, 0f, transform.position.z);
-//			transform.LookAt (player.transform.position);
-//
-//			//update hp
-//			health.fillAmount = frogInfo.FillFrogHp;
-//			RotateHealthBar ();
-//		}
+		attackCycle += Time.deltaTime;
+		if (isAlive)
+		{
+			
+			float searchRange = Vector3.Distance (player.transform.position, transform.position);
+			int summonPattern = Random.Range (0,5);
+
+			if (searchRange < attackRange)
+			{
+				if (!caveBossState.IsName ("ThrowFrogTakeDamage") && summonPattern == 4)
+				{
+					caveBossFrogAiAnimator.SetTrigger ("CaveBossSummon");
+					//CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogSummon);
+
+					Instantiate (suicideFrogSummon, transform.position + new Vector3 (0f, 10f, 0f), transform.rotation);
+
+
+				}
+				
+				else if (attackCycle >= 5 && !caveBossState.IsName ("ThrowFrogTakeDamage"))
+				{
+
+					CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogAttack);
+
+					attackCycle = 0;
+				}
+				else
+				{
+					
+					CaveBossFrogPattern(CaveBossFrogPatternName.CaveBossFrogIdle);
+				
+				
+				}
+
+
+
+			}
+			else if (searchRange <= runRange || searchRange <= attackRange)
+			{
+
+				CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogRun);
+				if (caveBossState.IsName ("CaveBossFrogRun"))
+				{
+					transform.LookAt (player.transform.position);
+					transform.position = Vector3.Lerp (transform.position, player.transform.position, Time.deltaTime * frogBossSpeed);
+
+				}
+			}
+		
+
+			if (searchRange > runRange)
+				CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogIdle);
+			caveBossState = this.caveBossFrogAiAnimator.GetCurrentAnimatorStateInfo (0);
+
+			transform.rotation = new Quaternion (0f, transform.rotation.y, 0f, 0f);
+			transform.position = new Vector3 (transform.position.x, 0f, transform.position.z);
+			transform.LookAt (player.transform.position);
+
+			//update hp
+			health.fillAmount = frogInfo.FillFrogHp;
+			RotateHealthBar ();
+		}
 
 	}
 
@@ -98,7 +119,7 @@ public class CaveBossFrogAI : Monster
 			frogInfo.MonsterHp -= _Damage;
 			if (frogInfo.MonsterHp > 0)
 			{
-				
+				caveBossFrogAiAnimator.SetTrigger ("MonsterHitTrigger");
 				//bossAiAnimator.SetTrigger( "MonsterHitTrigger" );
 				return;
 			}
@@ -126,7 +147,7 @@ public class CaveBossFrogAI : Monster
 					gold.name = "DropGold";
 				}
 
-				//bossAiAnimator.SetTrigger( "MonsterDie" );
+				caveBossFrogAiAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
 				Destroy( this.gameObject, 3.0f );
 				return;
@@ -134,33 +155,34 @@ public class CaveBossFrogAI : Monster
 		}
 	}
 
-	public void CaveBossFrogPattern(CaveFrogBossPatternName state)
+	public void CaveBossFrogPattern(CaveBossFrogPatternName state)
 	{
 		switch (state)
 		{
-			case CaveFrogBossPatternName.CaveBossFrogIdle:
+			case CaveBossFrogPatternName.CaveBossFrogIdle:
 			caveBossFrogAiAnimator.SetInteger ("state", 1);
 				break;
 
 
-			case CaveFrogBossPatternName.CaveBossFrogRun:
+			case CaveBossFrogPatternName.CaveBossFrogRun:
 			caveBossFrogAiAnimator.SetInteger ("state", 2);
 				break;
 
 
-			case CaveFrogBossPatternName.CaveBossFrogAttack:
+			case CaveBossFrogPatternName.CaveBossFrogAttack:
 			caveBossFrogAiAnimator.SetInteger ("state", 3);
+				isAttack = true;
 				break;
 
-			case CaveFrogBossPatternName.CaveBossFrogTakeDamage:
+			case CaveBossFrogPatternName.CaveBossFrogTakeDamage:
 			caveBossFrogAiAnimator.SetInteger ("state", 4);
 				break;
 			
-			case CaveFrogBossPatternName.CaveBossFrogSummon:
+			case CaveBossFrogPatternName.CaveBossFrogSummon:
 			caveBossFrogAiAnimator.SetInteger ("state", 5);
 				break;
 		
-			case CaveFrogBossPatternName.CaveBossFrogDeath:
+			case CaveBossFrogPatternName.CaveBossFrogDeath:
 			caveBossFrogAiAnimator.SetInteger ("state", 6);
 				break;
 
