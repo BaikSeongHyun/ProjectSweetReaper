@@ -1,10 +1,2 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-m_EditorVersion: 5.3.5f1
-=======
 m_EditorVersion: 5.3.6f1
->>>>>>> 18f73cf9db32a7afaea4649e5086164559c14fd2
-=======
-m_EditorVersion: 5.3.6f1
->>>>>>> 6c92abbdb95494bfdff08a2596599fcd023ec794
 m_StandardAssetsVersion: 0

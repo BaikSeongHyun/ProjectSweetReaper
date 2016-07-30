@@ -24,9 +24,7 @@ public class FrogBossAI : Monster
 		BossCriticalAttack,
 		AttackIdle,
 		TakeDamage,
-		Death}
-
-	;
+		Death};
 
 
 	// Use this for initialization

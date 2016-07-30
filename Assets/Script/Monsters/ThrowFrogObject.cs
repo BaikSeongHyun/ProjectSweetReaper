@@ -35,7 +35,6 @@ public class ThrowFrogObject : MonoBehaviour
 	void OnCollisionEnter( Collision col )
 	{
 
-		Debug.Log ("in");
 		if (col.gameObject.layer == LayerMask.NameToLayer( "Player" ))
 		{
 			
