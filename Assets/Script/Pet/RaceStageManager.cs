@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -6,6 +8,7 @@ public class RaceStageManager : MonoBehaviour
 {
 	public const int petNumber = 8;
 	public int select;
+	public AudioSource backgroundMusic;
 	public GameObject petType;
 	public CharacterInformation charInfo;
 	public Transform[] startPoint;
@@ -14,10 +17,13 @@ public class RaceStageManager : MonoBehaviour
 	public Pet[] anotherPets;
 	public Pet myPet;
 	public UserInterfaceManager mainUI;
+	public Button startButton;
+	
 
 	// Use this for initialization
 	void Start()
 	{
+		backgroundMusic = Camera.main.GetComponent<AudioSource>();
 		charInfo = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
 		CreatePets();
 		SetPetInformation();
@@ -26,6 +32,8 @@ public class RaceStageManager : MonoBehaviour
 		mainUI.LinkElement();
 		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Race );
 		mainUI.LinkRaceData( anotherPets, myPet );
+		Time.timeScale = 0f;
+		PlayBackgroundMusic();
 	}
 	
 	// Update is called once per frame
@@ -98,15 +106,37 @@ public class RaceStageManager : MonoBehaviour
 
 	public void OrderMyPet( string data )
 	{		
-		if (data == "Run")
-			myPet.UserOrder( "Run" );
-		else if (data == "Attack")
-			myPet.UserOrder( "Attack" );
+		myPet.UserOrder( data );
 	}
 
 	void CameraUpdate()
 	{
 		Camera.main.transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, myPet.transform.position.z - 30f);
 	}
-		
+	
+	void PlayBackgroundMusic()
+	{
+		backgroundMusic.clip = Resources.Load<AudioClip>( "Music/FrogRace" );
+		backgroundMusic.Play();
+	}
+	
+	//onClickEvent
+	public void StartGame()
+	{
+		Time.timeScale = 1f;
+		Destroy( startButton.gameObject );
+	}
+
+	//process after race
+	public void GoalProcess()
+	{
+		mainUI.ControlRaceResult(true);
+		Time.timeScale = 0f;		
+	}
+	
+	public void ReturnCampField()
+	{
+		charInfo.SaveCharacterInformation();
+		SceneManager.LoadScene("CampField");	
+	}
 }

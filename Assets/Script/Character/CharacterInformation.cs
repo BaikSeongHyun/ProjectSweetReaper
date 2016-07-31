@@ -271,10 +271,7 @@ public class CharacterInformation : MonoBehaviour
 		{
 			onSkill[i] = false;
 			skillCoolTimeSet[i] = 0.0f;
-		}
-
-		petMoveSpeed = 10.0f;
-		petStunTime = 10.0f;
+		}	
 	}
 
 	//set default status
@@ -309,6 +306,9 @@ public class CharacterInformation : MonoBehaviour
 		rootDamage = 100.0f;
 		presentDamage = rootDamage;
 		money = 1000;
+		
+		petMoveSpeed = 10.0f;
+		petStunTime = 3.0f;
 
 		InstallDefaultItem();
 		SetDefaultSkill();
@@ -454,6 +454,21 @@ public class CharacterInformation : MonoBehaviour
 			data.ItemInfo = null;
 		}
 	}
+
+	public void Training( string data )
+	{
+		if ((data == "Attack") && money >= 10000)
+		{
+			petStunTime += 0.5f;
+			money -= 10000;
+		}
+		
+		if ((data == "Speed") && money >= 10000)
+		{
+			petMoveSpeed += 0.5f;
+			money -= 10000;
+		}
+	}
 	
 	//save data load and apply
 	public void LoadCharacterInformation()
@@ -537,6 +552,9 @@ public class CharacterInformation : MonoBehaviour
 				else
 					installSkill[i] = new Skill(DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ));
 			}
+			
+			petMoveSpeed = PlayerPrefs.GetFloat( "petMoveSpeed" );
+			petStunTime = PlayerPrefs.GetFloat( "petStunTime" );
 		}
 		catch (NullReferenceException e)
 		{
@@ -599,6 +617,8 @@ public class CharacterInformation : MonoBehaviour
 			string temp = "installSkill" + i.ToString();
 			PlayerPrefs.SetInt( temp, installSkill[i].Id );
 		}
+		PlayerPrefs.SetFloat( "petMoveSpeed", petMoveSpeed );
+		PlayerPrefs.SetFloat( "petStunTime", petStunTime );
 
 		PlayerPrefs.Save();
 	}

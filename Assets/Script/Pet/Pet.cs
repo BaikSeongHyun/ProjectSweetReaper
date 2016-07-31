@@ -14,6 +14,7 @@ public class Pet : MonoBehaviour
 	public bool firstCycle;
 	public bool onRace;
 	public int grade;
+	public int orderCounter;
 
 	public Transform startPoint;
 	public Transform goalPoint;
@@ -64,6 +65,11 @@ public class Pet : MonoBehaviour
 	{
 		get { return grade; }
 		set { grade = value; }
+	}
+
+	public int OrderCounter
+	{
+		get { return orderCounter; }	
 	}
 
 	//use minimap

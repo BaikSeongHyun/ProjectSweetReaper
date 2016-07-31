@@ -15,3 +15,5 @@ EditorBuildSettings:
     path: Assets/Scene/Cave.unity
   - enabled: 1
     path: Assets/Scene/Nightmare.unity
+  - enabled: 1
+    path: Assets/Scene/PetRaceTrack.unity

@@ -46,16 +46,18 @@ public class NPCFrogPet : Pet
 		presentState = PetState.Idle;
 		onRace = true;
 		patternCycleTime = 5f;
+		orderCounter = 5;
 		if (!playerPet)
 		{
 			petInfo = new PetStatus();
 			checkLane.sprite = Resources.Load<Sprite>( "Race/RacePetBack" );
-			checkLane.transform.Find("LaneText").GetComponent<TextMesh>().text = lane.ToString();;
+			checkLane.transform.Find( "LaneText" ).GetComponent<TextMesh>().text = lane.ToString();
+			;
 		}
 		else
-		{
+		{			
 			checkLane.sprite = Resources.Load<Sprite>( "Race/RaceMyPetBack" );
-			checkLane.transform.Find("LaneText").GetComponent<TextMesh>().text = "";
+			checkLane.transform.Find( "LaneText" ).GetComponent<TextMesh>().text = "";
 		}
 	}
 
@@ -187,12 +189,28 @@ public class NPCFrogPet : Pet
 	}
 
 	public override void UserOrder( string data )
-	{
-		Debug.Log( data );
-		if (data == "Attack")
-			presentState = PetState.Attack;
-		else if (data == "Run")
-			presentState = PetState.Run;
+	{		
+		if (orderCounter > 0)
+		{
+			switch (data)
+			{
+				case "Attack":
+					presentState = PetState.Attack;
+					break;
+				case "Run":
+					presentState = PetState.Run;
+					break;
+				case "Slow":
+					presentState = PetState.Slow;
+					break;
+				case "OffStun":
+					isStun = false;
+					NPCFrogPetAiAnimator.SetBool( "Stun", false );
+					stunningTime = 0.0f;
+					break;
+			}
+			orderCounter--;
+		}
 	}
 
 	public override void HitDamege( float _stunningTime )

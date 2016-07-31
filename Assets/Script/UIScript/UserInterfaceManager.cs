@@ -57,6 +57,9 @@ public class UserInterfaceManager : MonoBehaviour
 	//child UI & data - use npc
 	public GameObject storeUI;
 	public StoreUI storeUILogic;
+	
+	public GameObject trainingUI;
+	public TrainingUI trainingUILogic;
 
 	//child UI & data - use race
 	public GameObject raceMiniMap;
@@ -67,6 +70,9 @@ public class UserInterfaceManager : MonoBehaviour
 
 	public GameObject raceAnotherPetStatus;
 	public RaceAnotherPetStatus raceAnotherPetStatusLogic;
+	
+	public GameObject raceResult;
+	public RaceResult raceResultLogic;
 
 	public GameObject racePetOrder;
 
@@ -200,10 +206,14 @@ public class UserInterfaceManager : MonoBehaviour
 		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
 		quickButton = GameObject.Find( "QuickButton" );
 
-		// npe UI & data
+		// npc UI & data
 		storeUI = GameObject.Find( "StoreUI" );
 		storeUILogic = storeUI.GetComponent<StoreUI>();
 		storeUILogic.LinkElement();
+		
+		trainingUI = GameObject.Find( "TrainingUI" );
+		trainingUILogic = trainingUI.GetComponent<TrainingUI>();
+		trainingUILogic.LinkElement();		
 
 		//race UI & data
 		raceMiniMap = GameObject.Find( "RaceMiniMap" );
@@ -217,6 +227,10 @@ public class UserInterfaceManager : MonoBehaviour
 		raceAnotherPetStatus = GameObject.Find( "RaceAnotherPetStatus" );
 		raceAnotherPetStatusLogic = raceAnotherPetStatus.GetComponent<RaceAnotherPetStatus>();
 		raceAnotherPetStatusLogic.LinkElement();
+		
+		raceResult = GameObject.Find( "RaceResult" );
+		raceResultLogic = raceResult.GetComponent<RaceResult>();
+		raceResultLogic.LinkElement();
 
 		racePetOrder = GameObject.Find( "RacePetOrder" );
 	}
@@ -277,12 +291,14 @@ public class UserInterfaceManager : MonoBehaviour
 
 		//off npc item
 		storeUI.SetActive( false );
+		trainingUI.SetActive( false );
 
 		//off race items
 		raceMiniMap.SetActive( false );
 		racePetStatus.SetActive( false );
 		racePetOrder.SetActive( false );
 		raceAnotherPetStatus.SetActive( false );
+		raceResult.SetActive( false );
 
 	}
 
@@ -310,11 +326,16 @@ public class UserInterfaceManager : MonoBehaviour
 		presentSelectItem.enabled = false;
 		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
 
+		//off npc item
+		storeUI.SetActive( false );
+		trainingUI.SetActive( false );
+				
 		//off race items
 		raceMiniMap.SetActive( true );
 		racePetStatus.SetActive( true );
 		racePetOrder.SetActive( true );
 		raceAnotherPetStatus.SetActive( true );
+		raceResult.SetActive( false );
 
 	}
 
@@ -334,7 +355,6 @@ public class UserInterfaceManager : MonoBehaviour
 			skillCutScene.SetActive( false );
 
 			//off asynchronous item
-			
 			skillUI.SetActive( false );
 			enterDungeon.SetActive( false );
 			deathPopUp.SetActive( false );
@@ -344,9 +364,43 @@ public class UserInterfaceManager : MonoBehaviour
 			presentSelectItem.enabled = false;
 			presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
 			
+			//off npc item
+			trainingUI.SetActive( false );
+			
 			//use store item
 			ControlInventory( true );
 			ControlStoreUI( true );
+		}
+		else if (presentNPC == NPC.Type.Race)
+		{
+			//off neutral update item
+			quickSkill.SetActive( false );
+			quickSkillChain.SetActive( false );
+			quickStatus.SetActive( false );
+			quickSlot.SetActive( false );
+			systemUI.SetActive( false );
+			expGauge.SetActive( false );
+			quickButton.SetActive( false );
+			skillCutScene.SetActive( false );
+
+			//off asynchronous item
+			ControlInventory( false );
+			skillUI.SetActive( false );
+			enterDungeon.SetActive( false );
+			deathPopUp.SetActive( false );
+			itemPopUpLogic.ControlComponent( false );	
+			skillPopUpLogic.ControlComponent( false );
+			exitDungeonPopUp.SetActive( false );
+			presentSelectItem.enabled = false;
+			presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
+
+			//off npc item
+			ControlStoreUI( false );
+
+			//use race item
+			trainingUI.SetActive( true );
+			trainingUILogic.UpdateTrainingUI( info );
+			
 		}
 	}
 
@@ -404,6 +458,13 @@ public class UserInterfaceManager : MonoBehaviour
 		if (state)
 			storeUILogic.UpdateStoreUI();
 	}
+	
+	//race result
+	public void ControlRaceResult( bool state )
+	{
+		raceResult.SetActive( state );
+		raceResultLogic.UpdateResult( myPet );
+	}
 
 	// close ui
 	public void CloseScreen( string name )
@@ -426,6 +487,9 @@ public class UserInterfaceManager : MonoBehaviour
 				ControlExitDungeonPopUp( false );
 				break;
 			case "Store":
+				SwitchUIMode( Mode.Neutral );
+				break;
+			case "Race":
 				SwitchUIMode( Mode.Neutral );
 				break;
 		}
@@ -472,11 +536,22 @@ public class UserInterfaceManager : MonoBehaviour
 		info.UpdateInventoryStatus();
 		inventoryLogic.UpdateInventory( info );
 	}
-
+	
+	//update by storeUI
 	public void UpdateItemInformationByStoreUI()
 	{
 		storeUILogic.UpdateStoreUI();
 		inventoryLogic.UpdateInventory( info );
+	}
+
+	public void Training( string data )
+	{
+		if (data == "Attack")
+			info.Training( "Attack" );
+		else if (data == "Speed")
+			info.Training( "Speed" );
+		
+		trainingUILogic.UpdateTrainingUI( info );
 	}
 	
 	//update by quick skill

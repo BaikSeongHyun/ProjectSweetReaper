@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class NPC : MonoBehaviour
@@ -6,6 +7,7 @@ public class NPC : MonoBehaviour
 	public GameController mainControl;
 	public RectTransform popUp;
 	public Type npcType;
+	public Image popUpLogic;
 
 	public enum Type
 	{
@@ -19,12 +21,16 @@ public class NPC : MonoBehaviour
 	void Start()
 	{
 		mainControl = GameObject.FindWithTag( "GameController" ).GetComponent<GameController>();
-		popUp = transform.Find( "Canvas" ).GetComponent<RectTransform>();	
+		popUp = transform.Find( "Canvas" ).GetComponent<RectTransform>();
+		popUpLogic = popUp.Find( "NPCUI" ).GetComponent<Image>();
+		popUpLogic.enabled = false;
+		
 	}
 
 	void OnTriggerEnter( Collider coll )
 	{
 		mainControl.ConnectNPC( npcType, this.gameObject );
+		popUpLogic.enabled = true;
 	}
 
 	void OnTriggerStay( Collider coll )
@@ -38,5 +44,6 @@ public class NPC : MonoBehaviour
 	void OnTriggerExit()
 	{
 		mainControl.DisConnectNPC();	
+		popUpLogic.enabled = false;
 	}
 }

@@ -141,7 +141,7 @@ public class GameController : MonoBehaviour
 				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/DarkForestField" );
 				break;
 			case "Cave":
-				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/CaveField" );
+				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/DeepCaveField" );
 				break;
 			case "Nightmare":
 				backgroundMusic.clip = Resources.Load<AudioClip>( "Music/NightmareField" );
@@ -212,5 +212,11 @@ public class GameController : MonoBehaviour
 	{
 		info.SaveCharacterInformation();
 		SceneManager.LoadScene( "CampField" );
+	}
+	
+	public void GotoRaceField()
+	{
+		info.SaveCharacterInformation();
+		SceneManager.LoadScene("PetRaceTrack");	
 	}
 }
