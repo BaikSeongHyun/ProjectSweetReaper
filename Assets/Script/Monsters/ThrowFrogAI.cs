@@ -81,7 +81,7 @@ public class ThrowFrogAI : Monster
 
 					ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
 					attackCycle += Time.deltaTime;
-					Debug.Log ("in");
+				
 				}
 
 			}

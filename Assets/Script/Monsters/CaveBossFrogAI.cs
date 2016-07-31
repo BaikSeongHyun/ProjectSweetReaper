@@ -12,6 +12,13 @@ public class CaveBossFrogAI : Monster
 
 	public bool summonTrigger;
 
+<<<<<<< HEAD
+=======
+	public int summonCount;
+
+	public GameObject[] SummonFrog;
+
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 	public enum CaveBossFrogPatternName
 	{
 		CaveBossFrogIdle =1,
@@ -32,7 +39,11 @@ public class CaveBossFrogAI : Monster
 		player = GameObject.FindGameObjectWithTag ("Player");
 
 		health = transform.Find ("CaveBossFrogHpBar").GetComponent<Image> ();
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 	}
 
 	public void SummonTrigger()
@@ -45,12 +56,18 @@ public class CaveBossFrogAI : Monster
 		attackCycle += Time.deltaTime;
 		if (isAlive)
 		{
+<<<<<<< HEAD
 
+=======
+			SummonFrog = GameObject.FindGameObjectsWithTag ("SuicideFrog");
+			
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 			float searchRange = Vector3.Distance (player.transform.position, transform.position);
 			int summonPattern = Random.Range (0,5);
 
 			if (searchRange < attackRange)
 			{
+<<<<<<< HEAD
 				if (!caveBossState.IsName ("ThrowFrogTakeDamage") && summonPattern == 4)
 				{
 					caveBossFrogAiAnimator.SetTrigger ("CaveBossSummon");
@@ -63,6 +80,19 @@ public class CaveBossFrogAI : Monster
 
 				else if (attackCycle >= 5 && !caveBossState.IsName ("ThrowFrogTakeDamage"))
 				{
+=======
+				
+				
+				if (attackCycle >= 1 && !caveBossState.IsName ("ThrowFrogTakeDamage") )
+				{
+
+					if (summonPattern == 4)
+					{
+						
+						SummonSkill ();
+					}
+					
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 
 					CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogAttack);
 
@@ -70,10 +100,17 @@ public class CaveBossFrogAI : Monster
 				}
 				else
 				{
+<<<<<<< HEAD
 
 					CaveBossFrogPattern(CaveBossFrogPatternName.CaveBossFrogIdle);
 
 
+=======
+					
+					CaveBossFrogPattern(CaveBossFrogPatternName.CaveBossFrogIdle);
+				
+				
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 				}
 
 
@@ -82,6 +119,10 @@ public class CaveBossFrogAI : Monster
 			else if (searchRange <= runRange || searchRange <= attackRange)
 			{
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 				CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogRun);
 				if (caveBossState.IsName ("CaveBossFrogRun"))
 				{
@@ -90,7 +131,11 @@ public class CaveBossFrogAI : Monster
 
 				}
 			}
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 
 			if (searchRange > runRange)
 				CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogIdle);
@@ -112,6 +157,21 @@ public class CaveBossFrogAI : Monster
 		attackCycle = 0;
 	}
 
+<<<<<<< HEAD
+=======
+	public void SummonSkill()
+	{
+		int summonPos = Random.Range (1,5);
+
+		if (SummonFrog.Length <= 3)
+		{
+			 Instantiate (suicideFrogSummon, transform.position + new Vector3 ((1* summonPos), 0f,(1 * summonPos)), transform.rotation);
+
+		}
+
+	}
+
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 	public override void HitDamage( float _Damage )
 	{
 		if (isAlive)
@@ -125,7 +185,11 @@ public class CaveBossFrogAI : Monster
 			}
 
 			if (frogInfo.MonsterHp <= 0)
+<<<<<<< HEAD
 			{            
+=======
+			{				
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 				health.fillAmount = 0;
 				int randomItem = Random.Range( 0, 3 );
 
@@ -143,7 +207,11 @@ public class CaveBossFrogAI : Monster
 				{
 					var item = Instantiate( dropItem, transform.position, new Quaternion(0, 0, 0, 0) );
 					item.name = "DropItem";
+<<<<<<< HEAD
 					var gold = Instantiate( dropGold, transform.position, new Quaternion(0, 0, 0, 0) );               
+=======
+					var gold = Instantiate( dropGold, transform.position, new Quaternion(0, 0, 0, 0) );					
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 					gold.name = "DropGold";
 				}
 
@@ -160,21 +228,34 @@ public class CaveBossFrogAI : Monster
 		switch (state)
 		{
 			case CaveBossFrogPatternName.CaveBossFrogIdle:
+<<<<<<< HEAD
 				caveBossFrogAiAnimator.SetInteger ("state", 1);
+=======
+			caveBossFrogAiAnimator.SetInteger ("state", 1);
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 				break;
 
 
 			case CaveBossFrogPatternName.CaveBossFrogRun:
+<<<<<<< HEAD
 				caveBossFrogAiAnimator.SetInteger ("state", 2);
+=======
+			caveBossFrogAiAnimator.SetInteger ("state", 2);
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 				break;
 
 
 			case CaveBossFrogPatternName.CaveBossFrogAttack:
+<<<<<<< HEAD
 				caveBossFrogAiAnimator.SetInteger ("state", 3);
+=======
+			caveBossFrogAiAnimator.SetInteger ("state", 3);
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 				isAttack = true;
 				break;
 
 			case CaveBossFrogPatternName.CaveBossFrogTakeDamage:
+<<<<<<< HEAD
 				caveBossFrogAiAnimator.SetInteger ("state", 4);
 				break;
 
@@ -184,10 +265,25 @@ public class CaveBossFrogAI : Monster
 
 			case CaveBossFrogPatternName.CaveBossFrogDeath:
 				caveBossFrogAiAnimator.SetInteger ("state", 6);
+=======
+			caveBossFrogAiAnimator.SetInteger ("state", 4);
+				break;
+			
+			case CaveBossFrogPatternName.CaveBossFrogSummon:
+			caveBossFrogAiAnimator.SetInteger ("state", 5);
+				break;
+		
+			case CaveBossFrogPatternName.CaveBossFrogDeath:
+			caveBossFrogAiAnimator.SetInteger ("state", 6);
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 				break;
 
 		}
 
 	}
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
