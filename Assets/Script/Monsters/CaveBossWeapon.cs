@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CaveBossWeapon : MonoBehaviour {
+public class CaveBossWeapon : MonoBehaviour
+{
 
 	public GameObject caveBoss;
 	CaveBossFrogAI caveBossAI;
@@ -12,42 +13,18 @@ public class CaveBossWeapon : MonoBehaviour {
 
 	MonsterHealth info;
 	// Use this for initialization
-	void Start () 
+	void Start()
 	{
-<<<<<<< HEAD
-		info = caveBoss.GetComponent<MonsterHealth> ();
-
+		info = caveBoss.GetComponent<MonsterHealth>();
 		if (caveBoss.gameObject.name == "CaveBossFrog")
-			caveBossAI = transform.GetComponent<CaveBossFrogAI> ();	
-=======
-		
-		info = caveBoss.GetComponent<MonsterHealth> ();
-		if (caveBoss.gameObject.name == "CaveBossFrog")
-		{
-			caveBossAI = transform.GetComponentInParent<CaveBossFrogAI> ();	
-		}
-					
-	
->>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
+			caveBossAI = transform.GetComponentInParent<CaveBossFrogAI>();	
 	}
-	
+
 	// Update is called once per frame
-	void Update () 
+	void Update()
 	{
-<<<<<<< HEAD
-		if (caveBoss.gameObject.name == "CaveBossFrog") 
-		{
-			attack = true;
-			Debug.Log (attack);
-=======
-
-
-		if (caveBoss.gameObject.name == "CaveBossFrog") 
-		{
-			attack = caveBossAI.IsAttack;		
->>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
-		}
-	
+		if (caveBoss.gameObject.name == "CaveBossFrog")
+			attack = caveBossAI.IsAttack;
 	}
 
 	void OnTriggerEnter( Collider coll )
@@ -68,6 +45,4 @@ public class CaveBossWeapon : MonoBehaviour {
 			}			
 		}
 	}
-
-
 }

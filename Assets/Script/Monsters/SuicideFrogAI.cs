@@ -22,59 +22,56 @@ public class SuicideFrogAI : Monster
 
 	;
 
-
 	// Use this for initialization
-	void Start ()
+	void Start()
 	{
-		frogInfo = this.GetComponent<MonsterHealth> ();
-		suicideFrogAIAnimator = GetComponent<Animator> ();
-		player = GameObject.FindGameObjectWithTag ("Player");
-		health = transform.Find ("SuicideFrogHpBar").GetComponent<Image> ();
+		frogInfo = this.GetComponent<MonsterHealth>();
+		suicideFrogAIAnimator = GetComponent<Animator>();
+		player = GameObject.FindGameObjectWithTag( "Player" );
+		health = transform.Find( "SuicideFrogHpBar" ).GetComponent<Image>();
 
 	}
 	// Update is called once per frame
-	void Update ()
+	void Update()
 	{
 		if (isAlive)
 		{
-			float searchRange = Vector3.Distance (player.transform.position, transform.position);
-	
+			float searchRange = Vector3.Distance( player.transform.position, transform.position );
+
 			if (searchRange < attackRange)
 			{
-				
-				SuicideFrogAttack ();	
-				Destroy (this.gameObject,4f);					
-							
+
+				SuicideFrogAttack();	
+				Destroy( this.gameObject, 4f );					
+
 			}
 			else if (searchRange <= runRange)
 			{
-				SuicideFrogPattern (SuicideFrogPatternName.SuicideFrogRun);
+				SuicideFrogPattern( SuicideFrogPatternName.SuicideFrogRun );
 
-				if(suicideFrogState.IsName("SuicideFrogRun"))
+				if (suicideFrogState.IsName( "SuicideFrogRun" ))
 				{
-						transform.LookAt(player.transform.position);
-						transform.position = Vector3.Lerp( transform.position, player.transform.position, Time.deltaTime * frogBossSpeed );
+					transform.LookAt( player.transform.position );
+					transform.position = Vector3.Lerp( transform.position, player.transform.position, Time.deltaTime * frogBossSpeed );
 
 				}
-				
+
 			}
-			
-					if(searchRange > runRange )
-					SuicideFrogPattern(SuicideFrogPatternName.SuicideFrogIdle);
 
-					suicideFrogState = this.suicideFrogAIAnimator.GetCurrentAnimatorStateInfo(0);
+			if (searchRange > runRange)
+				SuicideFrogPattern( SuicideFrogPatternName.SuicideFrogIdle );
+
+			suicideFrogState = this.suicideFrogAIAnimator.GetCurrentAnimatorStateInfo( 0 );
 
 
-					//set default rotation
-					transform.rotation = new Quaternion(0f, transform.rotation.y, 0f, 0f);
-					transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
-					transform.LookAt( player.transform.position );
+			//set default rotation
+			transform.rotation = new Quaternion(0f, transform.rotation.y, 0f, 0f);
+			transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+			transform.LookAt( player.transform.position );
 
-					//update hp
-					health.fillAmount = frogInfo.FillFrogHp;
-					RotateHealthBar ();	
-		
-		
+			//update hp
+			health.fillAmount = frogInfo.FillFrogHp;
+			RotateHealthBar();
 		}	
 	}
 
@@ -105,7 +102,6 @@ public class SuicideFrogAI : Monster
 				health.fillAmount = 0;
 				int randomItem = Random.Range( 0, 3 );
 
-
 				suicideFrogAIAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
 				Destroy( this.gameObject, 3.0f );
@@ -118,58 +114,40 @@ public class SuicideFrogAI : Monster
 
 
 
-	public void SuicideFrogPattern (SuicideFrogPatternName state)
+	public void SuicideFrogPattern( SuicideFrogPatternName state )
 	{
 		switch (state)
 		{
-
-		case SuicideFrogPatternName.SuicideFrogIdle:
-			suicideFrogAIAnimator.SetInteger ("state", 1);
-			break;
-
-		case SuicideFrogPatternName.SuicideFrogRun:
-			suicideFrogAIAnimator.SetInteger ("state", 2);
-			break;
-
-		case SuicideFrogPatternName.SuicideFrogAttack:
-			suicideFrogAIAnimator.SetInteger ("state", 3);
-			break;
-
-		case SuicideFrogPatternName.SuicideFrogTakeDamage:
-			suicideFrogAIAnimator.SetInteger ("state", 4);
-			break;
-
-		case SuicideFrogPatternName.SuicideFrogDeath:
-			suicideFrogAIAnimator.SetInteger ("state", 5);
-			break;
+			case SuicideFrogPatternName.SuicideFrogIdle:
+				suicideFrogAIAnimator.SetInteger( "state", 1 );
+				break;
+			case SuicideFrogPatternName.SuicideFrogRun:
+				suicideFrogAIAnimator.SetInteger( "state", 2 );
+				break;
+			case SuicideFrogPatternName.SuicideFrogAttack:
+				suicideFrogAIAnimator.SetInteger( "state", 3 );
+				break;
+			case SuicideFrogPatternName.SuicideFrogTakeDamage:
+				suicideFrogAIAnimator.SetInteger( "state", 4 );
+				break;
+			case SuicideFrogPatternName.SuicideFrogDeath:
+				suicideFrogAIAnimator.SetInteger( "state", 5 );
+				break;
 		}
-		
 	}
 
 	public void SuicideFrogAttack()
 	{
-		if (!suicideFrogState.IsName ("SuicideFrogTakeDamage"))
+		if (!suicideFrogState.IsName( "SuicideFrogTakeDamage" ))
 		{
-			SuicideFrogPattern (SuicideFrogPatternName.SuicideFrogAttack);
-
-
-
-<<<<<<< HEAD
-			if (effectCount <= 1)
-=======
+			SuicideFrogPattern( SuicideFrogPatternName.SuicideFrogAttack );
 			if (effectCount < 1)
->>>>>>> 8f14c018e8fb2c2bd513c39e114fe68906259237
 			{
 				effectCount++;
-				GameObject bomb = (GameObject)Instantiate (BombEffect, this.transform.position, transform.rotation);
-				bomb.GetComponent<FrogBombObject> ().BombDamege (frogInfo.MonsterDamage);
-			//	bombObject.BombDamege =  frogInfo.MonsterDamage;
+				GameObject bomb = (GameObject)Instantiate( BombEffect, this.transform.position, transform.rotation );
+				bomb.GetComponent<FrogBombObject>().BombDamege( frogInfo.MonsterDamage );
+				//	bombObject.BombDamege =  frogInfo.MonsterDamage;
 			}
-					
 		}	
 	}
-
-
-
-
 }
