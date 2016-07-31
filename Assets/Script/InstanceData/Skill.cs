@@ -60,6 +60,11 @@ public class Skill
 		get { return coolTime; }
 	}
 
+	public float Damage
+	{
+		get { return damage; }
+	}
+
 	public float SkillResource
 	{
 		get { return resource; }	

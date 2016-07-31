@@ -10,6 +10,7 @@ public class UserInterfaceManager : MonoBehaviour
 	public bool itemSell;
 	public bool itemBuy;
 	public bool onClickMouse;
+	public NPC.Type presentNPC;
 
 	//child UI & data - use neutral
 	public GameObject inventory;
@@ -95,6 +96,11 @@ public class UserInterfaceManager : MonoBehaviour
 	{
 		get { return onClickMouse; }
 		set { onClickMouse = value; }
+	}
+
+	public NPC.Type PresentNPCType
+	{
+		set { presentNPC = value; }	
 	}
 
 	public bool ItemSell
@@ -315,6 +321,33 @@ public class UserInterfaceManager : MonoBehaviour
 	//state apply - NPC
 	public void InitializeModeNPC()
 	{
+		if (presentNPC == NPC.Type.Store)
+		{
+			//off neutral update item
+			quickSkill.SetActive( false );
+			quickSkillChain.SetActive( false );
+			quickStatus.SetActive( false );
+			quickSlot.SetActive( false );
+			systemUI.SetActive( false );
+			expGauge.SetActive( false );
+			quickButton.SetActive( false );
+			skillCutScene.SetActive( false );
+
+			//off asynchronous item
+			
+			skillUI.SetActive( false );
+			enterDungeon.SetActive( false );
+			deathPopUp.SetActive( false );
+			itemPopUpLogic.ControlComponent( false );	
+			skillPopUpLogic.ControlComponent( false );
+			exitDungeonPopUp.SetActive( false );
+			presentSelectItem.enabled = false;
+			presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
+			
+			//use store item
+			ControlInventory( true );
+			ControlStoreUI( true );
+		}
 	}
 
 	// inventory
@@ -393,7 +426,7 @@ public class UserInterfaceManager : MonoBehaviour
 				ControlExitDungeonPopUp( false );
 				break;
 			case "Store":
-				ControlStoreUI( false );
+				SwitchUIMode( Mode.Neutral );
 				break;
 		}
 	}
@@ -426,7 +459,7 @@ public class UserInterfaceManager : MonoBehaviour
 	}
 
 	//update by inventory
-	public void UpdateItemInformationByInventory(  )
+	public void UpdateItemInformationByInventory()
 	{
 		info.TopInstall = inventoryLogic.TopInstall.ItemInfo;
 		info.BottomInstall = inventoryLogic.BottomInstall.ItemInfo;
@@ -447,7 +480,7 @@ public class UserInterfaceManager : MonoBehaviour
 	}
 	
 	//update by quick skill
-	public void UpdateInstallSkillInfomationByQuickSkill( )
+	public void UpdateInstallSkillInfomationByQuickSkill()
 	{
 		for (int i = 0; i < info.InstallSkill.Length; i++)
 			info.InstallSkill[i] = quickSkillLogic.InstallSkill[i].SkillInfo;	
@@ -461,12 +494,12 @@ public class UserInterfaceManager : MonoBehaviour
 	}
 
 	//sell item
-	public void SellItemProcess(ItemElement data)
+	public void SellItemProcess( ItemElement data )
 	{
 		info.SellItemProcess( data );
 	}
 
-	public void BuyItemProcess(ItemElement data)
+	public void BuyItemProcess( ItemElement data )
 	{
 		info.BuyItemProcess( data );
 	}
@@ -486,7 +519,7 @@ public class UserInterfaceManager : MonoBehaviour
 				itemBuy = false;
 				itemSell = true;
 				break;
-			case " Buy":
+			case "Buy":
 				itemBuy = true;
 				itemSell = false;
 				break;

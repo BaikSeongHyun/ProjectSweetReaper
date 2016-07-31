@@ -4,27 +4,24 @@ using System.Collections;
 public class NightmareWeapon : MonoBehaviour
 {
 	public GameObject Mob;
-	nightMare nightmareAI;
+	Nightmare nightmareAI;
 	bool Attack;
 	float damage = 0;
 	MonsterHealth Info;
 	// Use this for initialization
 	void Start()
 	{
-		nightmareAI = Mob.GetComponent<nightMare> ();
+		nightmareAI = Mob.GetComponent<Nightmare>();
 		Info = Mob.GetComponent<MonsterHealth>();
-
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
-		if (nightmareAI.IsAttack) {
+		if (nightmareAI.IsAttack)
 			Attack = true;
-		} else {
-			Attack = false;
-		}
-		Debug.Log (nightmareAI.IsAttack);
+		else
+			Attack = false;				
 	}
 
 	void OnTriggerEnter( Collider coll )
@@ -32,12 +29,13 @@ public class NightmareWeapon : MonoBehaviour
 		//IsAttack
 		if (coll.gameObject.layer == LayerMask.NameToLayer( "Player" ))
 		{
-			if (Attack) {
+			if (Attack)
+			{
 				damage = Info.MonsterDamage;
-				coll.gameObject.SendMessage ("HitDamage", damage);
-			} else {
-				damage = 0;
+				coll.gameObject.SendMessage( "HitDamage", damage );
 			}
+			else
+				damage = 0;			
 		}
 	}
 }

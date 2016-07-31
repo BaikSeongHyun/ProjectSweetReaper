@@ -31,7 +31,6 @@ public class StoreUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 			itemName[i] = sellItemList[i].transform.Find( "ItemNameText" ).GetComponent<Text>();
 			itemBuyPrice[i] = sellItemList[i].transform.Find( "ItemPriceText" ).GetComponent<Text>();
 		}
-
 	}
 
 	public void UpdateStoreUI()
@@ -92,7 +91,7 @@ public class StoreUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
 		presentItemElement.CloseItemPopUp();
 
-		if (eventData.button == PointerEventData.InputButton.Right && mainUI.ItemBuy)
+		if (eventData.button == PointerEventData.InputButton.Left && mainUI.ItemBuy)
 			mainUI.BuyItemProcess( presentItemElement );
 
 		mainUI.UpdateItemInformationByStoreUI();

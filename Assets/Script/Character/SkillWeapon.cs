@@ -30,22 +30,25 @@ public class SkillWeapon : MonoBehaviour
 	void Update()
 	{
 		skillTrigger = faye.SkillTrigger;
-		if (skillTrigger) {
-			skillTime+= Time.deltaTime;
-			transform.Translate (transform.forward * Time.deltaTime * skillMoveSpeed,Space.World);
+		if (skillTrigger)
+		{
+			skillTime += Time.deltaTime;
+			transform.Translate( transform.forward * Time.deltaTime * skillMoveSpeed, Space.World );
 		}
 	}
 
 	void OnCollisionStay( Collision coll )
 	{
 		//IsAttack
-		if(skillTime>=0.2f){
-			Debug.Log (damage);
-			if (coll.gameObject.layer == LayerMask.NameToLayer ("Enemy")) {
-				Monster monsterDamege = coll.gameObject.GetComponent<Monster> ();
+		if (skillTime >= 0.2f)
+		{
+			Debug.Log( damage );
+			if (coll.gameObject.layer == LayerMask.NameToLayer( "Enemy" ))
+			{
+				Monster monsterDamege = coll.gameObject.GetComponent<Monster>();
 				damage = info.Damage;
-				monsterDamege.HitDamage (damage);
-				Camera.main.GetComponent<Shaking> ().ShakeCamera (0.1f);
+				monsterDamege.HitDamage( damage );
+				Camera.main.GetComponent<Shaking>().ShakeCamera( 0.1f );				
 			}
 			skillTime = 0.0f;
 		}

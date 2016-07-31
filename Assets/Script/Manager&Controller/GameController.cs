@@ -9,17 +9,17 @@ public class GameController : MonoBehaviour
 	//simple data field
 	Vector3 cameraDistance;
 	public AudioSource backgroundMusic;
-	public GameObject[] temp;
-
+	public GameObject npcPosition;
+	
 	//complex data field
 	public CharacterFaye faye;
 	public CharacterInformation info;
 	public UserInterfaceManager mainUI;
+	
 
 	// initialize this script
 	void Start()
 	{
-		temp = GameObject.FindGameObjectsWithTag( "Player" );
 		Application.targetFrameRate = 80;
 		backgroundMusic = Camera.main.GetComponent<AudioSource>();
 		
@@ -42,14 +42,13 @@ public class GameController : MonoBehaviour
 			info.DefaultStatus();
 		}
 
-		if (Input.GetKeyDown( KeyCode.F11 ))
-		{
-			mainUI.ControlStoreUI( true );
-		}
-		
+		if (Input.GetButtonDown( "NPC" ))
+			mainUI.SwitchUIMode( UserInterfaceManager.Mode.NPC );
 	
 		//charaecter section
-		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)
+		if (!EventSystem.current.IsPointerOverGameObject()
+		    && !mainUI.PresentSelectItem.enabled
+		    && mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
 		{
 			if (Input.GetButtonDown( "NormalAttack" ))
 				faye.Attack();
@@ -152,6 +151,18 @@ public class GameController : MonoBehaviour
 		}
 		backgroundMusic.Play();
 	}
+
+	public void ConnectNPC( NPC.Type type, GameObject _npcPosition )
+	{	
+		mainUI.PresentNPCType = type;
+		npcPosition = _npcPosition;
+	}
+
+	public void DisConnectNPC()
+	{
+		mainUI.PresentNPCType = NPC.Type.Default;
+		npcPosition = null;
+	}
 	
 	//set destination for player character
 	void MakeMovePoint()
@@ -179,10 +190,11 @@ public class GameController : MonoBehaviour
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.NPC ))
 		{
-//			//rotation -> use forward vector
-//			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
-//			//position
-//			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + ( temp.transform.forward * 3 ) + new Vector3 ( 0f, 0.5f, 0f ), Time.deltaTime * 10 );
+			//rotation -> use forward vector
+			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -npcPosition.transform.forward, Time.deltaTime * 10 );
+			
+			//position
+			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, npcPosition.transform.position + (npcPosition.transform.forward) + new Vector3(0f, 1.0f, 0f), Time.deltaTime * 10 );
 		}
 
 		if (mainUI.CompareMode( UserInterfaceManager.Mode.Tranning ))

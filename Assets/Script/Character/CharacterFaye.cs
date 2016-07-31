@@ -40,6 +40,7 @@ public class CharacterFaye : MonoBehaviour
 	bool isSoundTrigger = false;
 
 	//finish Skill
+	float damageMultiplier;
 	bool isAlive = true;
 	bool useDemonicCyclone = false;
 	bool useSpecialActive;
@@ -113,6 +114,11 @@ public class CharacterFaye : MonoBehaviour
 		get{ return skillingChainCount; }
 	}
 
+	public float PercentDamage
+	{
+		get { return damageMultiplier; }
+	}
+
 	public void Start()
 	{
 		audioSource = GetComponent<AudioSource>();		
@@ -174,7 +180,8 @@ public class CharacterFaye : MonoBehaviour
 		respawnPoint = transform.position;
 		destination = this.transform.position;
 		Hit.size = new Vector3(0, 0, 0);
-		this.GetComponent<Animator>().speed = 1.5f;		
+		this.GetComponent<Animator>().speed = 1.5f;	
+		damageMultiplier = 1f;
 	}
 
 	void Move()
@@ -270,6 +277,7 @@ public class CharacterFaye : MonoBehaviour
 			skillChainTrigger = true;
 			skillUsingState = false;
 			isSoundTrigger = true;
+			damageMultiplier = 1f;
 		}
 
 		destination = transform.position;
@@ -333,6 +341,7 @@ public class CharacterFaye : MonoBehaviour
 				
 				//action active skill
 				charInfo.PresentResourcePoint -= charInfo.InstallSkill[index].SkillResource;
+				damageMultiplier = charInfo.InstallSkill[index].Damage;
 				isSoundTrigger = false;
 				skillChainTrigger = false;
 				SetState( charInfo.InstallSkill[index].Name );

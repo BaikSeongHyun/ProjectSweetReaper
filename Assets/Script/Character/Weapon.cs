@@ -11,28 +11,27 @@ public class Weapon : MonoBehaviour
 	float damage = 0;
 	public AudioClip hit;
 	AudioSource hitSound;
-	bool soundTrigger=false;
-	float soundTime=0.0f;
-	public bool _normalAttack
+	bool soundTrigger = false;
+	float soundTime = 0.0f;
+
+	public bool NormalAttack
 	{
-		get{
-			return normalAttack;
-		}
+		get{ return normalAttack; }
 	}
 
-	public float _Damage
+	public float Damage
 	{
 		get { return damage; }
 	}
 
-	public bool _skillAttack
+	public bool SkillAttack
 	{
 		get{ return skillAttack; }
 	}
 	// Use this for initialization
 	void Start()
 	{
-		hitSound = GetComponent<AudioSource> ();
+		hitSound = GetComponent<AudioSource>();
 		character = GameObject.FindWithTag( "Player" );
 		faye = character.GetComponent<CharacterFaye>();
 		info = character.GetComponent<CharacterInformation>();
@@ -43,9 +42,11 @@ public class Weapon : MonoBehaviour
 	{
 		normalAttack = faye.NormalAttackState;
 		skillAttack = faye.SkillUsingState;
-		if (soundTrigger) {
+		if (soundTrigger)
+		{
 			soundTime += Time.unscaledDeltaTime;
-			if (soundTime >= 0.5f) {
+			if (soundTime >= 0.5f)
+			{
 				soundTrigger = false;
 				soundTime = 0.0f;
 			}
@@ -59,38 +60,45 @@ public class Weapon : MonoBehaviour
 		if (coll.gameObject.layer == LayerMask.NameToLayer( "Enemy" ))
 		{
 
-			Monster monsterDamege = coll.gameObject.GetComponent<Monster> ();
-			if (monsterDamege != null) {
-				if (normalAttack) {
-					damage = info.Damage;
-
-				} else if (skillAttack) {
-					damage = info.Damage;
-				}
-				if (damage != 0) {
-					monsterDamege.HitDamage (damage);
+			Monster monsterDamege = coll.gameObject.GetComponent<Monster>();
+			if (monsterDamege != null)
+			{
+				if (normalAttack)
+					damage = info.Damage * faye.PercentDamage;
+				else if (skillAttack)
+					damage = info.Damage * faye.PercentDamage;
+				Debug.Log( damage );
+				
+				if (damage != 0)
+				{
+					monsterDamege.HitDamage( damage );
 					damage = 0;
-					Camera.main.GetComponent<Shaking> ().ShakeCamera (0.1f);
-					if (!soundTrigger) {
-						hitSound.PlayOneShot (hit);
+					Camera.main.GetComponent<Shaking>().ShakeCamera( 0.1f );
+					if (!soundTrigger)
+					{
+						hitSound.PlayOneShot( hit );
 						soundTrigger = true;
 					}
 				}
-			}else{
-				nightMare nightmare = coll.gameObject.GetComponent<nightMare> ();
-				if (nightmare != null) {
-					if (normalAttack) {
+			}
+			else
+			{
+				Nightmare nightmare = coll.gameObject.GetComponent<Nightmare>();
+				if (nightmare != null)
+				{
+					if (normalAttack)
 						damage = info.Damage;
-
-					} else if (skillAttack) {
+					else if (skillAttack)
 						damage = info.Damage;
-					}
-					if (damage != 0) {
-						nightmare.HitDamage (damage);
+					
+					if (damage != 0)
+					{
+						nightmare.HitDamage( damage );
 						damage = 0;
-						Camera.main.GetComponent<Shaking> ().ShakeCamera (0.1f);
-						if (!soundTrigger) {
-							hitSound.PlayOneShot (hit);
+						Camera.main.GetComponent<Shaking>().ShakeCamera( 0.1f );
+						if (!soundTrigger)
+						{
+							hitSound.PlayOneShot( hit );
 							soundTrigger = true;
 						}
 					}

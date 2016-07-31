@@ -10,21 +10,20 @@ public class FrogAI : Monster
 
 	//Boss Pattern Range
 	int bossAngryPattern = 0;
+	
 	//Boss Angry Image or Warning
 	public Image angryImage;
-	Image warningImage;
 	float imageDelayTime;
 	public float warningRange = 30.0f;
+	
 	//public GameObject mesh;
 	public GameObject myObject;
 	Renderer colorRenderer;
-
 	Color TempColor;
+	
 	//hp image
 	bool colorChanage = false;
 	float colorTime = 0.0f;
-
-
 
 	public enum FrogPatternName
 	{
@@ -89,7 +88,6 @@ public class FrogAI : Monster
 			{			
 				angryImage.enabled = true;
 				FrogPattern( FrogPatternName.Angry );
-
 				bossAngryPattern = 1;		
 			}
 			else if (searchRange <= runRange && bossAngryPattern == 1)
@@ -101,7 +99,6 @@ public class FrogAI : Monster
 					angryImage.enabled = false;
 					transform.LookAt( player.transform.position );
 					transform.position = Vector3.Lerp( transform.position, player.transform.position, Time.deltaTime * frogBossSpeed );
-
 				}
 			}
 
@@ -126,21 +123,20 @@ public class FrogAI : Monster
 		attackCycle = 0;
 	}
 
-	public override void HitDamage( float _Damage )
+	public override void HitDamage( float _damage )
 	{
 		Instantiate( hitEffect, new Vector3 ( transform.position.x, transform.position.y + 1, transform.position.z ), transform.rotation );
-		frogInfo.MonsterHp -= _Damage;
+		frogInfo.MonsterHp -= _damage;
 
 		colorRenderer.material.color = new Color ( 255, 255, 255, 255 );
 
 		if (isAlive)
 		{
 			
-			frogInfo.monsterHp -= _Damage;
+			frogInfo.monsterHp -= _damage;
 
 			if (frogInfo.MonsterHp > 0)
-			{
-				
+			{				
 				frogAiAnimator.SetTrigger( "MonsterHitTrigger" );
 				return;		
 			}
@@ -174,10 +170,7 @@ public class FrogAI : Monster
 				Destroy( this.gameObject, 3.0f );
 				return;
 			}
-
-
 		}
-
 	}
 
 	public void FrogPattern( FrogPatternName state )
