@@ -25,8 +25,8 @@ public class CaveBossWeapon : MonoBehaviour {
 	{
 		if (caveBoss.gameObject.name == "CaveBossFrog") 
 		{
-
 			attack = true;
+			Debug.Log (attack);
 		}
 	
 	}
