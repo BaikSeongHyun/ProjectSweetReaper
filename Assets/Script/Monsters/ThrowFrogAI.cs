@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class ThrowFrogAI : Monster 
+public class ThrowFrogAI : Monster
 {
 
 	// Use this for initialization
@@ -21,18 +21,19 @@ public class ThrowFrogAI : Monster
 		ThrowFrogWalk,
 		ThrowFrogAttack,
 		ThrowFrogTakeDamage,
-		ThrowFrogDeath
-				
-	};
+		ThrowFrogDeath}
+	;
 
-	void Start () 
+	void Start()
 	{
-		frogInfo = GetComponent<MonsterHealth> ();
-		throwFrogAiAnimator = GetComponent<Animator> ();	
-		player = GameObject.FindGameObjectWithTag ("Player");
-		ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
-		health = transform.Find ("ThrowFrogHpBar").GetComponent<Image> ();
+		expThrow = GameObject.FindWithTag( "GameController" ).GetComponent<GameController>();
+		frogInfo = GetComponent<MonsterHealth>();
+		throwFrogAiAnimator = GetComponent<Animator>();	
+		player = GameObject.FindGameObjectWithTag( "Player" );
+		ThrowFrogPattern( ThrowFrogPatternName.ThrowFrogIdle );
+		health = transform.Find( "ThrowFrogHpBar" ).GetComponent<Image>();
 		throwTrigger = false;
+		exp = 2000f;
 //		health = transform.Find ("").GetComponent<Image> ();
 	}
 
@@ -42,7 +43,7 @@ public class ThrowFrogAI : Monster
 	}
 	
 	// Update is called once per frame
-	void Update () 
+	void Update()
 	{
 
 		if (isAlive)
@@ -51,48 +52,36 @@ public class ThrowFrogAI : Monster
 
 			if (searchRange < attackRange)
 			{
-				if (attackCycle >= 5 && !throwFrogState.IsName ("ThrowFrogTakeDamage")) 
+				if (attackCycle >= 5 && !throwFrogState.IsName( "ThrowFrogTakeDamage" ))
 				{
+					ThrowFrogPattern( ThrowFrogPatternName.ThrowFrogAttack );
 
-					ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogAttack);
-
-
-					if (throwTrigger) 
+					if (throwTrigger)
 					{
 						
-						GameObject throwTemp = (GameObject)Instantiate (throwObject, transform.position + new Vector3 (1.3f, 0f, 0f), transform.rotation);
-						targetPos = new Vector3 (player.transform.position.x, player.transform.position.y, player.transform.position.z);
-
-						Destroy (throwTemp, 4.0f);
-
-						throwTemp.GetComponent<ThrowFrogObject> ().IsAttackCheck (targetPos);
-
+						GameObject throwTemp = (GameObject)Instantiate( throwObject, transform.position + new Vector3(1.3f, 0f, 0f), transform.rotation );
+						targetPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
+						Destroy( throwTemp, 4.0f );
+						throwTemp.GetComponent<ThrowFrogObject>().IsAttackCheck( targetPos );
 						attackCycle = 0;
-
-						ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
-
-
-
+						ThrowFrogPattern( ThrowFrogPatternName.ThrowFrogIdle );
 					}
-				} 
-				else 
+				}
+				else
 				{
 					throwTrigger = false;					
-
-					ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
-					attackCycle += Time.deltaTime;
-				
+					ThrowFrogPattern( ThrowFrogPatternName.ThrowFrogIdle );
+					attackCycle += Time.deltaTime;			
 				}
-
 			}
-			else if (searchRange <= runRange || searchRange<= attackRange)
+			else if (searchRange <= runRange || searchRange <= attackRange)
 			{
 
-				ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogWalk);
-				if (throwFrogState.IsName ("ThrowFrogWalk"))
+				ThrowFrogPattern( ThrowFrogPatternName.ThrowFrogWalk );
+				if (throwFrogState.IsName( "ThrowFrogWalk" ))
 				{
-					transform.LookAt (player.transform.position);
-					transform.position = Vector3.Lerp (transform.position, player.transform.position, Time.deltaTime * frogBossSpeed);
+					transform.LookAt( player.transform.position );
+					transform.position = Vector3.Lerp( transform.position, player.transform.position, Time.deltaTime * frogBossSpeed );
 
 				}
 			}
@@ -101,27 +90,18 @@ public class ThrowFrogAI : Monster
 //				
 //			}
 
-			if (searchRange > runRange) 
+			if (searchRange > runRange)
+				ThrowFrogPattern( ThrowFrogPatternName.ThrowFrogIdle );
+			throwFrogState = this.throwFrogAiAnimator.GetCurrentAnimatorStateInfo( 0 );
 
-				ThrowFrogPattern (ThrowFrogPatternName.ThrowFrogIdle);
-				throwFrogState = this.throwFrogAiAnimator.GetCurrentAnimatorStateInfo (0);
-
-				transform.rotation = new Quaternion (0f, transform.rotation.y, 0f, 0f);
-				transform.position = new Vector3 (transform.position.x, 0f, transform.position.z);
-				transform.LookAt (player.transform.position);
+			transform.rotation = new Quaternion(0f, transform.rotation.y, 0f, 0f);
+			transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+			transform.LookAt( player.transform.position );
 			
-				//update hp
-				health.fillAmount = frogInfo.FillFrogHp;
-				RotateHealthBar ();
-
-
-
-
-
-			}
-			
-
-
+			//update hp
+			health.fillAmount = frogInfo.FillFrogHp;
+			RotateHealthBar();
+		}
 	}
 
 
@@ -129,8 +109,6 @@ public class ThrowFrogAI : Monster
 	{
 		attackCycle = 0;
 	}
-
-	
 
 
 	public override void HitDamage( float _Damage )
@@ -169,43 +147,34 @@ public class ThrowFrogAI : Monster
 					var gold = Instantiate( dropGold, transform.position, new Quaternion(0, 0, 0, 0) );					
 					gold.name = "DropGold";
 				}
-
 				throwFrogAiAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
+				expThrow.ExpThrow( exp );
 				Destroy( this.gameObject, 3.0f );
 				return;
 			}
 		}
 	}
 
-	public void ThrowFrogPattern(ThrowFrogPatternName state)
+	public void ThrowFrogPattern( ThrowFrogPatternName state )
 	{
-		switch (state) 
+		switch (state)
 		{
 			case ThrowFrogPatternName.ThrowFrogIdle:
-				throwFrogAiAnimator.SetInteger ("state", 1);
+				throwFrogAiAnimator.SetInteger( "state", 1 );
 				break;
-
 			case ThrowFrogPatternName.ThrowFrogWalk:
-				throwFrogAiAnimator.SetInteger ("state",2);
+				throwFrogAiAnimator.SetInteger( "state", 2 );
 				break;
-
 			case ThrowFrogPatternName.ThrowFrogAttack:
-				throwFrogAiAnimator.SetInteger ("state", 3);
+				throwFrogAiAnimator.SetInteger( "state", 3 );
 				break;
-
 			case ThrowFrogPatternName.ThrowFrogTakeDamage:
-				throwFrogAiAnimator.SetInteger ("state",4);
+				throwFrogAiAnimator.SetInteger( "state", 4 );
 				break;
-
 			case ThrowFrogPatternName.ThrowFrogDeath:
-				throwFrogAiAnimator.SetInteger ("state", 5);
+				throwFrogAiAnimator.SetInteger( "state", 5 );
 				break;	
 		}
-		
 	}
-
-
-
-
 }

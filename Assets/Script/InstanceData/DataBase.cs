@@ -51,10 +51,10 @@ public class DataBase
 	{
 		//name, price, coreRank, weaponAtk, weaponDef, weaponStr, weaponDex, weaponInt, weaponLuck, weaponCri, section, rareRank)
 		itemInformation = new List<Item>();
-		itemInformation.Add( new Item(1, "Fear Blade", 		1000, 30, 100, 0, 10, 10, 0, 0, 1, Item.Section.Blade, Item.Rarity.Legendary) );
-		itemInformation.Add( new Item(2, "Iron Handle",		 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.Section.Handle, Item.Rarity.Normal) );
+		itemInformation.Add( new Item(1, "Fear Blade", 1000, 30, 100, 0, 10, 10, 0, 0, 1, Item.Section.Blade, Item.Rarity.Legendary) );
+		itemInformation.Add( new Item(2, "Iron Handle", 100, 1, 0, 30, 0, 0, 5, 8, 1, Item.Section.Handle, Item.Rarity.Normal) );
 		itemInformation.Add( new Item(3, "Drop Of Sorcerer", 300, 5, 0, 60, 0, 0, 7, 4, 1, Item.Section.Bottom, Item.Rarity.Unique) );
-		itemInformation.Add( new Item(4, "The Holy Spear", 	800, 10, 30, 0, 19, 10, 0, 0, 10, Item.Section.Top, Item.Rarity.Rare) );
+		itemInformation.Add( new Item(4, "The Holy Spear", 800, 10, 30, 0, 19, 10, 0, 0, 10, Item.Section.Top, Item.Rarity.Rare) );
 				
 		for (int i = 0; i < itemInformation.Count; i++)
 			itemInformation[i].SetSpriteIcon();

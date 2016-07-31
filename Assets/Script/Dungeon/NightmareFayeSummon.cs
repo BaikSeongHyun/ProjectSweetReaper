@@ -1,43 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NightmareFayeSummon : MonoBehaviour {
-
-	public GameObject[] NightmareArray;
-
+public class NightmareFayeSummon : MonoBehaviour
+{
+	public bool nightmareIsSummon;
+	
+	public Transform summonPosition;
+	public GameObject[] monsterList;
 	public GameObject NightmareFaye;
-	// Use this for initialization
+	public GameObject createdNightmareFaye;
+	
 
-	public bool fayeSummonCheck;
-
-	void Start ()
+	// initialize this script
+	void Start()
 	{
-		fayeSummonCheck = false;
+		nightmareIsSummon = false;
 	}
+	
 	// Update is called once per frame
-	void Update () 
+	void Update()
 	{
-		if (!NightAliveCheck ())
+		if (!MonsterAliveCheck() && !nightmareIsSummon)
 		{
-			if (!fayeSummonCheck)
-			{
-				
-				var Nightmarefaye = Instantiate (NightmareFaye, transform.position, transform.rotation);
-				Nightmarefaye.name = "NightmareFaye";
-
-				fayeSummonCheck = true;
-			}
-
-			Destroy (this.gameObject, 1.0f);
+			createdNightmareFaye = (GameObject)Instantiate( NightmareFaye, transform.position, transform.rotation );
+			nightmareIsSummon = true;
 		}
-
+		
+		if (createdNightmareFaye != null)
+			Destroy( this.gameObject );
 	}
 
-	public bool NightAliveCheck()
+	public bool MonsterAliveCheck()
 	{
-		for (int i = 0; i < NightmareArray.Length; i++)
+		for (int i = 0; i < monsterList.Length; i++)
 		{
-			if (NightmareArray[i] != null)
+			if (monsterList[i] != null)
 				return true;
 		}
 		return false;

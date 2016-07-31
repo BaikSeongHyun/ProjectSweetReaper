@@ -161,7 +161,7 @@ public class TutorialManager : MonoBehaviour
 
 	public void ExpThrow( float exp )
 	{
-		faye.AddExperience( exp );
+		faye.AddExperience( exp, mainUI );
 		mainUI.AsynchronousSystemUI( ( (int) exp ).ToString() + "의 경험치를 획득하셨습니다." );
 	}
 

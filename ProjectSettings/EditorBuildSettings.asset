@@ -6,8 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scene/Title.unity
+  - enabled: 1
     path: Assets/Scene/CampField.unity
   - enabled: 1
     path: Assets/Scene/Forest.unity
   - enabled: 1
     path: Assets/Scene/Cave.unity
+  - enabled: 1
+    path: Assets/Scene/Nightmare.unity

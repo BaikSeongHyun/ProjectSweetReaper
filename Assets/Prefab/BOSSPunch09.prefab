@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 472716}
-  - 114: {fileID: 11484444}
   m_Layer: 0
   m_Name: BOSSPunch09
   m_TagString: Untagged
@@ -25,45 +24,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.320551, y: 0.11647034, z: -18.004467}
   m_LocalScale: {x: 1, y: 1, z: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11484444
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 108318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b488e2fad7816d449c546904fad79d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteSheetMaterial: {fileID: 2100000, guid: b7e4c7635ce19f24aa31746285e6cc82, type: 2}
-  spriteCount: 32
-  uvAnimationTileX: 8
-  uvAnimationTileY: 4
-  framesPerSecond: 25
-  sizeStart: {x: 6, y: 6, z: 0}
-  sizeEnd: {x: 1, y: 1, z: 0}
-  randomRotation: 0
-  rotationStart: 0
-  rotationEnd: 0
-  isOneShot: 1
-  life: 0
-  billboarding: 0
-  addLightEffect: 0
-  lightRange: 0
-  lightColor: {r: 0, g: 0, b: 0, a: 0}
-  lightFadeSpeed: 1
-  addColorEffect: 0
-  colorStart: {r: 0.880597, g: 0.111717544, b: 0.111717544, a: 1}
-  colorEnd: {r: 0.18882206, g: 0.92537314, b: 0.07596346, a: 1}
-  foldOut: 1
-  offset: {x: 8.441526, y: -5.46, z: 1.2799997}
-  waittingTime: 0
-  copy: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

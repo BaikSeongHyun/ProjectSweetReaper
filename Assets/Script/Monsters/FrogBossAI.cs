@@ -30,6 +30,7 @@ public class FrogBossAI : Monster
 	// Use this for initialization
 	void Start()
 	{
+		expThrow = GameObject.FindWithTag( "GameController" ).GetComponent<GameController>();
 		frogInfo = this.GetComponent<MonsterHealth>();
 		bossAiAnimator = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag( "Player" );
@@ -137,6 +138,7 @@ public class FrogBossAI : Monster
 
 				bossAiAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
+				expThrow.ExpThrow( exp );
 				Destroy( this.gameObject, 3.0f );
 				return;
 			}

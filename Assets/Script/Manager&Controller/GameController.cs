@@ -41,8 +41,11 @@ public class GameController : MonoBehaviour
 			PlayerPrefs.DeleteAll();
 			info.DefaultStatus();
 		}
+		if (Input.GetKeyDown( KeyCode.F11 ))
+			info.LevelUp( mainUI );
+		
 
-		if (Input.GetButtonDown( "NPC" ))
+		if (Input.GetButtonDown( "NPC" ) && npcPosition != null)
 			mainUI.SwitchUIMode( UserInterfaceManager.Mode.NPC );
 	
 		//charaecter section
@@ -105,12 +108,7 @@ public class GameController : MonoBehaviour
 			if (faye.AcquireItem( hitInfo.collider.gameObject.GetComponent<DropItem>(), mainUI ))
 				Destroy( hitInfo.collider.gameObject );
 		}
-
-		if (Input.GetKeyDown( KeyCode.F8 ))
-			mainUI.SwitchUIMode( UserInterfaceManager.Mode.Race );
-		else if (Input.GetKeyDown( KeyCode.F7 ))
-			mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
-		
+	
 		//check cut Scene
 		if (faye.OnSpecialActive)
 		{
@@ -204,7 +202,7 @@ public class GameController : MonoBehaviour
 
 	public void ExpThrow( float exp )
 	{
-		faye.AddExperience( exp );
+		faye.AddExperience( exp, mainUI );
 		mainUI.AsynchronousSystemUI( ((int)exp).ToString() + "의 경험치를 획득하셨습니다." );
 	}
 

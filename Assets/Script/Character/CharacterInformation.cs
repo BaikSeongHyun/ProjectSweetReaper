@@ -117,7 +117,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status health bar
 	public float FillHealthPoint
 	{
-		get { return( presentHealthPoint / originHealthPoint ); }
+		get { return(presentHealthPoint / originHealthPoint); }
 	}
 
 	public float OriginResourcePoint
@@ -133,7 +133,7 @@ public class CharacterInformation : MonoBehaviour
 	//use quick status resource bar
 	public float FillResourcePoint
 	{
-		get { return ( presentResourcePoint / originResourcePoint ); }
+		get { return (presentResourcePoint / originResourcePoint); }
 	}
 
 	public float CriticalProability
@@ -306,7 +306,7 @@ public class CharacterInformation : MonoBehaviour
 		rootLuck = 20;
 		presentLuck = rootLuck;
 
-		rootDamage = 20.0f;
+		rootDamage = 100.0f;
 		presentDamage = rootDamage;
 		money = 1000;
 
@@ -317,13 +317,13 @@ public class CharacterInformation : MonoBehaviour
 	//set default item
 	public void InstallDefaultItem()
 	{
-		bladeInstall = new Item ();
-		bottomInstall = new Item ();
-		topInstall = new Item ();
-		handleInstall = new Item ();
+		bladeInstall = new Item();
+		bottomInstall = new Item();
+		topInstall = new Item();
+		handleInstall = new Item();
 
 		for (int i = 0; i < characterItem.Length; i++)
-			characterItem[i] = new Item ();
+			characterItem[i] = new Item();
 	}
 
 	public void SetDefaultSkill()
@@ -338,40 +338,42 @@ public class CharacterInformation : MonoBehaviour
 		characterSkill[7] = DataBase.Instance.FindSkillById( 8 );
 
 		for (int i = 8; i < characterSkill.Length; i++)
-			characterSkill[i] = new Skill ();
+			characterSkill[i] = new Skill();
 	}
 
-	public void ExpProcess( float exp )
+	public void ExpProcess( float exp, UserInterfaceManager mainUI )
 	{
 		presentExp += exp;
 
 		if (presentExp >= requireExp)
 		{
 			presentExp -= requireExp;
-			LevelUp();
-			requireExp *= 1.5f;
+			LevelUp( mainUI );
+			
 		}
 	}
 
-	public void LevelUp()
+	public void LevelUp( UserInterfaceManager mainUI )
 	{
 		characterLevel++;
 
-		rootHealthPoint *= 1.4f;
-		rootResourcePoint *= 1.1f;
-		rootDamage *= 1.2f;
+		requireExp *= 1.05f;
+		rootHealthPoint *= 1.05f;
+		originHealthPoint = rootHealthPoint;
+		rootResourcePoint += 5f;
+		originResourcePoint = rootResourcePoint;
+		rootDamage *= 1.05f;
 
 		rootStrength += 5;
 		rootDexterity += 4;
 		rootIntelligence += 3;
-		rootLuck += 4;
-
-		rootCriticalProability *= 1.1f;
+		rootLuck += 4;	
 
 		UpdateInventoryStatus();
 
 		presentHealthPoint = originHealthPoint;
 		presentResourcePoint = originResourcePoint;
+		mainUI.UpdateItemInformationByInventory();
 	}
 
 	public bool AddItem( Item item )
@@ -380,7 +382,7 @@ public class CharacterInformation : MonoBehaviour
 		{
 			if (characterItem[i].Name == "Default")
 			{
-				characterItem[i] = new Item ( item );
+				characterItem[i] = new Item(item);
 				return true;
 			}
 		}
@@ -441,12 +443,12 @@ public class CharacterInformation : MonoBehaviour
 	public void SellItemProcess( ItemElement data )
 	{
 		money += data.ItemInfo.Price;
-		data.ItemInfo = new Item ();
+		data.ItemInfo = new Item();
 	}
 
 	public void BuyItemProcess( ItemElement data )
 	{
-		if (money >= ( data.ItemInfo.Price * 10 ) && AddItem( data.ItemInfo ))
+		if (money >= (data.ItemInfo.Price * 10) && AddItem( data.ItemInfo ))
 		{
 			money -= data.ItemInfo.Price * 10;
 			data.ItemInfo = null;
@@ -488,24 +490,24 @@ public class CharacterInformation : MonoBehaviour
 
 			//item install
 			if (PlayerPrefs.GetInt( "topInstall" ) == 0)
-				topInstall = new Item ();
+				topInstall = new Item();
 			else
-				topInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "topInstall" ) ) );
+				topInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "topInstall" ) ));
 
 			if (PlayerPrefs.GetInt( "bottomInstall" ) == 0)
-				bottomInstall = new Item ();
+				bottomInstall = new Item();
 			else
-				bottomInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bottomInstall" ) ) );
+				bottomInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bottomInstall" ) ));
 
 			if (PlayerPrefs.GetInt( "bladeInstall" ) == 0)
-				bladeInstall = new Item ();
+				bladeInstall = new Item();
 			else
-				bladeInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bladeInstall" ) ) );
+				bladeInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "bladeInstall" ) ));
 
 			if (PlayerPrefs.GetInt( "handleInstall" ) == 0)
-				handleInstall = new Item ();
+				handleInstall = new Item();
 			else
-				handleInstall = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "handleInstall" ) ) );
+				handleInstall = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( "handleInstall" ) ));
 
 			money = PlayerPrefs.GetInt( "money" );
 
@@ -513,27 +515,27 @@ public class CharacterInformation : MonoBehaviour
 			{
 				string temp = "characterItem" + i.ToString();
 				if (PlayerPrefs.GetInt( temp ) == 0)
-					characterItem[i] = new Item ();
+					characterItem[i] = new Item();
 				else
-					characterItem[i] = new Item ( DataBase.Instance.FindItemById( PlayerPrefs.GetInt( temp ) ) );
+					characterItem[i] = new Item(DataBase.Instance.FindItemById( PlayerPrefs.GetInt( temp ) ));
 			}
 
 			for (int i = 0; i < characterSkill.Length; i++)
 			{
 				string temp = "characterSkill" + i.ToString();
 				if (PlayerPrefs.GetInt( temp ) == 0)
-					characterSkill[i] = new Skill ();
+					characterSkill[i] = new Skill();
 				else
-					characterSkill[i] = new Skill ( DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ) );			
+					characterSkill[i] = new Skill(DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ));			
 			}
 
 			for (int i = 0; i < installSkill.Length; i++)
 			{
 				string temp = "installSkill" + i.ToString();
 				if (PlayerPrefs.GetInt( temp ) == 0)
-					installSkill[i] = new Skill ();
+					installSkill[i] = new Skill();
 				else
-					installSkill[i] = new Skill ( DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ) );
+					installSkill[i] = new Skill(DataBase.Instance.FindSkillById( PlayerPrefs.GetInt( temp ) ));
 			}
 		}
 		catch (NullReferenceException e)

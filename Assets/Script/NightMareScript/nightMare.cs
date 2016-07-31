@@ -1,34 +1,30 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class Nightmare : MonoBehaviour
+public class Nightmare : Monster
 {
-	GameObject player;
 	Animator nightmareAnimator;
-	public GameObject hitEffect;
 	float moveSpeed = 3.0f;
 	float distance;
 	float stateTime = 0.0f;
 	bool hitTrigger = false;
-	bool isAttack = false;
-	bool isAlive = true;
-	MonsterHealth Info;
+	MonsterHealth info;
 	public BoxCollider Hit;
 	AnimatorStateInfo attackState;
-
-	public bool IsAttack
-	{
-		get{ return isAttack; }
-	}
+	public GameObject returnObject;
 	
 	// Use this for initialization
 	void Start()
 	{
-		Info = this.GetComponent<MonsterHealth>();
+		expThrow = GameObject.FindWithTag( "GameController" ).GetComponent<GameController>();
+		info = this.GetComponent<MonsterHealth>();
 		Hit.size = new Vector3(0, 0, 0);
 		player = GameObject.Find( "Faye" );
 		nightmareAnimator = GetComponent<Animator>();
 		nightmareAnimator.speed = 1.5f;
+		health = transform.Find( "NightmareHpBar" ).GetComponent<Image>();
+		exp = 16000f;
 	}
 	
 	// Update is called once per frame
@@ -38,6 +34,9 @@ public class Nightmare : MonoBehaviour
 		{
 			ProcessTime();
 			Process();
+			
+			health.fillAmount = info.FillFrogHp;
+			RotateHealthBar();
 		}
 	}
 
@@ -60,13 +59,13 @@ public class Nightmare : MonoBehaviour
 		}
 	}
 
-	public void HitDamage( float _damage )
+	public override void HitDamage( float damage )
 	{
 		if (isAlive)
 		{
 			Instantiate( hitEffect, new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation );
-			Info.MonsterHp -= _damage;
-			if (Info.MonsterHp > 0)
+			info.MonsterHp -= damage;
+			if (info.MonsterHp > 0)
 			{
 				Hit.size = new Vector3(0, 0, 0);
 				nightmareAnimator.SetTrigger( "PlayerHitTrigger" );
@@ -74,11 +73,13 @@ public class Nightmare : MonoBehaviour
 				return;		
 			}
 
-			if (Info.MonsterHp <= 0)
+			if (info.MonsterHp <= 0)
 			{
 				Hit.size = new Vector3(0, 0, 0);
 				nightmareAnimator.SetTrigger( "PlayerDie" );
 				isAlive = false;
+				expThrow.ExpThrow( exp );
+				Instantiate( returnObject, transform.position, transform.rotation );
 			}
 		}
 	}

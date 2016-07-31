@@ -32,12 +32,12 @@ public class CaveBossFrogAI : Monster
 	// Use this for initialization
 	void Start()
 	{
+		expThrow = GameObject.FindWithTag( "GameController" ).GetComponent<GameController>();
 		frogInfo = this.GetComponent<MonsterHealth>();
 		caveBossFrogAiAnimator = GetComponent<Animator>();
 		player = GameObject.FindGameObjectWithTag( "Player" );
-
 		health = transform.Find( "CaveBossFrogHpBar" ).GetComponent<Image>();
-
+		exp = 6000f;
 	}
 
 	public void SummonTrigger()
@@ -146,6 +146,7 @@ public class CaveBossFrogAI : Monster
 
 				caveBossFrogAiAnimator.SetTrigger( "MonsterDie" );
 				isAlive = false;
+				expThrow.ExpThrow( exp );
 				Destroy( this.gameObject, 3.0f );
 				return;
 			}

@@ -40,7 +40,7 @@ public class Monster : MonoBehaviour
 		get { return exp; }
 	}
 
-	public virtual void HitDamage( float _Damage )
+	public virtual void HitDamage( float damage )
 	{
 	}
 

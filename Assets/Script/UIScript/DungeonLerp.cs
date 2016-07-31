@@ -25,8 +25,8 @@ public class DungeonLerp : MonoBehaviour
 		delayTime += Time.deltaTime; 		
 		if (delayTime >= 1)
 		{
-			InsertDungeonImage.color = Color.Lerp( InsertDungeonImage.color, endColor, Time.deltaTime );
-			if (InsertDungeonImage.color.a < 0.1f)
+			InsertDungeonImage.color = Color.Lerp( InsertDungeonImage.color, endColor, Time.deltaTime * 5f);
+			if (InsertDungeonImage.color.a < 0.01f)
 			{
 				Destroy( this.gameObject );
 				//send massage kill this script for UIM

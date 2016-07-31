@@ -171,7 +171,11 @@ public class CharacterFaye : MonoBehaviour
 			Move();
 			
 			if (charInfo.PresentResourcePoint <= charInfo.OriginResourcePoint)
-				charInfo.PresentResourcePoint += 10f * Time.deltaTime;
+				charInfo.PresentResourcePoint += (charInfo.OriginResourcePoint / 20f) * Time.deltaTime;
+			
+			
+			if (charInfo.PresentHealthPoint <= charInfo.OriginHealthPoint)
+				charInfo.PresentHealthPoint += (charInfo.OriginHealthPoint / 500f) * Time.deltaTime;
 		}
 	}
 
@@ -229,7 +233,7 @@ public class CharacterFaye : MonoBehaviour
 		if (unbeatable)
 		{
 			unbeatableTime += Time.unscaledDeltaTime;
-			if (unbeatableTime >= 1.5f)
+			if (unbeatableTime >= 2f)
 			{
 				if (!useDemonicCyclone)
 				{
@@ -268,6 +272,7 @@ public class CharacterFaye : MonoBehaviour
 		destination = transform.position;
 		animator.Play( "Idle" );
 		isAlive = true;
+		unbeatable = true;
 	}
 
 	public void ChainTrigger()
@@ -515,8 +520,8 @@ public class CharacterFaye : MonoBehaviour
 			return false;		
 	}
 
-	public void AddExperience( float exp )
+	public void AddExperience( float exp, UserInterfaceManager mainUI )
 	{
-		charInfo.ExpProcess( exp );
+		charInfo.ExpProcess( exp, mainUI );
 	}
 }

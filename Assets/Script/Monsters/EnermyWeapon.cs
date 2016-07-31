@@ -25,8 +25,7 @@ public class EnermyWeapon : MonoBehaviour
 		if (Mob.gameObject.name == "BossFrog")
 			Attack = BossFrog.IsAttack;
 		else
-			Attack = Frog.IsAttack;
-		
+			Attack = Frog.IsAttack;		
 	}
 
 	void OnTriggerEnter( Collider coll )
