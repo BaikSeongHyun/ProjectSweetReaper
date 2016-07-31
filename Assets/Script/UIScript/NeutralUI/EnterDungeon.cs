@@ -7,22 +7,24 @@ public class EnterDungeon : MonoBehaviour
 {
 	public CharacterInformation charInfo;
 
-	public void LinkElement(CharacterInformation info)
+	public void LinkElement( CharacterInformation info )
 	{
 		charInfo = info;
 	}
 
 	public void FirstAreaDungeonSelect( string name )
 	{
+		charInfo.SaveCharacterInformation();
 		switch (name)
 		{
 			case "Forest":
-				charInfo.SaveCharacterInformation();
 				SceneManager.LoadScene( "Forest" );
 				break;
 			case "Cave":
-				charInfo.SaveCharacterInformation();
 				SceneManager.LoadScene( "Cave" );
+				break;
+			case "Nightmare":
+				SceneManager.LoadScene( "Nightmare" );
 				break;
 		}
 	}

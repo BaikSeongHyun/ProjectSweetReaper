@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -182,22 +182,22 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 		presentItemElement.CloseItemPopUp();
 
+		if (eventData.button == PointerEventData.InputButton.Left && mainUI.ItemSell)
+			mainUI.SellItemProcess( presentItemElement );
 		//uninstall item
-		if (eventData.button == PointerEventData.InputButton.Right && presentItemElement.CompareTag( "InstalledItem" ))
+		else if (eventData.button == PointerEventData.InputButton.Right && presentItemElement.CompareTag( "InstalledItem" ))
 			UninstallItem( presentItemElement );
-		
 		//install item
-		if (eventData.button == PointerEventData.InputButton.Right)
+		else if (eventData.button == PointerEventData.InputButton.Right)
 			SwapInstallItem( presentItemElement.ItemInfo.InstallSection, presentItemElement );
-		   
-		//mode drag send item icon data -> gameController
-		if (eventData.button == PointerEventData.InputButton.Left && presentItemElement.ItemInfo.Name != "Default")
+			//mode drag send item icon data -> gameController
+		else if (eventData.button == PointerEventData.InputButton.Left && presentItemElement.ItemInfo.Name != "Default")
 		{			
 			mainUI.PresentSelectItem.enabled = true;
 			mainUI.PresentSelectItem.sprite = presentItemElement.ItemIcon.sprite;
 		}
 
-		mainUI.UpdateItemInformationByInventory( this );	
+		mainUI.UpdateItemInformationByInventory();	
 	}
 
 	//mouse button up event
@@ -219,10 +219,12 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 			return;
 		else if (downPointItemElement.CompareTag( "InstalledItem" ))
 			InstallItem( presentItemElement, downPointItemElement );
+		else if (presentItemElement.CompareTag( "InstalledItem" ))
+			UninstallItem( presentItemElement, downPointItemElement );
 		else if (downPointItemElement != null)
 			SwapItem( presentItemElement, downPointItemElement );	
 
-		mainUI.UpdateItemInformationByInventory( this );
+		mainUI.UpdateItemInformationByInventory();
 	}
 
 	//uninstall item
@@ -238,6 +240,13 @@ public class Inventory : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 		}
 
 		//send message for system UI
+	}
+
+	//uninstall item
+	void UninstallItem( ItemElement presentSelect, ItemElement replaceItem )
+	{
+		if (presentSelect.ItemInfo.InstallSection == replaceItem.ItemInfo.InstallSection)
+			SwapItem( presentSelect, replaceItem );
 	}
 
 	//installed item swap

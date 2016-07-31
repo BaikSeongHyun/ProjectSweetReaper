@@ -41,6 +41,11 @@ public class GameController : MonoBehaviour
 			PlayerPrefs.DeleteAll();
 			info.DefaultStatus();
 		}
+
+		if (Input.GetKeyDown( KeyCode.F11 ))
+		{
+			mainUI.ControlStoreUI( true );
+		}
 		
 	
 		//charaecter section

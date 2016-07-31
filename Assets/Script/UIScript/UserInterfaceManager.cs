@@ -7,6 +7,8 @@ public class UserInterfaceManager : MonoBehaviour
 {
 	//ui mode
 	public Mode presentMode;
+	public bool itemSell;
+	public bool itemBuy;
 	public bool onClickMouse;
 
 	//child UI & data - use neutral
@@ -41,7 +43,7 @@ public class UserInterfaceManager : MonoBehaviour
 
 	public GameObject skillPopUp;
 	public SkillInformationPopUpControl skillPopUpLogic;
-	
+
 	public GameObject skillCutScene;
 	public SkillCutScene skillCutSceneLogic;
 
@@ -50,6 +52,10 @@ public class UserInterfaceManager : MonoBehaviour
 	public GameObject deathPopUp;
 	public GameObject exitDungeonPopUp;
 	public GameObject quickButton;
+
+	//child UI & data - use npc
+	public GameObject storeUI;
+	public StoreUI storeUILogic;
 
 	//child UI & data - use race
 	public GameObject raceMiniMap;
@@ -89,6 +95,18 @@ public class UserInterfaceManager : MonoBehaviour
 	{
 		get { return onClickMouse; }
 		set { onClickMouse = value; }
+	}
+
+	public bool ItemSell
+	{
+		get { return itemSell; }
+		set { itemSell = value; }
+	}
+
+	public bool ItemBuy
+	{
+		get { return itemBuy; }
+		set { itemBuy = value; }
 	}
 
 	public bool OnEnterDungeon
@@ -161,7 +179,7 @@ public class UserInterfaceManager : MonoBehaviour
 		skillPopUp = GameObject.Find( "SkillPopUp" );
 		skillPopUpLogic = skillPopUp.GetComponent<SkillInformationPopUpControl>();
 		skillPopUpLogic.LinkElement();
-		
+
 		skillCutScene = GameObject.Find( "SkillCutScene" );
 		skillCutSceneLogic = skillCutScene.GetComponent<SkillCutScene>();
 		skillCutSceneLogic.LinkElement();
@@ -175,6 +193,11 @@ public class UserInterfaceManager : MonoBehaviour
 		deathPopUp = GameObject.Find( "DeathPopUp" );
 		exitDungeonPopUp = GameObject.Find( "ExitDungeonPopUp" );
 		quickButton = GameObject.Find( "QuickButton" );
+
+		// npe UI & data
+		storeUI = GameObject.Find( "StoreUI" );
+		storeUILogic = storeUI.GetComponent<StoreUI>();
+		storeUILogic.LinkElement();
 
 		//race UI & data
 		raceMiniMap = GameObject.Find( "RaceMiniMap" );
@@ -204,6 +227,10 @@ public class UserInterfaceManager : MonoBehaviour
 				presentMode = Mode.Race;
 				InitializeModeRace();
 				break;
+			case Mode.NPC:
+				presentMode = Mode.NPC;
+				InitializeModeNPC();
+				break;
 		}
 	}
 
@@ -231,7 +258,7 @@ public class UserInterfaceManager : MonoBehaviour
 		quickButton.SetActive( true );
 		skillCutScene.SetActive( true );
 
-		//off asynchronous item
+		//off neutralasynchronous item
 		inventory.SetActive( false );
 		skillUI.SetActive( false );
 		enterDungeon.SetActive( false );
@@ -241,6 +268,9 @@ public class UserInterfaceManager : MonoBehaviour
 		exitDungeonPopUp.SetActive( false );
 		presentSelectItem.enabled = false;
 		presentSelectSkill.gameObject.GetComponent<Image>().enabled = false;
+
+		//off npc item
+		storeUI.SetActive( false );
 
 		//off race items
 		raceMiniMap.SetActive( false );
@@ -280,6 +310,11 @@ public class UserInterfaceManager : MonoBehaviour
 		racePetOrder.SetActive( true );
 		raceAnotherPetStatus.SetActive( true );
 
+	}
+
+	//state apply - NPC
+	public void InitializeModeNPC()
+	{
 	}
 
 	// inventory
@@ -329,6 +364,14 @@ public class UserInterfaceManager : MonoBehaviour
 		exitDungeonPopUp.SetActive( state );
 	}
 
+	// store ui
+	public void ControlStoreUI( bool state )
+	{
+		storeUI.SetActive( state );
+		if (state)
+			storeUILogic.UpdateStoreUI();
+	}
+
 	// close ui
 	public void CloseScreen( string name )
 	{
@@ -348,6 +391,9 @@ public class UserInterfaceManager : MonoBehaviour
 				break;
 			case "ExitDungeonPopUp":
 				ControlExitDungeonPopUp( false );
+				break;
+			case "Store":
+				ControlStoreUI( false );
 				break;
 		}
 	}
@@ -380,25 +426,31 @@ public class UserInterfaceManager : MonoBehaviour
 	}
 
 	//update by inventory
-	public void UpdateItemInformationByInventory( Inventory inventory )
+	public void UpdateItemInformationByInventory(  )
 	{
-		info.TopInstall = inventory.TopInstall.ItemInfo;
-		info.BottomInstall = inventory.BottomInstall.ItemInfo;
-		info.BladeInstall = inventory.BladeInstall.ItemInfo;
-		info.HandleInstall = inventory.handleInstall.ItemInfo;
+		info.TopInstall = inventoryLogic.TopInstall.ItemInfo;
+		info.BottomInstall = inventoryLogic.BottomInstall.ItemInfo;
+		info.BladeInstall = inventoryLogic.BladeInstall.ItemInfo;
+		info.HandleInstall = inventoryLogic.handleInstall.ItemInfo;
 
 		for (int i = 0; i < info.CharacterItem.Length; i++)
-			info.CharacterItem[i] = inventory.ItemSlot[i].ItemInfo;
+			info.CharacterItem[i] = inventoryLogic.ItemSlot[i].ItemInfo;
 
 		info.UpdateInventoryStatus();
 		inventoryLogic.UpdateInventory( info );
 	}
+
+	public void UpdateItemInformationByStoreUI()
+	{
+		storeUILogic.UpdateStoreUI();
+		inventoryLogic.UpdateInventory( info );
+	}
 	
 	//update by quick skill
-	public void UpdateInstallSkillInfomationByQuickSkill( QuickSkill quickSkill )
+	public void UpdateInstallSkillInfomationByQuickSkill( )
 	{
 		for (int i = 0; i < info.InstallSkill.Length; i++)
-			info.InstallSkill[i] = quickSkill.InstallSkill[i].SkillInfo;	
+			info.InstallSkill[i] = quickSkillLogic.InstallSkill[i].SkillInfo;	
 	}
 		
 	//skill install in quick skill
@@ -407,7 +459,18 @@ public class UserInterfaceManager : MonoBehaviour
 		if (quickSkillLogic.CheckSkill( PresentSelectSkill.SkillInfo ))
 			quickSkillLogic.InstallQuickSkill( PresentSelectSkill.SkillInfo, info );
 	}
-	
+
+	//sell item
+	public void SellItemProcess(ItemElement data)
+	{
+		info.SellItemProcess( data );
+	}
+
+	public void BuyItemProcess(ItemElement data)
+	{
+		info.BuyItemProcess( data );
+	}
+
 	// on click event - quick button
 	public void QuickButtonEvent( string name )
 	{
@@ -418,7 +481,15 @@ public class UserInterfaceManager : MonoBehaviour
 				break;
 			case "SkillUI":
 				ControlSkillUI( !OnSkillUI );
-				break;	
+				break;
+			case "Sell":
+				itemBuy = false;
+				itemSell = true;
+				break;
+			case " Buy":
+				itemBuy = true;
+				itemSell = false;
+				break;
 		}
 	}
 	
@@ -428,7 +499,8 @@ public class UserInterfaceManager : MonoBehaviour
 		systemUILogic.AddData( data );
 		systemUILogic.UpdateSystem();
 	}
-	
+
+	// skill cut scene active!
 	public void ActiveSkillCutScene()
 	{
 		skillCutSceneLogic.ActiveSkillCutScene();
