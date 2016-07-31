@@ -18,10 +18,13 @@ public class FrogAI : Monster
 	//public GameObject mesh;
 	public GameObject myObject;
 	Renderer colorRenderer;
+
 	Color TempColor;
 	//hp image
 	bool colorChanage = false;
 	float colorTime = 0.0f;
+
+
 
 	public enum FrogPatternName
 	{
