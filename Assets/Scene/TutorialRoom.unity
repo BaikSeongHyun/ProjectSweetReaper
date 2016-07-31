@@ -398,6 +398,47 @@ GameObject:
 Transform:
   m_PrefabParentObject: {fileID: 475042, guid: a7d65c5d36646b645876bf64e2b4d572, type: 2}
   m_PrefabInternal: {fileID: 321290939}
+--- !u!114 &364526171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 364526167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 843093112162ae947ae2ebf7e9bf34b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expThrow: {fileID: 0}
+  hitObject: {fileID: 0}
+  hitEffect: {fileID: 0}
+  player: {fileID: 0}
+  frogInfo: {fileID: 0}
+  runRange: 0
+  attackRange: 0
+  attackCycle: 0
+  frogBossSpeed: 0
+  exp: 0
+  isAlive: 1
+  isAttack: 0
+  health: {fileID: 0}
+  dropItem: {fileID: 0}
+  dropGold: {fileID: 0}
+  frogAiAnimator: {fileID: 0}
+  bossAngryPattern: 0
+  angryImage: {fileID: 0}
+  warningImage: {fileID: 0}
+  imageDelayTime: 0
+  warningRange: 30
+  myObject: {fileID: 0}
+  colorRenderer: {fileID: 0}
+  TempColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  colorChanage: 0
+  colorTime: 0
 --- !u!1 &390153544
 GameObject:
   m_ObjectHideFlags: 0
