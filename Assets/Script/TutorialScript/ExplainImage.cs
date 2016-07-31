@@ -42,11 +42,12 @@ public class ExplainImage : MonoBehaviour, IPointerDownHandler {
 	{
 		Debug.Log (imageCounter);
 		if(eventData.button == PointerEventData.InputButton.Left){
-			if (imageCounter<= 2 
-			|| imageCounter==4 
+			if (
+				imageCounter<= 2 
+			|| imageCounter==4
 			|| imageCounter==6 
 			||imageCounter==8
-			||imageCounter==11
+			||imageCounter == 10
 			||imageCounter== 13
 			||imageCounter==14
 			||imageCounter==18

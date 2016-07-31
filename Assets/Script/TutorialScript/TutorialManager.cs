@@ -4,34 +4,24 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class TutorialManager : MonoBehaviour
+public class TutorialManager : GameController
 {
-	//simple data field
+	//tutorialui getting
 	Vector3 cameraDistance;
-
-	//complex data field
-	public CharacterFaye faye;
-	public CharacterInformation info;
-	public UserInterfaceManager mainUI;
-
-	//tutorialui upload
 	public DataBase dataBase;
 	public TutorialUI tutorialUI;
 
 	// initialize this script
 	void Start()
 	{
-		Application.targetFrameRate = 80;
-		faye = GameObject.FindWithTag( "Player" ).GetComponent<CharacterFaye>();
+		faye = GameObject.FindWithTag ("Player").GetComponent<CharacterFaye> ();
 		info = GameObject.FindWithTag( "Player" ).GetComponent<CharacterInformation>();
+		tutorialUI = GameObject.Find ("TutorialUI").GetComponent<TutorialUI> ();
 		mainUI = GameObject.FindWithTag( "MainUI" ).GetComponent<UserInterfaceManager>();
 		mainUI.LinkNeutralData( info );
 		mainUI.LinkElement();
 		mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
-		cameraDistance = new Vector3 ( 0f, 7.5f, -8f );
-
-		tutorialUI = GameObject.Find ("TutorialUI").GetComponent<TutorialUI> ();
-
+		cameraDistance = new Vector3(0f, 7.5f, -8f);
 	}
 
 	// Update is called once per frame
@@ -42,6 +32,7 @@ public class TutorialManager : MonoBehaviour
 			PlayerPrefs.DeleteAll();
 			info.DefaultStatus();
 		}
+
 
 		//charaecter section
 		if (!EventSystem.current.IsPointerOverGameObject() && !mainUI.PresentSelectItem.enabled)
@@ -107,20 +98,33 @@ public class TutorialManager : MonoBehaviour
 		else if (Input.GetKeyDown( KeyCode.F7 ))
 			mainUI.SwitchUIMode( UserInterfaceManager.Mode.Neutral );
 
-
+		//check cut Scene
+		if (faye.OnSpecialActive)
+		{
+			mainUI.ActiveSkillCutScene();
+			faye.OnSpecialActive = false;
+		}
 
 		//death popup
 		if (!faye.IsAlive)
 			mainUI.ControlDeathPopUp( true );		
 	}
 
-	public void LateUpdate()
+	void LateUpdate()
 	{
-		//update camera sight
-		CameraControl();
+		CameraControlForTutorial ();
 	}
 
-	//another method
+
+	public void CameraControlForTutorial()
+	{
+		if (mainUI.CompareMode (UserInterfaceManager.Mode.Neutral)) {
+			//position
+			Camera.main.transform.position = Vector3.Lerp (Camera.main.transform.position, faye.transform.position + cameraDistance, Time.deltaTime * 10);
+			//rotation
+			Camera.main.transform.rotation = Quaternion.Lerp (Camera.main.transform.rotation, new Quaternion (0.4f, 0.0f, 0.0f, 0.9f), Time.deltaTime * 10);
+		}
+	}
 
 	//set destination for player character
 	void MakeMovePoint()
@@ -134,35 +138,10 @@ public class TutorialManager : MonoBehaviour
 			faye.Destinaton = hitInfo.point;
 		}
 	}
-
-	//set camera
-	public void CameraControl()
-	{
-		if (mainUI.CompareMode( UserInterfaceManager.Mode.Neutral ))
-		{
-			//position
-			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, faye.transform.position + cameraDistance, Time.deltaTime * 10 );
-			//rotation
-			Camera.main.transform.rotation = Quaternion.Lerp( Camera.main.transform.rotation, new Quaternion ( 0.4f, 0.0f, 0.0f, 0.9f ), Time.deltaTime * 10 );
-		}
-
-		if (mainUI.CompareMode( UserInterfaceManager.Mode.NPC ))
-		{
-			//			//rotation -> use forward vector
-			//			Camera.main.transform.forward = Vector3.Lerp( Camera.main.transform.forward, -temp.transform.forward, Time.deltaTime * 10 );
-			//			//position
-			//			Camera.main.transform.position = Vector3.Lerp( Camera.main.transform.position, temp.transform.position + ( temp.transform.forward * 3 ) + new Vector3 ( 0f, 0.5f, 0f ), Time.deltaTime * 10 );
-		}
-
-		if (mainUI.CompareMode( UserInterfaceManager.Mode.Tranning ))
-		{
-		}			
-	}
-
 	public void ExpThrow( float exp )
 	{
 		faye.AddExperience( exp );
-		mainUI.AsynchronousSystemUI( ( (int) exp ).ToString() + "의 경험치를 획득하셨습니다." );
+		mainUI.AsynchronousSystemUI( ((int)exp).ToString() + "의 경험치를 획득하셨습니다." );
 	}
 
 	//button event

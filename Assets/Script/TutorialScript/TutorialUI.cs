@@ -50,15 +50,7 @@ public class TutorialUI : MonoBehaviour {
 					}
 			}
 
-			if (getimageCounter == 9) {
-				{
-					if (Input.GetKey (KeyCode.I)) {
-						if (UIM.OnInventory) {
-							explainImage.SendMessage ("EventClearNext");
-						}
-					}
-				}
-			}
+		
 
 			if (getimageCounter == 7) {
 				if (!EventSystem.current.IsPointerOverGameObject ()) {
@@ -72,15 +64,39 @@ public class TutorialUI : MonoBehaviour {
 				}
 			}
 
-			if(explainImage.imageCounter == 12)	
+			if(explainImage.imageCounter == 9)	
 			{
 				MonsterArrayList.SetActive (true);
-				if (MonsterAliveCheck ()) {
+				if (!MonsterAliveCheck ()) {
 					explainImage.SendMessage ("EventClearNext");
 					Destroy (MonsterArrayList);
 					Destroy (cube3);
 				}
 
+			}
+
+			if (getimageCounter == 11) {
+				{if (UIM.OnInventory) {
+						explainImage.SendMessage ("EventClearNext");
+					}
+
+				}
+			}
+
+			if (getimageCounter == 12) {
+				{if (UIM.OnInventory) {
+						if(UIM.inventoryLogic.TopInstall.ItemInfo.Name != "Default")
+							explainImage.SendMessage ("EventClearNext");
+						if(UIM.inventoryLogic.BladeInstall.ItemInfo.Name != "Default")
+							explainImage.SendMessage ("EventClearNext");
+						if(UIM.inventoryLogic.BottomInstall.ItemInfo.Name != "Default")
+							explainImage.SendMessage ("EventClearNext");
+						if(UIM.inventoryLogic.HandleInstall.ItemInfo.Name != "Default")
+							explainImage.SendMessage ("EventClearNext");
+
+					}
+
+				}
 			}
 
 			if (explainImage.imageCounter == 15) {
@@ -102,6 +118,7 @@ public class TutorialUI : MonoBehaviour {
 			if (explainImage.imageCounter == 17) {
 				//if(Faye.Finish){explainImage.SendMessage ("EventClearNext");}
 				//파야 각성기 사용시 넘어가게 하기
+
 			}
 
 			if (explainImage.imageCounter == 20) {
