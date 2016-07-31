@@ -21,8 +21,8 @@ public class RacePetStatus : MonoBehaviour
 	{
 		string path = "Race/MyPetGrade" + myPet.Grade.ToString();
 		raceGrade.sprite = Resources.Load<Sprite>( path );
-		attack.text = myPet.petInfo.petStunTime.ToString() + " m/s";
-		moveSpeed.text = myPet.petInfo.MoveSpeed.ToString() + " sec";
+		attack.text = myPet.petInfo.petStunTime.ToString() + " sec";
+		moveSpeed.text = myPet.petInfo.MoveSpeed.ToString() + " m/s";
 		petOrderCounter.text = myPet.OrderCounter.ToString();
 	}
 }

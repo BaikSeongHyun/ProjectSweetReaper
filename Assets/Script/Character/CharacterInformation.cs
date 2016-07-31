@@ -348,8 +348,7 @@ public class CharacterInformation : MonoBehaviour
 		if (presentExp >= requireExp)
 		{
 			presentExp -= requireExp;
-			LevelUp( mainUI );
-			
+			LevelUp( mainUI );			
 		}
 	}
 
@@ -373,7 +372,9 @@ public class CharacterInformation : MonoBehaviour
 
 		presentHealthPoint = originHealthPoint;
 		presentResourcePoint = originResourcePoint;
-		mainUI.UpdateItemInformationByInventory();
+		
+		if (mainUI.OnInventory)
+			mainUI.UpdateItemInformationByInventory();
 	}
 
 	public bool AddItem( Item item )

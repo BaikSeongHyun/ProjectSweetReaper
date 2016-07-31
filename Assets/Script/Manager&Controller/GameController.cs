@@ -219,4 +219,10 @@ public class GameController : MonoBehaviour
 		info.SaveCharacterInformation();
 		SceneManager.LoadScene("PetRaceTrack");	
 	}
+	
+	public void GameExit()
+	{
+		info.SaveCharacterInformation();
+		Application.Quit();
+	}
 }
