@@ -12,6 +12,10 @@ public class CaveBossFrogAI : Monster
 
 	public bool summonTrigger;
 
+	public int summonCount;
+
+	public GameObject[] SummonFrog;
+
 	public enum CaveBossFrogPatternName
 	{
 		CaveBossFrogIdle =1,
@@ -45,24 +49,24 @@ public class CaveBossFrogAI : Monster
 		attackCycle += Time.deltaTime;
 		if (isAlive)
 		{
+			SummonFrog = GameObject.FindGameObjectsWithTag ("SuicideFrog");
 			
 			float searchRange = Vector3.Distance (player.transform.position, transform.position);
 			int summonPattern = Random.Range (0,5);
 
 			if (searchRange < attackRange)
 			{
-				if (!caveBossState.IsName ("ThrowFrogTakeDamage") && summonPattern == 4)
-				{
-					caveBossFrogAiAnimator.SetTrigger ("CaveBossSummon");
-					//CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogSummon);
-
-					Instantiate (suicideFrogSummon, transform.position + new Vector3 (0f, 10f, 0f), transform.rotation);
-
-
-				}
 				
-				else if (attackCycle >= 5 && !caveBossState.IsName ("ThrowFrogTakeDamage"))
+				
+				if (attackCycle >= 1 && !caveBossState.IsName ("ThrowFrogTakeDamage") )
 				{
+
+					if (summonPattern == 4)
+					{
+						
+						SummonSkill ();
+					}
+					
 
 					CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogAttack);
 
@@ -81,6 +85,7 @@ public class CaveBossFrogAI : Monster
 			}
 			else if (searchRange <= runRange || searchRange <= attackRange)
 			{
+
 
 				CaveBossFrogPattern (CaveBossFrogPatternName.CaveBossFrogRun);
 				if (caveBossState.IsName ("CaveBossFrogRun"))
@@ -110,6 +115,18 @@ public class CaveBossFrogAI : Monster
 	public void SetAttackTime()
 	{
 		attackCycle = 0;
+	}
+
+	public void SummonSkill()
+	{
+		int summonPos = Random.Range (1,5);
+
+		if (SummonFrog.Length <= 3)
+		{
+			 Instantiate (suicideFrogSummon, transform.position + new Vector3 ((1* summonPos), 0f,(1 * summonPos)), transform.rotation);
+
+		}
+
 	}
 
 	public override void HitDamage( float _Damage )

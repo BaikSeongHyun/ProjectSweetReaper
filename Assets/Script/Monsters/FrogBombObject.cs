@@ -20,7 +20,7 @@ public class FrogBombObject : MonoBehaviour
 	
 	}
 
-	void OnCollisionStay( Collision col )
+	void OnCollisionEnter( Collision col )
 	{
 		if (col.gameObject.layer == LayerMask.NameToLayer( "Player" ))
 		{

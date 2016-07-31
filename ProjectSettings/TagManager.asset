@@ -13,6 +13,7 @@ TagManager:
   - PetRaceGoal
   - StartPosition
   - GameController
+  - SuicideFrog
   layers:
   - Default
   - TransparentFX

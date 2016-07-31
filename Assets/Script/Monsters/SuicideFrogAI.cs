@@ -154,7 +154,7 @@ public class SuicideFrogAI : Monster
 
 
 
-			if (effectCount <= 1)
+			if (effectCount < 1)
 			{
 				effectCount++;
 				GameObject bomb = (GameObject)Instantiate (BombEffect, this.transform.position, transform.rotation);

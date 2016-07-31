@@ -14,19 +14,24 @@ public class CaveBossWeapon : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		
 		info = caveBoss.GetComponent<MonsterHealth> ();
-
 		if (caveBoss.gameObject.name == "CaveBossFrog")
-			caveBossAI = transform.GetComponent<CaveBossFrogAI> ();	
+		{
+			caveBossAI = transform.GetComponentInParent<CaveBossFrogAI> ();	
+		}
+					
+	
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+
+
 		if (caveBoss.gameObject.name == "CaveBossFrog") 
 		{
-			attack = true;
-			Debug.Log (attack);
+			attack = caveBossAI.IsAttack;		
 		}
 	
 	}
