@@ -222,7 +222,7 @@ public class CharacterFaye : MonoBehaviour
 		if (unbeatable)
 		{
 			unbeatableTime += Time.unscaledDeltaTime;
-			if (unbeatableTime >= 3.0f)
+			if (unbeatableTime >= 1.5f)
 			{
 				if (!useDemonicCyclone)
 				{
@@ -281,6 +281,7 @@ public class CharacterFaye : MonoBehaviour
 		destination = this.transform.position;
 		normalAttackState = true;
 		SetState( "NormalAttack" );
+		isSoundTrigger = true;
 
 	}
 
@@ -393,7 +394,6 @@ public class CharacterFaye : MonoBehaviour
 		if (useDemonicCyclone)
 		{
 			isStop = true;
-
 			if (finishSkillcount == 1 && !skillUsingState)
 			{
 				Instantiate( finishSkillEffect, new Vector3(transform.position.x, 0, transform.position.z), transform.rotation );

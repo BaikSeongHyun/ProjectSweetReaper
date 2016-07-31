@@ -43,7 +43,7 @@ public class EnermyWeapon : MonoBehaviour
 				if (damage != 0)
 					fayeObject.HitDamage( damage );
 				
-				damage = 0;				
+				damage = 0;
 			}			
 		}
 	}

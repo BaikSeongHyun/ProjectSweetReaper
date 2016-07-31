@@ -142,7 +142,6 @@ public class FrogAI : Monster
 			{
 				
 				frogAiAnimator.SetTrigger( "MonsterHitTrigger" );
-
 				return;		
 			}
 
