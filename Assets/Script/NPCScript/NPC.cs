@@ -1,33 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NPC : MonoBehaviour {
-	Vector3 target;
-	public GameObject talk;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+public class NPC : MonoBehaviour
+{
+	public GameController mainControl;
+
+	// initialize this script
+	void Start()
+	{
+		mainControl = GameObject.FindWithTag( "GameController" ).GetComponent<GameController>();
 	}
 
-	void OnTriggerEnter(Collider coll){
-		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player")) {
-			talk.SetActive (true);
-
-		}
+	void OnTriggerEnter( Collider coll )
+	{
+		
 	}
 
-	void OnTriggerStay(Collider coll){
-		if (coll.gameObject.layer == LayerMask.NameToLayer ("Player")) {
-			this.transform.LookAt (coll.gameObject.transform.position,Vector3.up);
-		}
+	void OnTriggerStay( Collider coll )
+	{
+		if (coll.gameObject.layer == LayerMask.NameToLayer( "Player" ))
+			this.transform.LookAt( coll.gameObject.transform.position, Vector3.up );		
 	}
 
-	void OnTriggerExit(){
+	void OnTriggerExit()
+	{
 		
 	}
 }
