@@ -305,7 +305,7 @@ public class CharacterInformation : MonoBehaviour
 
 		rootDamage = 100.0f;
 		presentDamage = rootDamage;
-		money = 1000;
+		money = 100000;
 		
 		petMoveSpeed = 10.0f;
 		petStunTime = 3.0f;

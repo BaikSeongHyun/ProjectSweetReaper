@@ -41,7 +41,7 @@ public class DropItem : MonoBehaviour
 		else if (gameObject.name == "DropItem")
 		{
 			text = transform.Find( "DropItemImage" ).Find( "DropItemName" ).GetComponent<TextMesh>();
-			itemInfo = new Item(DataBase.Instance.FindItemById( Random.Range( 1, 5 ) ));
+			itemInfo = new Item(DataBase.Instance.FindItemById( Random.Range( 1, 8 ) ));
 			text.text = itemInfo.Name;
 			text.color = itemInfo.SetTextColor();
 		}		

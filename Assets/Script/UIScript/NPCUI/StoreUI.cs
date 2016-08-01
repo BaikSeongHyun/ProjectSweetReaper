@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using System;
 using System.Collections;
 
 public class StoreUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
@@ -37,7 +36,7 @@ public class StoreUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 	{
 		for (int i = 0; i < sellItemList.Length; i++)
 		{
-			sellItemList[i].ItemInfo = new Item ( DataBase.Instance.FindItemById( 1 ) );
+			sellItemList[i].ItemInfo = new Item ( DataBase.Instance.FindItemById( Random.Range( 1, 8 ) ) );
 			sellItemList[i].UpdateItemIcon();
 			itemName[i].text = sellItemList[i].ItemInfo.Name;
 			itemName[i].color = sellItemList[i].ItemInfo.SetTextColor();
@@ -80,9 +79,8 @@ public class StoreUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 			presentName = eventData.pointerEnter.name;
 			presentItemElement = transform.Find( presentName ).gameObject.GetComponent<ItemElement>();
 		}
-		catch (NullReferenceException e)
+		catch
 		{
-			Debug.Log( e.InnerException );
 			presentItemElement = null;
 		}
 		//delete item
